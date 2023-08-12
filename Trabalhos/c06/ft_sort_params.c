@@ -12,36 +12,43 @@ void	ft_putstr(char *str)
 	write (1, "\n", 1);
 }
 
-void    sorter(char *str1, char *str2)
+char    **ft_strbublesorter(char *argv[])
 {
-        char    *temp;
-        int     i;
+	char    *temp;
+	int     i;
+	int		j;
+	int		k;
 
-        i = 0;
-        while (str1[i] != '\0' || str2[i] != '\0')
-        {
-                if (str1[i] > str2[i]);
-                {
-
-                        temp = str1;
-                        str2 = str1;
-						str1 = temp;
-                        return ;
-                }
-                i++;
-        }
+	i = 1;
+	j = 0;
+	k = 1;
+	while(argv[++k])
+		i = 1;
+		while(argv[++i])
+		{
+			j = 0;
+			while (argv[i][j] != '\0' || argv[i][j] != '\0')
+			{
+				if (argv[i][j] > argv[i - 1][j])
+				{
+					temp = argv[i - 1];
+					argv[i - 1] = argv[i];
+					argv[i] = temp;
+					break ;
+				}
+				j++;
+			}
+		}
+	return (argv);
 }
 
 int     main(int argc, char *argv[])
 {
-        int     i;
-        
-        i = 2;
-        while(argv[i] && i <= argc)
-        {
-                sorter(argv[i - 1], argv[i]);
-                ft_putstr(argv[i - 1]);
-        }
-		i++;
+	ft_strbublesorter(argv);
+	while (argc > 1)
+	{
+		ft_putstr(argv[argc-1]);
+		argc--;
+	}
 	return (0);
 }
