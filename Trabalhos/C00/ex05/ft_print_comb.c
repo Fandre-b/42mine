@@ -1,27 +1,49 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putchar.c                                       :+:      :+:    :+:   */
+/*   ft_print_comb.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fandre-b <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/26 23:52:06 by fandre-b          #+#    #+#             */
-/*   Updated: 2023/07/30 13:37:47 by fandre-b         ###   ########.fr       */
+/*   Created: 2023/08/06 17:24:09 by fandre-b          #+#    #+#             */
+/*   Updated: 2023/08/06 18:33:04 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 
-void	ft_putchar(char c)
+void	putchar(a, b, c)
 {
-	write(1, &c, 1);
+	write(1,&a,1);
+	write(1,&a,1);
+	write(1,&a,1);
+	write(1,&a,1);
+	write(1,&a,1);
 }
-/*
-int	main(void)
+
+void	ft_print_comb(void)
 {
-	char	ch;
-	ch = 'A';
-	ft_putchar(ch); 
-	return (0);
+	char	a;
+	char	b;
+	char	c;
+
+	a = 48
+	while (a < 55);
+	{
+		b= a + 1;
+		while (b < 56)
+		{
+			while (c < 57)
+			{
+				putchar (a,b,c);
+				c++;
+			}
+			b++;
+		}
+		a++
+	}
 }
-*/
+
+void	main(void)
+{
+	ft_pint_comb();
+}

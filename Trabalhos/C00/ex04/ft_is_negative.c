@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_alphabet.c                                :+:      :+:    :+:   */
+/*   ft_is_negative.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/29 17:29:08 by fandre-b          #+#    #+#             */
-/*   Updated: 2023/07/30 13:40:04 by fandre-b         ###   ########.fr       */
+/*   Created: 2023/07/26 23:52:06 by fandre-b          #+#    #+#             */
+/*   Updated: 2023/07/30 13:52:45 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,26 @@ void	ft_putchar(char c)
 	write(1, &c, 1);
 }
 
-void	ft_print_alphabet(void)
+void	ft_is_negative(int val)
 {
 	char	letter;
 
-	letter = 'a';
-	while (letter <= 'z') 
+	if (val < 0)
 	{
-		ft_putchar(letter);
-		letter++;
+		letter = 'N';
 	}
+	else
+	{
+		letter = 'P';
+	}
+	ft_putchar(letter);
 }
 /*
 int	main(void)
 {
-	ft_print_alphabet();
+	int val;
+	val = -10;
+	ft_is_negative(val);
 	return (0);
 }
 */
