@@ -6,7 +6,7 @@
 /*   By: fandre-b <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 19:06:36 by fandre-b          #+#    #+#             */
-/*   Updated: 2023/08/14 20:02:51 by fandre-b         ###   ########.fr       */
+/*   Updated: 2023/08/15 17:44:39 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,19 +61,20 @@ char	*ft_strcat(char *dest, char *src)
 	return (dest);
 }
 
-char *ft_strjoin(int size, char **strs, char *sep)
+char	*ft_strjoin(int size, char **strs, char *sep)
 {
-	char    *dest;
-	int	len;
-	int	i;
+	char	*dest;
+	int		len;
+	int		i;
 
 	if (sep == NULL)
 		return (NULL);
 	len = ft_strmatrixlen(size, strs, sep);
-	if (!(dest = ((char *)malloc(sizeof(char) * len))))
+	dest = (char *)malloc(sizeof(char) * len);
+	if (!(dest))
 		return (NULL);
 	dest[0] = '\0';
-	i = 0;	
+	i = 0;
 	while (i < size)
 	{
 		dest = ft_strcat(dest, strs[i++]);
@@ -82,11 +83,11 @@ char *ft_strjoin(int size, char **strs, char *sep)
 	}
 	return (dest);
 }
-
+/*
 int	main(void)
 {
-	char	*strs[] = {"i", "a", "s"};
-	char	*sep = "";
+	char	*strs[] = {"isfsf", "sfsfa", "sfdf"};
+	char	*sep = ", ,";
 	char	*dest;
 	int	size = 3;
 
@@ -95,4 +96,4 @@ int	main(void)
 	free(dest);
 	dest = NULL;
 	return (0);
-}
+}*/
