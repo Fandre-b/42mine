@@ -6,11 +6,11 @@
 /*   By: fandre-b <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 23:19:07 by fandre-b          #+#    #+#             */
-/*   Updated: 2023/09/06 10:45:31 by fandre-b         ###   ########.fr       */
+/*   Updated: 2023/09/17 09:52:15 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isalpha(char c)
+int	ft_isalpha(int c)
 {
-	return(c > 'a' && c < 'z' && c > 'A' && c < 'Z');
+	return ((c > 'a' && c < 'z') || (c > 'A' && c < 'Z'));
 }

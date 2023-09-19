@@ -6,11 +6,11 @@
 /*   By: fandre-b <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 23:19:07 by fandre-b          #+#    #+#             */
-/*   Updated: 2023/09/06 10:44:55 by fandre-b         ###   ########.fr       */
+/*   Updated: 2023/09/17 09:40:28 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isdigit(char c)
+int	ft_isdigit(int c)
 {
-	return(c > 47 && c < 58);
+	return (c > 47 && c < 58);
 }

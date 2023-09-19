@@ -1,16 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isprint.c                                       :+:      :+:    :+:   */
+/*   ft_strncpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fandre-b <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/03 23:19:07 by fandre-b          #+#    #+#             */
-/*   Updated: 2023/09/17 09:35:57 by fandre-b         ###   ########.fr       */
+/*   Created: 2023/09/18 17:47:36 by fandre-b          #+#    #+#             */
+/*   Updated: 2023/09/19 03:16:23 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isprint(int c)
+char	*strncpy(char *restrict dst, const char *restrict src, size_t size)
 {
-	return (c > 31 && c < 127);
+	size_t	i;
+
+	i = 0;
+	while(src[i] && i < size - 1)
+		dst[i++] = src[i++];
+	dest[i] = '\0';
+	return (dest);
 }

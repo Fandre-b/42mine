@@ -1,16 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isupper.c                                       :+:      :+:    :+:   */
+/*   ft_strncat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fandre-b <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/03 23:19:07 by fandre-b          #+#    #+#             */
-/*   Updated: 2023/09/06 10:46:48 by fandre-b         ###   ########.fr       */
+/*   Created: 2023/09/18 17:47:36 by fandre-b          #+#    #+#             */
+/*   Updated: 2023/09/18 18:15:15 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isupper(char c)
+char	*strncat(char *restrict dst, const char *restrict src, size_t size)
 {
-	return(c > 'A' && c < 'Z');
+	size_t	i;
+	size_t	u;
+
+	i = 0;
+	while(dst[i])
+		i++;
+	u = 0;
+	while(src[u] && u < size - 1)
+		dst[i++] = src[u++];
+	dst[i] = '\0';
 }

@@ -1,16 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isblank.c                                       :+:      :+:    :+:   */
+/*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fandre-b <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/03 23:19:07 by fandre-b          #+#    #+#             */
-/*   Updated: 2023/09/06 10:44:41 by fandre-b         ###   ########.fr       */
+/*   Created: 2023/09/18 17:15:26 by fandre-b          #+#    #+#             */
+/*   Updated: 2023/09/18 17:47:13 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isblank(char c)
+char	*strcpy(char *restrict dst, const char *restrict src)
 {
-	return(c == 32 || c == 9);
+	int	i;
+
+	i=0;
+
+	while(src[i])
+		dest[i]=src[i++];
+	dest[i] = '\0';
+	return ((char *) dest);
 }
+

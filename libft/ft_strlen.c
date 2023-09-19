@@ -6,16 +6,17 @@
 /*   By: fandre-b <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 11:01:53 by fandre-b          #+#    #+#             */
-/*   Updated: 2023/09/03 11:07:21 by fandre-b         ###   ########.fr       */
+/*   Updated: 2023/09/17 09:39:39 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int	ft_strlen(char *str)
 {
 	unsigned int	i;
-	
+
 	i = 0;
-	while(str[i++])
-	return i;
+	while (str[i++])
+	{
+	}
+	return (i);
 }
-		
