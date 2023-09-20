@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncat.c                                       :+:      :+:    :+:   */
+/*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fandre-b <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/18 17:47:36 by fandre-b          #+#    #+#             */
-/*   Updated: 2023/09/18 18:15:15 by fandre-b         ###   ########.fr       */
+/*   Created: 2023/09/18 17:15:26 by fandre-b          #+#    #+#             */
+/*   Updated: 2023/09/18 17:47:13 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char	*strncat(char *restrict dst, const char *restrict src, size_t size)
+char	*ft_strcpy(char *dst, const char *src)
 {
-	size_t	i;
-	size_t	u;
+	int	i;
 
 	i = 0;
-	while(dst[i])
-		i++;
-	u = 0;
-	while(src[u] && u < size - 1)
-		dst[i++] = src[u++];
-	dst[i] = '\0';
+	while (src[i])
+		 dst[i] = src[i++];
+	 dst[i] = '\0';
+	return ((char *)  dst);
 }

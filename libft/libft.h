@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
+
 # define LIBFT_H
 
 # include <stdlib.h>
@@ -25,5 +26,16 @@ int	ft_isupper(int c);
 int	ft_isblank(int c);
 int	ft_isspace(int c);
 int	ft_isalnum(int c);
+size_t	ft_strlen(const char *str);
+char	*ft_strcat(char *dst, const char *src);
+char	*ft_strchr(char *str, int c);
+char	*ft_strcpy(char *dst, const char *src);
+//size_t	ft_strlcat(char *dst, const char *src, size_t size);
+char	*ft_strncat(char *dst, const char *src, size_t size);
+char	*ft_strncpy(char *dst, const char *src, size_t size);
+char	*ft_strnstr(const char *str, const char *to_find, size_t size);
+char	*ft_strrchr(const char *str, int c);
+int	ft_tolower(int c);
+int	ft_toupper(int c);
 
 #endif

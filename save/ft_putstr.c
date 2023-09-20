@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncpy.c                                       :+:      :+:    :+:   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fandre-b <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/18 17:47:36 by fandre-b          #+#    #+#             */
-/*   Updated: 2023/09/19 03:16:23 by fandre-b         ###   ########.fr       */
+/*   Created: 2023/09/18 16:08:06 by fandre-b          #+#    #+#             */
+/*   Updated: 2023/09/18 16:14:39 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char	*strncpy(char *restrict dst, const char *restrict src, size_t size)
+#include "libft.h"
+
+void	ft_putstr(const char *str)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
-	while(src[i] && i < size - 1)
-		dst[i++] = src[i++];
-	dest[i] = '\0';
-	return (dest);
+	while (str[i])
+		ft_putchar(str[i++]);
 }

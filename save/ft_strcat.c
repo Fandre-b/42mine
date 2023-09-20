@@ -1,22 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr.c                                        :+:      :+:    :+:   */
+/*   ft_strcat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fandre-b <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/18 16:08:06 by fandre-b          #+#    #+#             */
-/*   Updated: 2023/09/18 16:14:39 by fandre-b         ###   ########.fr       */
+/*   Created: 2023/09/18 17:36:11 by fandre-b          #+#    #+#             */
+/*   Updated: 2023/09/18 17:46:28 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putstr(const char *str)
+char	*ft_strcat(char *dst, const char *src)
 {
-	int	i;
+	size_t	i;
+	size_t	u;
 
-	i=0;
-	while(str[i])
-		ft_putchar(str[i++]);
+	i = 0;
+	while (dst[i])
+		i++;
+	u = 0;
+	while (src[u])
+		 dst[i++] = src[u++];
+	 dst[i] = '\0';
+	return ( dst);
 }
