@@ -6,7 +6,7 @@
 /*   By: fandre-b <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:12:47 by fandre-b          #+#    #+#             */
-/*   Updated: 2023/10/01 13:45:52 by fandre-b         ###   ########.fr       */
+/*   Updated: 2023/10/01 19:22:19 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	ft_strncmp(const char *str1, const char *str2, size_t size)
 {
 	size_t	i;
-	
+
 	if (size == 0)
 		return (0);
 	i = 0;
