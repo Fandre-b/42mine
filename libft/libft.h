@@ -6,7 +6,7 @@
 /*   By: fandre-b <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 12:19:11 by fandre-b          #+#    #+#             */
-/*   Updated: 2023/09/18 14:42:04 by fandre-b         ###   ########.fr       */
+/*   Updated: 2023/10/01 13:40:53 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 # define LIBFT_H
 
+# include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
 
@@ -32,5 +33,10 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size);
 char	*ft_strchr(char *str, int c);
 char	*ft_strrchr(const char *str, int c);
 char	*ft_strnstr(const char *str, const char *to_find, size_t size);
+void    ft_putchar_fd(char c, int fd);
+void    ft_putstr_fd(char *str, int fd);
+int	ft_strncmp(const char *str1, const char *str2, size_t size);
+char	*ft_strdup(const char *src);
+int	atoi(const char *str);
 
 #endif
