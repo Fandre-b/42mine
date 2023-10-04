@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fandre-b <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/17 10:49:46 by fandre-b          #+#    #+#             */
-/*   Updated: 2023/10/03 15:41:03 by fandre-b         ###   ########.fr       */
+/*   Created: 2023/10/03 15:18:11 by fandre-b          #+#    #+#             */
+/*   Updated: 2023/10/03 15:41:07 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-char	*ft_strchr(char *str, int c)
+char	*ft_strtrim(char const *str, char const *set)
 {
-	int	i;
-
-	i = 0;
-	while (str && str[i] != (char)c)
-		i++;
-	if (str[i] == (char)c)
-		return ((char *)(str + i));
-	return (NULL);
+	while (set)
+	{
+		while (str[i])
+			if(str[i] == *set)
+				str[i] = &str[i + 1];
+			i++;
+	}
+	return (str);
 }
