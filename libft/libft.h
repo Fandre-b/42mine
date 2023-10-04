@@ -44,7 +44,7 @@ void    ft_bzero(void *str, size_t size);
 void    *ft_memset(void *str, int c, size_t size);
 void	*ft_memcpy(void *dst, const void *src, size_t size);
 //void	*ft_memmove(void *dst, const void *src, size_t size);
-//void	*ft_memchr(const void *str, int c, size_t size);
+void    *ft_memchr(const void *str, int c, size_t size);
 int		ft_memcmp(const void *str1, const void *str2, size_t size);
 
 #endif

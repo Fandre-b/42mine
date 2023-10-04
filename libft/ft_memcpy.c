@@ -6,7 +6,7 @@
 /*   By: fandre-b <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 20:29:01 by fandre-b          #+#    #+#             */
-/*   Updated: 2023/10/01 21:04:50 by fandre-b         ###   ########.fr       */
+/*   Updated: 2023/10/04 14:42:39 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ void	*ft_memcpy(void *dst, const void *src, size_t size)
 {
 	char	*char_dst;
 	const char	*char_src;
-	
+
+	if (!dst && !src)
+		return (NULL);
 	char_dst = (char *) dst;
 	char_src = (char *) src;
 	while (size-- > 0)
