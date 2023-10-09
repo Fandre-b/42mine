@@ -1,25 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fandre-b <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/17 10:49:46 by fandre-b          #+#    #+#             */
-/*   Updated: 2023/10/05 10:40:38 by fandre-b         ###   ########.fr       */
+/*   Created: 2023/10/09 19:24:55 by fandre-b          #+#    #+#             */
+/*   Updated: 2023/10/09 19:45:31 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strchr(const char *str, int c)
+void	*ft_memmove(void *dst, const void *src, size_t size)
 {
-	int	i;
+	char	*chr_dst;
+	char	*chr_src;
 
-	i = 0;
-	while (str[i] && str[i] != (char)c)
-		i++;
-	if (str[i] == (char)c)
-		return ((char *)(str + i));
-	return (NULL);
+	chr_dst = (char *) dst;
+	chr_src = (char *) src;
+	//if (!chr_src || 0 == size)
+	if (dst == src)
+		return (dst);
+	if (chr_src < chr_dst)
+	{
+		while (size--)
+			chr_dst[size] = chr_src [size];
+	}
+	else
+	{
+		while (size--)
+			*chr_dst++ = *chr_src++;
+	}
+	return (dst);
 }

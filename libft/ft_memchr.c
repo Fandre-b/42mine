@@ -6,7 +6,7 @@
 /*   By: fandre-b <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 13:17:39 by fandre-b          #+#    #+#             */
-/*   Updated: 2023/10/04 19:36:48 by fandre-b         ###   ########.fr       */
+/*   Updated: 2023/10/06 22:37:45 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	*ft_memchr(const void *str, int c, size_t size)
 {
 	const char	*chr_str;
-	size_t	i;
+	size_t		i;
 
 	chr_str = (char *) str;
 	i = 0;
@@ -27,4 +27,3 @@ void	*ft_memchr(const void *str, int c, size_t size)
 	}
 	return (NULL);
 }
-
