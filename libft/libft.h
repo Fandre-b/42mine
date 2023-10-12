@@ -51,6 +51,7 @@ char    *ft_itoa(int num);
 void    ft_putnbr_fd(int n, int fd);
 char	*ft_strtrim(char const *str, char const *set);
 char	*ft_substr(char const *str, unsigned int start, size_t end);
+char    **ft_split(const char *str, char c);
 
 
 #endif
