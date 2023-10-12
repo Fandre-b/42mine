@@ -1,23 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/04 21:21:43 by fandre-b          #+#    #+#             */
-/*   Updated: 2023/10/12 20:19:20 by fandre-b         ###   ########.fr       */
+/*   Created: 2023/10/12 16:50:44 by fandre-b          #+#    #+#             */
+/*   Updated: 2023/10/12 20:27:51 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putnbr_fd(int n, int fd)
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	char	*str;
-	
-	str = ft_itoa(n);
-	write(fd, str, ft_strlen(str));
-	free (str);
-	str = NULL;
+	char    *str;
+	unsigned int	i;
+
+	str = ft_strdup(s);
+	if (!str)
+		return(NULL);
+	i = 0;
+	while (str[i])
+	{
+		str[i] = f (i, s[i]);
+		i++;
+	}
+	str[i] = '\0';
+	return (str);
 }
