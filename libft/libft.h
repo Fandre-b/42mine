@@ -6,17 +6,22 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 12:19:11 by fandre-b          #+#    #+#             */
-/*   Updated: 2023/10/12 19:44:12 by fandre-b         ###   ########.fr       */
+/*   Updated: 2023/10/17 18:12:54 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
-
 # define LIBFT_H
 
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
+
+typedef struct  s_list
+{
+    void            *content;
+    struct s_list   *next;
+} t_list;
 
 int	    ft_isalpha(int c);
 int	    ft_isdigit(int c);
@@ -54,6 +59,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t end);
 char    **ft_split(const char *s, char c);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void	ft_striteri(char *s, void (*f)(unsigned int, char*));
-
+t_list  *ft_lstnew(void *content);
+void    ft_lstadd_front(t_list **lst, t_list *new);
 
 #endif
