@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,18 +12,17 @@
 
 #include "libft.h"
 
-void ft_lstadd_back(t_list **lst, t_list *new)
+void    ft_lstclear(t_list **lst, void (*del)(void*))
 {
-	t_list	*last;
+    t_list  *temp;
 
-	if (lst)
-	{
-		last = ft_lstlast(*lst);
-		if (last)
-			last->next = new;
-		else
-			*lst = new;
-	}
-	else
-		*lst = new;
+    if (del && lst)
+    {
+        while(lst)
+        {
+            temp = (*lst)->next;
+            ft_lstdelone(*lst, del);
+            *lst = temp;
+        }
+    }
 }

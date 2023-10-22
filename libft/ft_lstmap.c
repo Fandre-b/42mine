@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,20 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-void ft_lstadd_back(t_list **lst, t_list *new)
+t_list  *ft_lstmap(t_list *lst, void *(*f)(void *),void (*del)(void *))
 {
-	t_list	*last;
-
-	if (lst)
-	{
-		last = ft_lstlast(*lst);
-		if (last)
-			last->next = new;
-		else
-			*lst = new;
-	}
-	else
-		*lst = new;
+    
 }
