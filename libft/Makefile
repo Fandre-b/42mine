@@ -6,7 +6,7 @@
 #    By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/15 17:32:38 by fandre-b          #+#    #+#              #
-#    Updated: 2023/10/17 21:09:02 by fandre-b         ###   ########.fr        #
+#    Updated: 2023/10/23 17:44:30 by fandre-b         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ SRCS			=	ft_isalnum.c ft_isprint.c ft_memcmp.c  ft_putchar_fd.c ft_split.c \
 OBJS			= $(SRCS:.c=.o)
 
 BONUS			=	ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c \
-					ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c
+					ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c\
+					ft_lstmap.c
 
 BONUS_OBJS		= $(BONUS:.c=.o)
 

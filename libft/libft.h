@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 12:19:11 by fandre-b          #+#    #+#             */
-/*   Updated: 2023/10/17 21:09:04 by fandre-b         ###   ########.fr       */
+/*   Updated: 2023/10/23 17:36:49 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,6 @@ void    ft_lstadd_back(t_list **lst, t_list *new);
 void	ft_lstdelone(t_list *lst, void (*del)(void*));
 void    ft_lstclear(t_list **lst, void (*del)(void*));
 void    ft_lstiter(t_list *lst, void (*f)(void *));
-t_list  *ft_lstmap(t_list *lst, void *(*f)(void *),void (*del)(void *));
+t_list  *ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
 #endif
