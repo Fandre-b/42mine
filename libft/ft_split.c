@@ -31,7 +31,7 @@ static int	ft_countword(const char *s, char c)
 	count = 0;
 	while (s[i])
 	{
-		while (c == s[i])
+		while (s[i] && c == s[i])
 			i++;
 		if (s[i] && s[i] != c)
 		{
@@ -41,7 +41,7 @@ static int	ft_countword(const char *s, char c)
 		}
 	}
 	return (count);
-}	
+}
 
 static int	ft_getnextword(const char *s, char c)
 {
@@ -52,16 +52,16 @@ static int	ft_getnextword(const char *s, char c)
 		i++;
 	while (s[i] && c == s[i])
 		i++;
-	return(i);
+	return (i);
 }
 
-static char	**ft_getsplitted (const char *s, char **matrix, char c, size_t size)
+static char	**ft_getsplitted(const char *s, char **matrix, char c, size_t size)
 {
 	size_t	index;
 	size_t	k;
 
 	index = 0;
-	while (c == s[index])
+	while (s[index] && c == s[index])
 		index++;
 	k = 0;
 	while (k < size)
@@ -71,17 +71,20 @@ static char	**ft_getsplitted (const char *s, char **matrix, char c, size_t size)
 			return (NULL);
 		index += ft_getnextword(&s[index], c);
 	}
-	return(matrix);
+	matrix[k] = NULL;
+	return (matrix);
 }
 
 char	**ft_split(const char *s, char c)
 {
 	char	**matrix;
 	size_t	size;
-	
+
 	if (!s)
-        return (NULL);
-	size = ft_countword(s, c);
-	matrix = (char **) calloc ((size + 1), sizeof (char *));
-	return (ft_getsplitted (s, matrix, c, size));
+		return (NULL);
+	size = ft_countword(s, (char) c);
+	matrix = (char **) malloc (sizeof(char *) * (size + 1));
+	if (!matrix)
+		return (NULL);
+	return (ft_getsplitted(s, matrix, (char) c, size));
 }

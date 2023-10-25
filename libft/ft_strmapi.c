@@ -14,12 +14,12 @@
 
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	char    *str;
+	char			*str;
 	unsigned int	i;
 
 	str = ft_strdup(s);
 	if (!str)
-		return(NULL);
+		return (NULL);
 	i = 0;
 	while (str[i])
 	{
