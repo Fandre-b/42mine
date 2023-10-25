@@ -12,18 +12,28 @@
 
 #include "libft.h"
 
-char	*ft_strjoin(const char *s1, const char *s2)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	size_t	s1_len;
-	size_t	s2_len;
-	char	*dst;
+	char	*str;
+	size_t	i;
+	size_t	j;
 
-	s1_len = ft_strlen(s1);
-	s2_len = ft_strlen(s2);
-	dst = (char *) malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
-	if (!dst)
-		return (NULL);
-	ft_strlcpy(dst, s1, s1_len + 1);
-	ft_strlcat(dst, s2, s1_len + s2_len + 1);
-	return (dst);
+	//str = (char*)malloc(sizeof(*s1) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	//if (!str)
+	//	return (NULL);
+	str = calloc(ft_strlen(s1) + ft_strlen(s2) + 1, sizeof (char));
+	j = 0;
+	while (s1[j])
+	{
+		str[j] = s1[j];
+		j++;
+	}
+	i = 0;
+	while (s2[i])
+	{
+		str[j++] = s2[i];
+		i++;
+	}
+	str[j] = 0;
+	return (str);
 }
