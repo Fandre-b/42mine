@@ -68,7 +68,12 @@ static char	**ft_getsplitted(const char *s, char **matrix, char c, size_t size)
 	{
 		matrix[k] = ft_substr(s, index, ft_wordlen(&s[index], c));
 		if (!matrix[k++])
+		{
+			while (k > 0)
+				free(matrix[--k]);
+			free(matrix);
 			return (NULL);
+		}
 		index += ft_getnextword(&s[index], c);
 	}
 	matrix[k] = NULL;

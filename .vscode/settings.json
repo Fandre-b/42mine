@@ -1,0 +1,15 @@
+{
+    "files.associations": {
+        "libft.h": "c",
+        "unistd.h": "c",
+        "string": "c",
+        "iosfwd": "c",
+        "ios": "c",
+        "__locale": "c",
+        "sstream": "c",
+        "__threading_support": "c",
+        "vector": "c",
+        "ratio": "c",
+        "bit": "c"
+    }
+}
