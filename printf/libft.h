@@ -19,7 +19,6 @@
 
 typedef struct s_flags
 {
-	int	spec;
 	int	width;
 	int	left;
 	int	zero;
