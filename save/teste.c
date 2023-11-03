@@ -23,6 +23,6 @@ int main(int argc, char *argv[])
   int p;
 
   p = argc;
-  printf(argv[1], str);
+  printf(argv[1], str[0]);
   return (0);
 }
