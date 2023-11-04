@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 17:48:22 by fandre-b          #+#    #+#             */
-/*   Updated: 2023/10/28 17:48:34 by fandre-b         ###   ########.fr       */
+/*   Updated: 2023/11/04 18:04:03 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int get_flags(const char **string, char **flags)
     str1 = "cspdiuxX";
     str2 = "-0123456789.# +";
     i = 0;
-    if (*string == '%')
+    if (*string++ == '%')
     {
         ft_putchar(*string++);
         return (0);
@@ -75,7 +75,7 @@ void ft_printf(const char *string, ...)
     while (*str)
     {
         ft_putchar(*str++);
-        if (*string++ == '%' && get_flags(&flags, &string) == 1)
+        if (*string == '%' && get_flags(&flags, &string) == 1)
             conv = ft_call_convert(args, flags);
         if (flags)
             free (flags);

@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 20:58:42 by fandre-b          #+#    #+#             */
-/*   Updated: 2023/11/03 20:58:49 by fandre-b         ###   ########.fr       */
+/*   Updated: 2023/11/04 20:15:56 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	*ft_utoa(unsigned int n)
 }
 
 char	*ft_htoa(unsigned int n, char type)
-{
+{//can maybe remove this function
 	size_t	num_size;
 	char	*str;
 
@@ -78,7 +78,7 @@ char	*ft_htoa(unsigned int n, char type)
                 str[--num_size] =(char)(n % 16 + '0');
         else
         {
-            if (typeize == 'x')
+            if (type == 'x')
                 str[--num_size] = (char)(n % base - 10 + 'a');
             if (type == 'X')
                 str[--num_size] = (char)(n % base - 10 + 'A');
@@ -89,7 +89,7 @@ char	*ft_htoa(unsigned int n, char type)
 }
 
 char	*ft_addr(unsigned long int *num)
-{
+{//if i can get reed of unsigned int or somwthing i can maybe remove this function
 	size_t	num_size;
 	char	*str;
 

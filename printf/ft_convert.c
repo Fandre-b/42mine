@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 10:52:25 by fandre-b          #+#    #+#             */
-/*   Updated: 2023/11/03 10:52:27 by fandre-b         ###   ########.fr       */
+/*   Updated: 2023/11/04 20:10:07 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char    *ft_conv_addr(unsigned long int argument, char *flags)
     char        *accepted_flags;
     t_flags     *pross_flags;
 
-    accepted_flags = "-0.";
+    accepted_flags = "-0."; //add (nill) if 0
     pross_flags = ft_process_flags (flags, accepted_flags);
     if (pross_flags->precision >= 0)
 	    pross_flags->zero = 0;
