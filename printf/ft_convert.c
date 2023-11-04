@@ -31,15 +31,17 @@ char    *ft_conv_str(char *argument, char *flags)
     return(ft_conv_flag(res, pross_flags));
 }
 
-ft_conv_addr(uintptr_t argument, char *flags)
+ft_conv_addr(unsigned long int argument, char *flags)
 {
     char        *accepted_flags;
     t_flags     *pross_flags;
-	int		argument;
 
-    accepted_flags = "-0.#";
+    accepted_flags = "-0.";
     pross_flags = ft_process_flags (flags, accepted_flags);
-    return(ft_conv_flag("not working still"))
+    if (pross_flags->precision >= 0)
+	    pross_flags->zero = 0;
+    pross_flags->hash = 1;
+    return(ft_conv_flag(&argument, pross_flags))
 }
 
 char   *ft_conv_num(int argument, char *flags)
@@ -76,7 +78,7 @@ char    *ft_conv_octal(unsigned int argument, char *flags, char type)
     char    *accepted_flags;
     t_flags *pross_flags;
 
-    accepted_flags = "-0.";
+    accepted_flags = "-0.#";
     pross_flags = ft_process_flags (flags, accepted_flags);
     if (pross_flags->precision >= 0)
 	    pross_flags->zero = 0;

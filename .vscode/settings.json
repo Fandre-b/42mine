@@ -20,7 +20,9 @@
         "string_view": "c",
         "unordered_map": "c",
         "utility": "c",
-        "chrono": "c"
+        "chrono": "c",
+        "functional": "c",
+        "memory": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }
