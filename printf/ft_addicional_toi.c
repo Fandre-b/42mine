@@ -24,6 +24,19 @@ static size_t	ft_numsize(unsigned int n, unsigned int base)
 	return (count);
 }
 
+static size_t	ft_numsize_adress(unsigned long int n)
+{
+	size_t	count;
+
+	count = 0;
+	while (n != 0)
+	{
+		n /= 16;
+		count++;
+	}
+	return (count);
+}
+
 char	*ft_utoa(unsigned int n)
 {
 	size_t	num_size;
@@ -73,19 +86,6 @@ char	*ft_htoa(unsigned int n, char type)
         n /= 16;
     }
 	return (str);
-}
-
-static size_t	ft_numsize_adress(unsigned long int n)
-{
-	size_t	count;
-
-	count = 0;
-	while (n != 0)
-	{
-		n /= 16;
-		count++;
-	}
-	return (count);
 }
 
 char	*ft_addr(unsigned long int *num)

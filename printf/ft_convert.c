@@ -31,7 +31,7 @@ char    *ft_conv_str(char *argument, char *flags)
     return(ft_conv_flag(res, pross_flags));
 }
 
-ft_conv_addr(unsigned long int argument, char *flags)
+char    *ft_conv_addr(unsigned long int argument, char *flags)
 {
     char        *accepted_flags;
     t_flags     *pross_flags;

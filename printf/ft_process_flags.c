@@ -13,6 +13,43 @@
 #include "ft_printf.h"
 #include "libft.h"
 
+static int ft_get_precision(char *str)
+{
+    int len;
+    int res;
+
+    len = ft_strlen(str);
+    res = 0;
+    while (len >= 0 && str[len] != '.')
+        len--;
+    if (str[len] != '.')
+    {
+        while(str[++len] && ft_isdigit(str[len]))
+            res *= res * 10 + ((str[len]) - 48);
+    }
+    return (res);
+}
+
+static int ft_get_width(char *str)
+{
+    int len;
+    int res;
+
+    len = ft_strlen(str);
+    res = 0;
+    while (len >= 0 && !ft_isdigit(str[len--]))
+    {
+        while (len >= 0 && ft_isdigit(str[len]))
+            len--;
+        if(str[len] != '.')
+        {
+            while(str[++len] && ft_isdigit(str[len]))
+               res *= res * 10 + ((str[len]) - 48);
+        }
+    }
+    return (res);
+}
+
 t_flags *ft_process_flags(char *str, char *accepted_flags)
 {
 	t_flags	flags; //maybe allocate if fails to set values
@@ -38,41 +75,4 @@ t_flags *ft_process_flags(char *str, char *accepted_flags)
         }
     }
     return (flags);
-}
-
-int ft_get_precision(char *str)
-{
-    int len;
-    int res;
-
-    len = ft_strlen(str);
-    res = 0;
-    while (len >= 0 && str[len] != '.')
-        len--;
-    if (str[len] != '.')
-    {
-        while(str[++len] && ft_isdigit(str[len]))
-            res *= res * 10 + ((str[len]) - 48);
-    }
-    return (res);
-}
-
-int ft_get_width(char *str)
-{
-    int len;
-    int res;
-
-    len = ft_strlen(str);
-    res = 0;
-    while (len >= 0 && !ft_isdigit(str[len--]))
-    {
-        while (len >= 0 && ft_isdigit(str[len]))
-            len--;
-        if(str[len] != '.')
-        {
-            while(str[++len] && ft_isdigit(str[len]))
-               res *= res * 10 + ((str[len]) - 48);
-        }
-    }
-    return (res);
 }

@@ -10,22 +10,40 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
-# define LIBFT_H
+#ifndef ft_print_H
+# define FT_PRINTF_H
 
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <string.h>
+# include <stdarg.h>
 
 typedef struct s_flags
 {
-	int	precision;
-	int	zero;
-	int	left;
 	int	width;
 	int	plus;
 	int	space;
 	int	hash;
+	int	precision;
+	int	zero;
+	int	left;
 }		t_flags;
+
+void ft_printf(const char *string, ...)
+
+t_flags *ft_process_flags(char *str, char *accepted_flags)
+char	*ft_conv_wflags (char *str, t_flags flags)
+
+char    *ft_conv_char(char c, flags)
+char    *ft_conv_str(char *argument, char *flags)
+char	*ft_conv_addr(unsigned long int argument, char *flags)
+char	*ft_conv_num(int argument, char *flags)
+char	*ft_conv_unsigned(unsigned int argument, char *flags)
+char	*ft_conv_octal(unsigned int argument, char *flags, char type)
+
+char	*ft_utoa(unsigned int n)
+char	*ft_htoa(unsigned int n, char type)
+char	*ft_addr(unsigned long int *num)
 
 #endif

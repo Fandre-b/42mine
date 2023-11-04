@@ -13,29 +13,7 @@
 #include "ft_printf.h"
 #include "libft.h"
 
-void ft_printf(const char *string, ...)
-{
-    char    *flags;
-    char    *conv;
-    va_list args;
-
-    va_start(args, string);
-    while (*str)
-    {
-        ft_putchar(*str++);
-        if (*string++ == '%' && get_flags(&flags, &string) == 1)
-            conv = ft_call_convert(args, flags);
-        if (flags)
-            free (flags);
-        flags = NULL;
-    //Se conv for retornado aqui dar free
-        ft_putstr(conv);
-        free (conv);
-    }
-    va_end(args);
-}
-
-int get_flags(const char **string, char **flags)
+static int get_flags(const char **string, char **flags)
 {
     int  i;
     const char *str1;
@@ -62,7 +40,7 @@ int get_flags(const char **string, char **flags)
     return (1);
 }
 
-char    *ft_call_convert(va_list args, char *flags)
+static char    *ft_call_convert(va_list args, char *flags)
 {
     char    type;
     char    *conv;
@@ -85,6 +63,27 @@ char    *ft_call_convert(va_list args, char *flags)
     else
         ft_conv_str("", flags);
     return (conv);
+}
+
+void ft_printf(const char *string, ...)
+{
+    char    *flags;
+    char    *conv;
+    va_list args;
+
+    va_start(args, string);
+    while (*str)
+    {
+        ft_putchar(*str++);
+        if (*string++ == '%' && get_flags(&flags, &string) == 1)
+            conv = ft_call_convert(args, flags);
+        if (flags)
+            free (flags);
+        flags = NULL;
+        ft_putstr(conv);
+        free (conv);
+    }
+    va_end(args);
 }
 
 char    *ft_conv_char(char c, flags)
