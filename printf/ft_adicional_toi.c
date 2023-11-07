@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_printf.h"
 
 static size_t	ft_numsize(unsigned int n, unsigned int base)
 {
@@ -79,16 +80,16 @@ char	*ft_htoa(unsigned int n, char type)
         else
         {
             if (type == 'x')
-                str[--num_size] = (char)(n % base - 10 + 'a');
+                str[--num_size] = (char)(n % 16 - 10 + 'a');
             if (type == 'X')
-                str[--num_size] = (char)(n % base - 10 + 'A');
+                str[--num_size] = (char)(n % 16 - 10 + 'A');
         }
         n /= 16;
     }
 	return (str);
 }
 
-char	*ft_addr(unsigned long int *num)
+char	*ft_addr(unsigned long int num)
 {//if i can get reed of unsigned int or somwthing i can maybe remove this function
 	size_t	num_size;
 	char	*str;

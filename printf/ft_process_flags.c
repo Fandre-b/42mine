@@ -11,67 +11,73 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include "libft.h"
 
-static int ft_get_precision(char *str)
+static int ft_get_precision(char *str_flags)
 {
     int len;
     int res;
 
-    len = ft_strlen(str);
-    res = 0;
-    while (len >= 0 && str[len] != '.')
+    len = ft_strlen(str_flags);
+    res = -1;
+    while (len >= 0 && str_flags[len] != '.')
         len--;
-    if (str[len] != '.')
+    if (str_flags[len] == '.')
     {
-        while(str[++len] && ft_isdigit(str[len]))
-            res *= res * 10 + ((str[len]) - 48);
+        res = 0;
+        while(str_flags[++len] && ft_isdigit(str_flags[len]))
+            res = (res * 10 + (str_flags[len] - '0'));
     }
     return (res);
 }
 
-static int ft_get_width(char *str)
+static int ft_get_width(char *str_flags)
 {
     int len;
     int res;
 
-    len = ft_strlen(str);
+    len = ft_strlen(str_flags);
     res = 0;
-    while (len >= 0 && !ft_isdigit(str[len--]))
+    while (len >= 0)
     {
-        while (len >= 0 && ft_isdigit(str[len]))
+        while (len >= 0 && !ft_isdigit(str_flags[len]))
             len--;
-        if(str[len] != '.')
+        while (len >= 0 && ft_isdigit(str_flags[len]))
+            len--;
+        if(str_flags[len] && str_flags[len] != '.')
         {
-            while(str[++len] && ft_isdigit(str[len]))
-               res *= res * 10 + ((str[len]) - 48);
+            if(str_flags[len + 1] != '0')
+              break;
         }
     }
+    while(str_flags[++len] && ft_isdigit(str_flags[len]))
+      res = res * 10 + (str_flags[len] - '0');
     return (res);
 }
 
-t_flags *ft_process_flags(char *str, char *accepted_flags)
+t_flags ft_process_flags(char *str_flags, char *accepted_flags)
 {
-	t_flags	flags; //maybe allocate if fails to set values
+	t_flags	flags;
+    int i;
 
-    memset(&flags, 0, sizeof(t_flags)); //flags = {0};
-    flags.width = ft_get_width(str);
-    while(str[i]) 
+    memset(&flags, 0, sizeof(t_flags));
+    flags.width = ft_get_width(str_flags);
+    i = 0;
+    while(str_flags[i]) 
     {
-        if (strrchr(accepted_flags, str[i]))
+        if (strrchr(accepted_flags, str_flags[i]))
         {
-            if (str[i] == '0' && !ft_isdigit(str[i - 1]) && !strchr(str, '-') && !strchr(str, '.'))
+            if (str_flags[i] == '0' && !ft_isdigit(str_flags[i - 1]) && !strchr(str_flags, '-') && !strchr(str_flags, '.'))
                 flags.zero = 1;
-            if (str[i] == '-')
+            if (str_flags[i] == '-')
                 flags.left = 1;
-            if (str[i] == ' ' && !strchr(str, '+'))
+            if (str_flags[i] == ' ' && !strchr(str_flags, '+'))
                 flags.space = 1;
-            if (str[i] == '+')
+            if (str_flags[i] == '+')
                 flags.plus = 1;
-            if (str[i] == '#')
+            if (str_flags[i] == '#')
                 flags.hash = 1;
-            if (str[i] == '.')
-                flags.precision = ft_get_precision(str);
+            if (str_flags[i] == '.')
+                flags.precision = ft_get_precision(str_flags);
         }
     }
     return (flags);

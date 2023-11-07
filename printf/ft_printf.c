@@ -11,9 +11,31 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include "libft.h"
 
-static int get_flags(const char **string, char **flags)
+static char    *ft_call_specifier(char *str_flags, va_list args)
+{
+    char    type;
+    char    *str_formated;
+    
+    type = str_flags[ft_strlen(str_flags) - 1];
+    if (type == 'c')
+        str_formated = ft_conv_char(va_arg(args, int), str_flags);
+    else if (type == 's')
+        str_formated = ft_conv_str(va_arg(args, char *), str_flags);
+    else if (type == 'p')
+        str_formated = ft_conv_addr(va_arg(args, unsigned long int), str_flags);
+    else if (type == 'd' || type == 'i')
+        str_formated = ft_conv_num(va_arg(args, int), str_flags);
+    else if (type == 'u')
+        str_formated = ft_conv_unsigned(va_arg(args, unsigned int), str_flags);
+    else if (type == 'x' || type == 'X')
+        str_formated = ft_conv_octal(va_arg(args, unsigned int), str_flags, type);
+    else
+        str_formated = ft_conv_str("", str_flags);
+    return (str_formated);
+}
+
+static int ft_parse_flags(char **string, char **str_flags)
 {
     int  i;
     const char *str1;
@@ -21,76 +43,109 @@ static int get_flags(const char **string, char **flags)
 
     str1 = "cspdiuxX";
     str2 = "-0123456789.# +";
-    i = 0;
-    if (*string++ == '%')
+    if (*(++(*string)) == '%')
     {
-        ft_putchar(*string++);
-        return (0);
+        ft_putchar_fd(*((*string)++), 1);
+        *str_flags = strdup("");
+        return (1);
     }
+    i = 0;
     while (((*string)[i]) && strchr(str2, (*string)[i]))
-    {
-        if (strrchr(str1, (*string)[++i]))
-            i++;
-    }
-    *flags = (char *) malloc ((i + 1) * sizeof(char));
-    if (!*flags)
+      i++;
+    if (((*string)[i]) && strrchr(str1, (*string)[i]))
+      i++;
+    *str_flags = (char *) malloc ((i + 1) * sizeof(char));
+    if (!*str_flags)
       return(0);
-    strlcpy(*flags, *string, i);
+    ft_strlcpy(*str_flags, *string, i + 1);
     *string += i;
-    return (1);
+    return (0);
 }
 
-static char    *ft_call_convert(va_list args, char *flags)
+static int ft_parse_format(char *string, va_list args)
 {
-    char    type;
-    char    *conv;
-    
-    i = 0;
-    while (flags[i++])
-        type = flags[i];
-    if (type == 'c')
-        ft_conv_char(va_arg(args, char), flags);
-    if (type == 's')
-        ft_conv_str(va_arg(args, (char *)), flags);
-    if (type == 'p')
-        ft_conv_addr(va_arg(args, uintptr_t), flags);
-    if (type == 'd' || type == 'i')
-        ft_conv_num(va_arg(args, int), flags);
-    if (type == 'u')
-        ft_conv_unsigned(va_arg(args, unsigned int), flags);
-    if (type == 'x' || type == 'X')
-        ft_conv_octal(va_arg(args, unsigned int), flags, type);
-    else
-        ft_conv_str("", flags);
-    return (conv);
-}
+    char    *str_flags;
+    char    *str_formated;
+    int     count;
 
-void ft_printf(const char *string, ...)
-{
-    char    *flags;
-    char    *conv;
-    va_list args;
-
-    va_start(args, string);
-    while (*str)
+    count = 0;
+    while (*string)
     {
-        ft_putchar(*str++);
-        if (*string == '%' && get_flags(&flags, &string) == 1)
-            conv = ft_call_convert(args, flags);
-        if (flags)
-            free (flags);
-        flags = NULL;
-        ft_putstr(conv);
-        free (conv);
+        ft_putchar_fd(*string++, 1);
+        count++;
+        if (*string && *string == '%')
+        {
+            count += ft_parse_flags(&string, &str_flags);
+            if (!str_flags)
+                return (0);
+            str_formated = ft_call_specifier(str_flags, args);
+            if (!str_formated)
+                return(0);
+            count += ft_strlen(str_formated);
+            ft_putstr_fd(str_formated, 1);
+            free (str_flags);
+            free (str_formated);
+        }
     }
-    va_end(args);
+    return (count);
 }
 
-char    *ft_conv_char(char c, flags)
+int ft_printf(const char *format, ...)
 {
-	char		*argument[2];
+    va_list args;
+    char    *string;
+    int     check;
 
-	argument[0] = c;
-	argument[1] = '\0';
-    return(ft_conv_str(argument, flags););
+    if (!format)
+		return (0);
+    string = ft_strdup(format);
+	if (!string)
+		return (0);
+    va_start(args, format);
+        check = ft_parse_format(string, args);
+    va_end(args);
+    free(string);
+    return (check);
 }
+
+char    *ft_conv_char(char c, char *str_flags)
+{
+	char		*argument;
+    char        *res;
+
+    if (!c)
+        argument = ft_strdup("(null)");
+    else
+	    argument = (char *) malloc (2 * sizeof(char));
+    if (!argument) 
+        return (NULL);
+    argument[0] = (char) c;
+    argument[1] = '\0';
+    res = ft_conv_str(argument, str_flags);
+    free(argument);
+    return(res);
+}
+/*char    *ft_conv_char(char c, char *str_flags)
+{
+    char        *accepted_flags;
+    t_flags     pross_flags;
+	char        *res;
+    char *argument
+
+    accepted_flags = "-0.";
+    pross_flags = ft_process_flags (str_flags, accepted_flags);
+    char *argument = (char *) malloc (2 * sizeof(char));
+    if (!argument) 
+        return (NULL)
+    argument[0] = (char)c;
+    argument[1] = '\0';
+	if (pross_flags.precision >= 0)
+	{    	
+    	res = ft_substr(argument, 0, pross_flags.precision);
+    	pross_flags.precision = 0;
+	}
+	else
+		res = argument;
+    free (argument);
+    return(ft_conv_wflags(res, pross_flags));
+}*/
