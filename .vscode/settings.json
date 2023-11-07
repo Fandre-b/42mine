@@ -22,7 +22,8 @@
         "utility": "c",
         "chrono": "c",
         "functional": "c",
-        "memory": "c"
+        "memory": "c",
+        "*.a": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }
