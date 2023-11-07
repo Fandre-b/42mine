@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 10:52:25 by fandre-b          #+#    #+#             */
-/*   Updated: 2023/11/04 20:10:07 by fandre-b         ###   ########.fr       */
+/*   Updated: 2023/11/07 11:17:47 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ char    *ft_conv_str(char *argument, char *flags)
 	char        *res;
 
     accepted_flags = "-0.";
-    pross_flags = ft_process_flags (flags, accepted_flags);
     if (!argument)
-        argument = "(null)";
+        argument = "(nill)";
+    pross_flags = ft_process_flags (flags, accepted_flags);
 	if (pross_flags.precision >= 0)
 	{    	
     	res = ft_substr(argument, 0, pross_flags.precision);
@@ -38,9 +38,9 @@ char    *ft_conv_addr(unsigned long int argument, char *flags)
     t_flags     pross_flags;
 
     accepted_flags = "-0."; //add (nill) if 0
-    pross_flags = ft_process_flags (flags, accepted_flags);
     if (!argument)
         argument = 0;
+    pross_flags = ft_process_flags (flags, accepted_flags);
     if (pross_flags.precision >= 0)
 	    pross_flags.zero = 0;
     pross_flags.hash = 1;
@@ -53,9 +53,9 @@ char   *ft_conv_num(int argument, char *flags)
     t_flags pross_flags;
 
     accepted_flags = "-0. +";
-    pross_flags = ft_process_flags (flags, accepted_flags);
     if (!argument)
         argument = 0;
+    pross_flags = ft_process_flags (flags, accepted_flags);
     if (argument <= 0)
     {
         pross_flags.plus = 0;
@@ -72,9 +72,9 @@ char    *ft_conv_unsigned(unsigned int argument, char *flags)
     t_flags pross_flags;
 
     accepted_flags = "-0.";
-    pross_flags = ft_process_flags (flags, accepted_flags);
     if (!argument)
         argument = 0;
+    pross_flags = ft_process_flags (flags, accepted_flags);
     if (pross_flags.precision >= 0)
 	    pross_flags.zero = 0;
     return(ft_conv_wflags(ft_utoa(argument), pross_flags));
@@ -86,9 +86,9 @@ char    *ft_conv_octal(unsigned int argument, char *flags, char type)
     t_flags pross_flags;
 
     accepted_flags = "-0.#";
-    pross_flags = ft_process_flags (flags, accepted_flags);
     if (!argument)
         argument = 0;
+    pross_flags = ft_process_flags (flags, accepted_flags);
     if (pross_flags.precision >= 0)
 	    pross_flags.zero = 0;
     return(ft_conv_wflags(ft_htoa(argument, type), pross_flags));

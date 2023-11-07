@@ -23,7 +23,11 @@
         "chrono": "c",
         "functional": "c",
         "memory": "c",
-        "*.a": "c"
+        "*.a": "c",
+        "ft_printf.h": "c",
+        "stdarg.h": "c",
+        "string.h": "c",
+        "libftprintf.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

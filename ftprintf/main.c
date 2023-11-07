@@ -1,9 +1,10 @@
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include <string.h>
-# include <stdarg.h>
-# include <ctype.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdarg.h>
+#include <ctype.h> 
+#include "libftprintf.h" 
 
 /*
 int main(void)
@@ -16,7 +17,7 @@ int main(void)
   printf("%s\n %s", string, flags);
   return (i);
 }*/
-
+/*
 int main(int argc, char *argv[])
 {
   int i = 1234;
@@ -26,5 +27,13 @@ int main(int argc, char *argv[])
 
   p = argc;
   printf(argv[1], str);
+  return (0);
+}*/
+
+int main(void)
+{
+  int i;
+
+  i = ft_printf("teste %s", "str");
   return (0);
 }

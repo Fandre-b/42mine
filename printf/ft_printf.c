@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 17:48:22 by fandre-b          #+#    #+#             */
-/*   Updated: 2023/11/04 18:04:03 by fandre-b         ###   ########.fr       */
+/*   Updated: 2023/11/07 20:39:02 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,35 +54,34 @@ static int ft_parse_flags(char **string, char **str_flags)
       i++;
     if (((*string)[i]) && strrchr(str1, (*string)[i]))
       i++;
-    *str_flags = (char *) malloc ((i + 1) * sizeof(char));
+    *str_flags = (char *)malloc((i + 1) * sizeof(char));
     if (!*str_flags)
-      return(0);
+      return(-1);
     ft_strlcpy(*str_flags, *string, i + 1);
     *string += i;
     return (0);
 }
 
-static int ft_parse_format(char *string, va_list args)
+int ft_parse_format(char *str_format, va_list args)
 {
     char    *str_flags;
     char    *str_formated;
     int     count;
 
     count = 0;
-    while (*string)
+    while(*str_format)
     {
-        ft_putchar_fd(*string++, 1);
-        count++;
-        if (*string && *string == '%')
+        while (*str_format && *str_format != '%')
+        {            
+            ft_putchar_fd(*str_format++, 1);
+            count++;
+        }
+        if (*str_format && *str_format == '%')
         {
-            count += ft_parse_flags(&string, &str_flags);
-            if (!str_flags)
-                return (0);
+            count += ft_parse_flags(&str_format, &str_flags);
             str_formated = ft_call_specifier(str_flags, args);
-            if (!str_formated)
-                return(0);
-            count += ft_strlen(str_formated);
             ft_putstr_fd(str_formated, 1);
+            count += ft_strlen(str_formated);
             free (str_flags);
             free (str_formated);
         }
@@ -125,6 +124,8 @@ char    *ft_conv_char(char c, char *str_flags)
     free(argument);
     return(res);
 }
+
+
 /*char    *ft_conv_char(char c, char *str_flags)
 {
     char        *accepted_flags;
@@ -149,3 +150,4 @@ char    *ft_conv_char(char c, char *str_flags)
     free (argument);
     return(ft_conv_wflags(res, pross_flags));
 }*/
+
