@@ -6,14 +6,18 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 18:23:21 by fandre-b          #+#    #+#             */
-/*   Updated: 2023/10/24 12:53:15 by fandre-b         ###   ########.fr       */
+/*   Updated: 2023/11/09 09:56:26 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putstr_fd(char *s, int fd)
+int	ft_putstr_fd(char *s, int fd)
 {
+	int i;
+
+	i = -1;
 	if (s)
-		write (fd, s, ft_strlen(s));
+		i = write (fd, s, ft_strlen(s));
+	return i;
 }

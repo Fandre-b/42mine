@@ -6,7 +6,7 @@
 #    By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/15 17:32:38 by fandre-b          #+#    #+#              #
-#    Updated: 2023/10/23 17:44:30 by fandre-b         ###   ########.fr        #
+#    Updated: 2023/11/08 22:19:53 by fandre-b         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,9 @@ CC				= cc
 RM				= rm -f
 CFLAGS			= -Wall -Wextra -Werror -std=c99
 
+%.o: %.c
+				$(CC) $(CFLAGS) -c $< -o $@
+
 all:			$(NAME)
 
 $(NAME):		$(OBJS)
@@ -47,5 +50,7 @@ re:				fclean $(NAME)
 
 bonus:			$(OBJS) $(BONUS_OBJS)
 				ar rcs $(NAME) $(OBJS) $(BONUS_OBJS)
+				ranlib $(NAME)
+
 
 .PHONY:			all clean fclean re bonus

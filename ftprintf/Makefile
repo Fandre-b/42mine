@@ -6,62 +6,50 @@
 #    By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/05 11:10:00 by fandre-b          #+#    #+#              #
-#    Updated: 2023/11/07 21:01:29 by fandre-b         ###   ########.fr        #
+#    Updated: 2023/11/08 22:07:06 by fandre-b         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME				=	libftprintf.a
+NAME					=	libftprintf.a
 
-CC					=	gcc
-CFLAGS				=	-Wall -Wextra -Werror
-RM					=	rm -rf
+CC						=	gcc
+CFLAGS					=	-Wall -Wextra -Werror
+RM						=	rm -rf
 
-OBJ_DIR				=	obj
-LIBFT_DIR			=	libft
+SRCS					=	ft_printf.c
 
-SRCS				=	ft_printf
-					
-SRC_FILES 			=	$(addsuffix .c, $(SRC))
+INCLUDES				=	libft.a
 
-$(OBJ_DIR):			
-			mkdir	./$(OBJ_DIR)
+OBJ_DIR					=	./obj
+LIBFT_DIR				=	./libft
+INCLUDE_DIR				=	./includes
 
-OBJS				=	$(SRC_FILES:%.c=$(OBJ_DIR)/%.o)
+OBJS					=	$(SRCS:%.c=$(OBJ_DIR)/%.o)
 
-LIBFT_PATH			=	./$(LIBFT_DIR)/libft.a					
-./%.a: 				$(LIBFT_PATH)%.a
-			make -C $(LIBFT_PATH) all
-    		cp 		$< ./
+all:					$(NAME)
 
-$(LIBFT)/%.o:		$(LIBFT_PATH)
-			make -C $(LIBFT_PATH) all
-			cp 		$< $(DEST_DIR)
+$(OBJ_DIR)/%.o: 		%.c
+			mkdir -p 	$(OBJ_DIR)
+						$(CC) $(CFLAGS) -c $< -o $@
 
-$(OBJ_DIR)/%.o:		%.c
-					$(CC) $(CFLAGS) -c $< -o $@
+$(INCLUDE_DIR)/$(INCLUDES):
+			mkdir -p	$(INCLUDE_DIR)
+			make -C		$(LIBFT_DIR) all
+			mv			$(LIBFT_DIR)/$(INCLUDES) $(INCLUDE_DIR)
 
-all:				$(NAME)
-
-bonus:				all
-
-$(NAME):				$(LIBFT) $(OBJ_DIR) $(OBJS)
-				cp		$(LIBFT) $(NAME)
-				ar rcs 	$(NAME) $(OBJS)
-
-$(LIBFT):
-					make -C $(LIBFT_PATH) all
-
-$(OBJ_DIR):
-					mkdir -p $(OBJ_DIR)
+$(NAME):				$(INCLUDE_DIR)/$(INCLUDES) $(OBJS)
+			mkdir -p 	$(OBJ_DIR)
+			ar rcs		$(NAME) $(OBJS) $(INCLUDE_DIR)/$(INCLUDES)
 
 clean:
-					make -C $(LIBFT_PATH) clean
-					$(RM) $(OBJ_DIR)
+			make -C 	$(LIBFT_DIR) clean
+						$(RM) $(OBJ_DIR)
 
-fclean:				clean
-					make -C $(LIBFT_PATH) fclean
-					$(RM) $(NAME)
+fclean:					clean
+			make -C 	$(LIBFT_DIR) fclean
+						$(RM) $(NAME)
+						$(RM) $(INCLUDE_DIR)
 
-re:					fclean all
+re:						fclean all
 
-.PHONY:				all bonus clean fclean re libft
+.PHONY:					all bonus clean fclean re libft

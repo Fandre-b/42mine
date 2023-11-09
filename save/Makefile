@@ -1,49 +1,59 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
+#    MAKEFILE                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fandre-b <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/09/15 17:32:38 by fandre-b          #+#    #+#              #
-#    Updated: 2023/09/18 14:47:34 by fandre-b         ###   ########.fr        #
+#    Created: 2023/11/05 11:10:00 by fandre-b          #+#    #+#              #
+#    Updated: 2023/11/05 11:10:02 by fandre-b         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS			=	ft_isalnum.c ft_isprint.c ft_memcmp.c ft_putchar_fd.c ft_split.c \
-					ft_strlcat.c ft_strncmp.c ft_substr.c ft_atoi.c ft_isalpha.c \
-					ft_itoa.c ft_memcpy.c  ft_putendl_fd.c ft_strchr.c  ft_strlcpy.c \
-					ft_strnstr.c ft_tolower.c ft_bzero.c   ft_isascii.c ft_memccpy.c \
-					ft_memmove.c ft_putnbr_fd.c  ft_strdup.c  ft_strlen.c  ft_strrchr.c \
-					ft_toupper.c ft_calloc.c  ft_isdigit.c ft_memchr.c  ft_memset.c  \
-					ft_putstr_fd.c  ft_strjoin.c ft_strmapi.c ft_strtrim.c
-OBJS			= $(SRCS:.c=.o)
+NAME			=	libftprintf.a
 
-BONUS			=	ft_lstadd_back.c ft_lstadd_front.c ft_lstclear.c \
-					ft_lstdelone.c ft_lstiter.c ft_lstlast.c \
-					ft_lstmap.c ft_lstnew.c ft_lstsize.c
-BONUS_OBJS		= $(BONUS:.c=.o)
+CC				=	gcc
+CFLAGS			=	-Wall -Wextra -Werror
+AR				=	ar
+ARFLAGS 		=	rcs
+RM				=	rm -rf
 
-CC				= cc
-RM				= rm -f
-CFLAGS			= -Wall -Wextra -Werror -std=c99
+SRC				=	ft_printf ft_process_flags ft_conv_wflags \
+					ft_convert ft_adicional_toi\
+					
+SRCS 			=	$(addsuffix .c, $(SRC))
 
-NAME			= libft.a
+OBJ_DIR			=	obj
+OBJS			=	$(SRCS:%.c=$(OBJ_DIR)/%.o)
 
-all:			$(NAME)
+LIBFT_PATH		=	./libft
+LIBFT			=	$(LIBFT_PATH)/libft.a
 
-$(NAME):		$(OBJS)
-				ar rcs $(NAME) $(OBJS)
+$(OBJ_DIR)/%.o:		%.c
+					$(CC) $(CFLAGS) -c $< -o $@
+
+all:				$(NAME)
+
+bonus:				all
+
+$(NAME):			$(LIBFT) $(OBJ_DIR) $(OBJS)
+				cp	$(LIBFT) $(NAME)
+					$(AR) $(ARFLAGS) $(NAME) $(OBJS)
+
+$(LIBFT):
+					make -C $(LIBFT_PATH) all
+
+$(OBJ_DIR):
+					mkdir -p $(OBJ_DIR)
 
 clean:
-				$(RM) $(OBJS) $(BONUS_OBJS)
+					make -C $(LIBFT_PATH) clean
+					$(RM) $(OBJ_DIR)
 
-fclean:			clean
-				$(RM) $(NAME)
+fclean:				clean
+					make -C $(LIBFT_PATH) fclean
+					$(RM) $(NAME)
 
-re:				fclean $(NAME)
+re:					fclean all
 
-bonus:			$(OBJS) $(BONUS_OBJS)
-				ar rcs $(NAME) $(OBJS) $(BONUS_OBJS)
-
-.PHONY:			all clean fclean re bonus
+.PHONY:				all bonus clean fclean re libft

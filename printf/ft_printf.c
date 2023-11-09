@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 17:48:22 by fandre-b          #+#    #+#             */
-/*   Updated: 2023/11/07 20:39:02 by fandre-b         ###   ########.fr       */
+/*   Updated: 2023/11/09 10:05:06 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,9 @@ static int ft_parse_flags(char **string, char **str_flags)
     const char *str1;
     const char *str2;
 
+    i = 0;
     str1 = "cspdiuxX";
     str2 = "-0123456789.# +";
-    if (*(++(*string)) == '%')
-    {
-        ft_putchar_fd(*((*string)++), 1);
-        *str_flags = strdup("");
-        return (1);
-    }
-    i = 0;
     while (((*string)[i]) && strchr(str2, (*string)[i]))
       i++;
     if (((*string)[i]) && strrchr(str1, (*string)[i]))
@@ -71,19 +65,20 @@ int ft_parse_format(char *str_format, va_list args)
     count = 0;
     while(*str_format)
     {
-        while (*str_format && *str_format != '%')
-        {            
-            ft_putchar_fd(*str_format++, 1);
-            count++;
-        }
-        if (*str_format && *str_format == '%')
+        while (*str_format && *str_format != '%')         
+            count += ft_putchar_fd(*str_format++, 1);
+        if (*(++str_format) && *str_format == '%')
         {
-            count += ft_parse_flags(&str_format, &str_flags);
-            str_formated = ft_call_specifier(str_flags, args);
-            ft_putstr_fd(str_formated, 1);
-            count += ft_strlen(str_formated);
-            free (str_flags);
-            free (str_formated);
+            if (*str_format == '%')
+                count += ft_putchar_fd(*str_format++, 1);
+            else
+            {
+                count += ft_parse_flags(&str_format, &str_flags);
+                str_formated = ft_call_specifier(str_flags, args);
+                count += ft_putstr_fd(str_formated, 1);
+                free (str_flags);
+                free (str_formated);
+            }
         }
     }
     return (count);

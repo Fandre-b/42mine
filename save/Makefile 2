@@ -1,0 +1,66 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/11/05 11:10:00 by fandre-b          #+#    #+#              #
+#    Updated: 2023/11/08 18:08:02 by fandre-b         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+NAME					=	libftprintf.a
+
+CC						=	gcc
+CFLAGS					=	-Wall -Wextra -Werror
+RM						=	rm -rf
+
+OBJ_DIR					=	obj
+LIBFT_DIR				=	libft
+INCLUDE_DIR				=	./includes
+
+SRCS					=	ft_printf
+					
+SRC_FILES 				=	$(addsuffix .c, $(SRC))
+
+OBJS					=	$(SRC_FILES:%.c=$(OBJ_DIR)/%.o)
+
+LIBFT_PATH				=	./$(LIBFT_DIR)/libft.a	
+
+
+
+all:					$(NAME)
+
+$(INCLUDE_DIR)%.a:		$(LIBFT_PATH)%.a
+				mkdir	./$(INCLUDE_DIR)		
+				make -C	$(LIBFT_PATH) all
+    			cp 		$< ./
+
+$(OBJ_DIR):			
+			mkdir		./$(OBJ_DIR)
+
+$(OBJ_DIR)/%.o:			%.c
+						$(CC) $(CFLAGS) -c $< -o $@
+
+$(NAME):				$(LIBFT) $(OBJ_DIR) $(OBJS)
+				cp		$(NAME) $(LIBFT) $(OBJS)
+				ar rcs 	$(NAME) $(OBJS)
+
+$(LIBFT):
+						make -C $(LIBFT_PATH) all
+
+$(OBJ_DIR):
+						mkdir -p $(OBJ_DIR)
+
+clean:
+						make -C $(LIBFT_PATH) clean
+						$(RM) $(OBJ_DIR)
+
+fclean:				clean
+				make -C$(LIBFT_PATH) fclean
+					$(RM) $(NAME)
+
+re:					fclean all
+
+.PHONY:				all bonus clean fclean re libft
