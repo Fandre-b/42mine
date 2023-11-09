@@ -29,5 +29,11 @@
         "string.h": "c",
         "libftprintf.h": "c"
     },
-    "C_Cpp.errorSquiggles": "disabled"
+    "C_Cpp.errorSquiggles": "disabled",
+    "editor.fontSize": 12,
+    "editor.accessibilityPageSize": 8,
+    "editor.scrollbar.verticalScrollbarSize": 8,
+    "editor.minimap.scale": 1,
+    "editor.codeLensFontSize": 0,
+    "terminal.explorerKind": "external",
 }

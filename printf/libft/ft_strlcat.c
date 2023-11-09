@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 19:29:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2023/10/12 15:34:49 by fandre-b         ###   ########.fr       */
+/*   Updated: 2023/11/09 17:45:55 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,3 +31,4 @@ size_t	ft_strlcat(char *dest, const char *src, size_t size)
 	dest[dst_len + i] = '\0';
 	return (dst_len + src_len);
 }
+

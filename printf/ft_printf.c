@@ -6,14 +6,14 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 17:48:22 by fandre-b          #+#    #+#             */
-/*   Updated: 2023/11/09 10:05:06 by fandre-b         ###   ########.fr       */
+/*   Updated: 2023/11/09 16:32:02 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
 static char    *ft_call_specifier(char *str_flags, va_list args)
-{
+{//not tested
     char    type;
     char    *str_formated;
     
@@ -36,7 +36,7 @@ static char    *ft_call_specifier(char *str_flags, va_list args)
 }
 
 static int ft_parse_flags(char **string, char **str_flags)
-{
+{//tested
     int  i;
     const char *str1;
     const char *str2;
@@ -53,11 +53,12 @@ static int ft_parse_flags(char **string, char **str_flags)
       return(-1);
     ft_strlcpy(*str_flags, *string, i + 1);
     *string += i;
+    printf("rodou flags: %s \n", *str_flags);
     return (0);
 }
 
 int ft_parse_format(char *str_format, va_list args)
-{
+{//tested
     char    *str_flags;
     char    *str_formated;
     int     count;
@@ -67,9 +68,9 @@ int ft_parse_format(char *str_format, va_list args)
     {
         while (*str_format && *str_format != '%')         
             count += ft_putchar_fd(*str_format++, 1);
-        if (*(++str_format) && *str_format == '%')
+        if (*str_format && *str_format == '%')
         {
-            if (*str_format == '%')
+            if (*(++str_format) == '%')
                 count += ft_putchar_fd(*str_format++, 1);
             else
             {
@@ -80,12 +81,13 @@ int ft_parse_format(char *str_format, va_list args)
                 free (str_formated);
             }
         }
+    printf("rodou parse flags %s\n", str_formated);
     }
     return (count);
 }
 
 int ft_printf(const char *format, ...)
-{
+{//tested
     va_list args;
     char    *string;
     int     check;
@@ -103,46 +105,22 @@ int ft_printf(const char *format, ...)
 }
 
 char    *ft_conv_char(char c, char *str_flags)
-{
+{//not tested
 	char		*argument;
     char        *res;
 
     if (!c)
         argument = ft_strdup("(null)");
     else
-	    argument = (char *) malloc (2 * sizeof(char));
-    if (!argument) 
-        return (NULL);
-    argument[0] = (char) c;
-    argument[1] = '\0';
+    {    
+	    argument = (char *)malloc(2 * sizeof(char));
+        if (!argument) 
+            return (NULL);
+        argument[0] = (char) c;
+        argument[1] = '\0';
+    }
     res = ft_conv_str(argument, str_flags);
     free(argument);
     return(res);
 }
-
-
-/*char    *ft_conv_char(char c, char *str_flags)
-{
-    char        *accepted_flags;
-    t_flags     pross_flags;
-	char        *res;
-    char *argument
-
-    accepted_flags = "-0.";
-    pross_flags = ft_process_flags (str_flags, accepted_flags);
-    char *argument = (char *) malloc (2 * sizeof(char));
-    if (!argument) 
-        return (NULL)
-    argument[0] = (char)c;
-    argument[1] = '\0';
-	if (pross_flags.precision >= 0)
-	{    	
-    	res = ft_substr(argument, 0, pross_flags.precision);
-    	pross_flags.precision = 0;
-	}
-	else
-		res = argument;
-    free (argument);
-    return(ft_conv_wflags(res, pross_flags));
-}*/
 

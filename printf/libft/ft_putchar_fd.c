@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 18:23:21 by fandre-b          #+#    #+#             */
-/*   Updated: 2023/11/09 09:54:30 by fandre-b         ###   ########.fr       */
+/*   Updated: 2023/11/09 14:34:52 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,6 @@
 
 int	ft_putchar_fd(char c, int fd)
 {
-	return (write (fd, &c, 1));
+	write (fd, &c, 1);
+	return (1);
 }

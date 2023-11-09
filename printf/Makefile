@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    MAKEFILE                                           :+:      :+:    :+:    #
+#    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/05 11:10:00 by fandre-b          #+#    #+#              #
-#    Updated: 2023/11/08 22:36:19 by fandre-b         ###   ########.fr        #
+#    Updated: 2023/11/09 15:39:11 by fandre-b         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ CFLAGS					=	-Wall -Wextra -Werror
 RM						=	rm -rf
 
 SRCS					=	ft_printf.c ft_process_flags.c ft_conv_wflags.c \
-							ft_convert.c ft_adicional_toi.c\
+							ft_convert.c ft_adicional_toi.c teste.c \
 							
 INCLUDES				=	libft.a
 
@@ -29,9 +29,11 @@ OBJS					=	$(SRCS:%.c=$(OBJ_DIR)/%.o)
 
 all:					$(NAME)
 
+bonus:					all
+
 $(OBJ_DIR)/%.o: 		%.c
 			mkdir -p 	$(OBJ_DIR)
-						$(CC) $(CFLAGS) -I. -c $< -o $@
+						$(CC) $(CFLAGS) -c $< -o $@
 
 $(INCLUDE_DIR)/$(INCLUDES):
 			mkdir -p	$(INCLUDE_DIR)
@@ -54,4 +56,4 @@ fclean:					clean
 
 re:						fclean all
 
-.PHONY:					all bonus clean fclean re libft
+.PHONY:					all bonus clean fclean re
