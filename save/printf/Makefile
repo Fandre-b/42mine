@@ -6,7 +6,7 @@
 #    By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/05 11:10:00 by fandre-b          #+#    #+#              #
-#    Updated: 2023/11/08 22:07:06 by fandre-b         ###   ########.fr        #
+#    Updated: 2023/11/11 01:00:34 by fandre-b         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,9 @@ CC						=	gcc
 CFLAGS					=	-Wall -Wextra -Werror
 RM						=	rm -rf
 
-SRCS					=	ft_printf.c
-
+SRCS					=	ft_printf.c ft_process_flags.c ft_conv_wflags.c \
+							ft_convert.c ft_adicional_toi.c teste.c \
+							
 INCLUDES				=	libft.a
 
 OBJ_DIR					=	./obj
@@ -27,6 +28,8 @@ INCLUDE_DIR				=	./includes
 OBJS					=	$(SRCS:%.c=$(OBJ_DIR)/%.o)
 
 all:					$(NAME)
+
+bonus:					all
 
 $(OBJ_DIR)/%.o: 		%.c
 			mkdir -p 	$(OBJ_DIR)
@@ -38,8 +41,8 @@ $(INCLUDE_DIR)/$(INCLUDES):
 			mv			$(LIBFT_DIR)/$(INCLUDES) $(INCLUDE_DIR)
 
 $(NAME):				$(INCLUDE_DIR)/$(INCLUDES) $(OBJS)
-			mkdir -p 	$(OBJ_DIR)
-			ar rcs		$(NAME) $(OBJS) $(INCLUDE_DIR)/$(INCLUDES)
+			cp			$(INCLUDE_DIR)/$(INCLUDES) $(NAME)
+			ar rcs		$(NAME) $(OBJS)
 
 clean:
 			make -C 	$(LIBFT_DIR) clean
@@ -52,4 +55,4 @@ fclean:					clean
 
 re:						fclean all
 
-.PHONY:					all bonus clean fclean re libft
+.PHONY:					all bonus clean fclean re
