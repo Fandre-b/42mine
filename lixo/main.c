@@ -4,8 +4,15 @@
 #include <string.h>
 #include <stdarg.h>
 #include <ctype.h> 
-#include "libftprintf.h" 
-
+#include <stdbool.h> 
+#include <errno.h>
+#include <limits.h>
+#include <math.h>
+#include <stddef.h>
+#include <time.h>
+#include <wchar.h>
+#include <fcntl.h> 
+ 
 /*
 int main(void)
 {
