@@ -6,7 +6,7 @@
 #    By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/05 11:10:00 by fandre-b          #+#    #+#              #
-#    Updated: 2023/11/12 23:47:39 by fandre-b         ###   ########.fr        #
+#    Updated: 2023/11/11 11:16:03 by fandre-b         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,10 +19,17 @@ RM						=	rm -rf
 OBJ_DIR					=	./obj
 LIBFT_DIR				=	./libft
 
-SRCS					=	ft_printf.c ft_nbr_convert.c ft_converter.c ft_process_flags.c ft_print_wflags.c
+SRCS					=	ft_printf.c ft_nbr_convert.c ft_converter.c
 
-OBJS_PATH				=	$(SRCS:%.c=$(OBJ_DIR)/%.o)
+OBJS_PATH					=	$(SRCS:%.c=$(OBJ_DIR)/%.o)
 LIBFT_PATH				=	$(addprefix $(LIBFT_DIR), /libft.a)
+
+#questoes
+###inseri -I path nas flags para dizer onde estão headers do libft
+###tambem adicionei libft.h na bibilioteca, preciso disso?
+###este libft.h preciso de dizer o dir?
+###não é suposto só precisar do file libft.a?
+#quando compilamos o novo .a so estamos a colar obj na biblioteca antiga, right?
 
 all:					$(NAME)
 
