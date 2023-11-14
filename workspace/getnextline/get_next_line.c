@@ -68,6 +68,28 @@ char	*process_buffer(int fd, char *new_str, char *buffer)
 		str = get_next_line(fd);
 	printf("%s", str);
 	return (0);
-} */
+} 
+
+
+char *Find_or_create_node(t_list **head, int fd) 
+{
+    t_list *r_node;
+
+    if (!*head) 
+    {
+        r_node = Create_node(head, fd);
+        return (r_node);
+    } 
+    r_node = *head;
+    while (r_node->next) 
+    {
+        r_node = r_node->next;
+        if (r_node->fd == fd) 
+            return (r_node);
+    }
+
+    r_node = Create_node(head, fd);
+    return (r_node);
+}*/
 
 
