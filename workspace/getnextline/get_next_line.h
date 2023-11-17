@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 
 #ifndef BUFFER_SIZE
-# define BUFFER_SIZE 10
+# define BUFFER_SIZE 1
 #endif
 
 #ifndef BUFFER_SIZE
@@ -52,10 +52,12 @@ typedef struct s_temp_buffer
 //functions
 
 char  *ft_strnjoin(char *old_str, char *str_add, int size);
-char		*ft_strchr(char *str, char c);
-char	*ft_clearbuffer(char *str);
+int		ft_strchr_index(char *str, char c);
+char	*ft_clearbuffer(void *str, int size);
 char *get_next_line(int fd);
-char	*process_buffer(int fd, char *new_str, char *buffer);
+char	*ft_process_buffer(int fd, char *new_str, char *buffer);
+char    *ft_memshift(void *str, int n_shift);
+
 
 
 #endif

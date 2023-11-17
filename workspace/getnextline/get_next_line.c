@@ -15,36 +15,52 @@
 char *get_next_line(int fd)
 {
 	char 	*new_str;
-	static char	buffer[BUFFER_SIZE + 1];
+	static char buffer[BUFFER_SIZE + 1];
 
 	if (fd <= 0 || fd > 16 || read(fd, 0, 0) < 0)
 		return (NULL);
-	new_str = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	new_str = (char *)malloc(sizeof(char) * (1));
 	if (!new_str)
 		return (NULL);
-	new_str = ft_strchr(buffer, '\n');
-	process_buffer(fd, new_str, buffer);
+	new_str[0] = '\0';
+	new_str = ft_process_buffer(fd, new_str, buffer);
+	/* if (!new_str[0])
+    {
+        free(new_str);
+        return (NULL);
+    } */
 	return (new_str);
 }
 
-char	*process_buffer(int fd, char *new_str, char *buffer)
+char	*ft_process_buffer(int fd, char *new_str, char *buffer)
 {
 	int	count;
+	int	newline_pos;
 	
 	count = 1;
-	while (count > 0)
+	while (count > 0 || buffer[0] != '\0')
 	{	
-		ft_clearbuffer(buffer);
-		count = read (fd, buffer, BUFFER_SIZE);
-		if (count == 0)
-			ft_strnjoin(new_str, "\n", 1);
-		else if (ft_strchr(buffer, '\n'))
+		buffer[BUFFER_SIZE] = '\0';
+		newline_pos = ft_strchr_index(buffer, '\n');
+		if (newline_pos >= 0)
 		{
-			ft_strnjoin(new_str, buffer, ft_strchr(buffer, '\n') - buffer); 
+			new_str = ft_strnjoin(new_str, buffer, newline_pos + 1);
+			buffer = ft_memshift(buffer, newline_pos + 1);
 			break ;
 		}
-		else
-			ft_strnjoin(new_str, buffer, count);
+		new_str = ft_strnjoin(new_str, buffer, BUFFER_SIZE);
+		buffer = ft_clearbuffer(buffer, BUFFER_SIZE + 1);
+		count = read (fd, buffer, BUFFER_SIZE);
+	}
+	/* if (count == 0 && !new_str[0])
+	{
+		free(buffer);
+		return (NULL);
+	} */
+	if (!new_str[0] || count == -1)
+	{
+		free(new_str);
+		return (NULL);
 	}
 	return (new_str);
 }
@@ -56,21 +72,34 @@ char	*process_buffer(int fd, char *new_str, char *buffer)
 
 	fd = open("Loren.txt", O_RDONLY);
 	str = get_next_line(fd);
-	printf("%s", str);
-		str = get_next_line(fd);
-	printf("%s", str);
-		str = get_next_line(fd);
-	printf("%s", str);
-		str = get_next_line(fd);
-	printf("%s", str);
-		str = get_next_line(fd);
-	printf("%s", str);
-		str = get_next_line(fd);
-	printf("%s", str);
+	printf("//////////\n");
+	free(str);
+	str = get_next_line(fd);
+	printf("//////////\n");
+	free(str);
+	str = get_next_line(fd);
+	printf("//////////\n");
+	free(str);
+	str = get_next_line(fd);
+	printf("//////////\n");
+	free(str);
+	str = get_next_line(fd);
+	printf("//////////\n");
+	free(str);
+	str = get_next_line(fd);
+	printf("//////////\n");
+	free(str);
+	str = get_next_line(fd);
+	printf("//////////\n");
+	free(str);
+	str = get_next_line(fd);
+	printf("//////////\n");
+	free(str);
 	return (0);
-} 
+}  */
 
 
+/*
 char *Find_or_create_node(t_list **head, int fd) 
 {
     t_list *r_node;
