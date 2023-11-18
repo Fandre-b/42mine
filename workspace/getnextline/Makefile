@@ -16,7 +16,7 @@ CC = cc
 FLAGS = -Wall -Wextra -Werror -D BUFFER_SIZE=n
 RM = rm -rf
 
-SRCS = get_next_line.c get_next_line_utils.c
+SRCS = get_next_line.c get_next_line_utils.c 
 
 OBJ_DIR = ./obg
 

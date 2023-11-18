@@ -17,9 +17,14 @@ char  *ft_strnjoin(char *old_str, char *str_add, int size)
     char    *new_str;
     int        i;
 
+    if (!str_add[0])
+        return (old_str);
     i = 0;
-    while (old_str[i])
-        i++;
+    if (old_str)
+    {
+        while (old_str[i])
+            i++;
+    }
     new_str = (char *)malloc(sizeof(char) * (i + size + 1));
     if (!new_str)
         return (NULL);
@@ -28,7 +33,8 @@ char  *ft_strnjoin(char *old_str, char *str_add, int size)
         new_str[i + size] = str_add[size];
     while (--i >= 0)
         new_str[i] = old_str[i];
-    free(old_str);
+    if (old_str)
+        free(old_str);
     return (new_str);
 }
 
@@ -37,6 +43,8 @@ int		ft_strchr_index(char *str, char c)
     int		i;
 
     i = 0;
+    if (!str)
+        return (-1);
     while (str[i] && str[i] != c)
         i++;
     if (str[i] == '\0')
@@ -62,7 +70,7 @@ char	*ft_clearbuffer(void *str, int size)
 
 	char_str = (char *) str;
 	while (size > 0)
-		char_str[--size] = (char) 0;
+		char_str[--size] = (char) '\0';
 	return (str);
 }
 
@@ -72,13 +80,15 @@ char    *ft_memshift(void *str, int n_shift)
     char *shifted_str;
 
     i = 0;
+    if (n_shift == 0)
+        return (str);
     shifted_str = (char *) str;
     while (shifted_str[i + n_shift])
     {
         shifted_str[i] = shifted_str[n_shift + i];
         i++;
     }
-    while (i !=  (BUFFER_SIZE + 1))
+    while (i != (BUFFER_SIZE + 1))
         shifted_str[i++] = '\0';
     return (shifted_str);
 }
