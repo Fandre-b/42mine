@@ -55,7 +55,7 @@ char  *ft_strnjoin(char *old_str, char *str_add, int size);
 int		ft_strchr_index(char *str, char c);
 char	*ft_clearbuffer(void *str, int size);
 char *get_next_line(int fd);
-//char	*ft_process_buffer(int fd, char *new_str, char *buffer);
+char	*ft_process_buffer(int fd, char *new_str, char *buffer);
 char    *ft_memshift(void *str, int n_shift);
 
 #endif
