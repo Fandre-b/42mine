@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 14:08:40 by fandre-b          #+#    #+#             */
-/*   Updated: 2023/11/20 15:20:35 by fandre-b         ###   ########.fr       */
+/*   Updated: 2023/12/04 21:03:53 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ char	*get_next_line(int fd)
 	static char	buffer[FOPEN_MAX][BUFFER_SIZE + 1];
 
 	if (fd < 0 || fd > FOPEN_MAX || read(fd, 0, 0) < 0)
+	{
+		ft_clearbuffer(buffer[fd], BUFFER_SIZE + 1);
 		return (NULL);
+	}
 	new_str = NULL;
 	new_str = ft_process_buffer(fd, new_str, buffer[fd]);
 	return (new_str);
@@ -30,10 +33,10 @@ char	*ft_process_buffer(int fd, char *new_str, char *buffer)
 	int	newline_pos;
 
 	count = 1;
-	while (count > 0)
+	while (count > 0 || buffer[0] != '\0')
 	{
 		newline_pos = ft_strchr_index(buffer, '\n');
-		if (newline_pos >= 0)
+		if (newline_pos >= 0 && buffer[0] != '\0')
 		{
 			new_str = ft_strnjoin(new_str, buffer, newline_pos + 1);
 			buffer = ft_memshift(buffer, newline_pos + 1);
@@ -46,6 +49,8 @@ char	*ft_process_buffer(int fd, char *new_str, char *buffer)
 	if (count == -1 || (count == 0 && !new_str))
 	{
 		ft_clearbuffer(buffer, BUFFER_SIZE + 1);
+		if (new_str)
+			free(new_str);
 		return (NULL);
 	}
 	return (new_str);

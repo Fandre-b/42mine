@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 14:08:40 by fandre-b          #+#    #+#             */
-/*   Updated: 2023/11/20 14:13:14 by fandre-b         ###   ########.fr       */
+/*   Updated: 2023/12/04 20:51:15 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,11 @@ char *get_next_line(int fd)
 	char 	*new_str;
 	static char buffer[BUFFER_SIZE + 1];
 
-	if (fd < 0 || fd > 16 || read(fd, 0, 0) < 0)
+	if (fd < 0 || fd > FOPEN_MAX || read(fd, 0, 0) < 0)
+	{
+		ft_clearbuffer(buffer, BUFFER_SIZE + 1);
 		return (NULL);
+	}
 	new_str = NULL;
 	new_str = ft_process_buffer(fd, new_str, buffer);
 	if (!new_str)
