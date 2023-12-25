@@ -4,6 +4,7 @@ cat /proc/cpuinfo | grep 'cpu cores' | wc -l | awk '{printf "ola gay %10s\n", $1
 
  lscpu | egrep 'Socket\(s\)|Core\(s\) per socket'
  /proc/cpuinfo grep "cpu cores"
+ lscpu | grep 'Core(s) per socket' | awk '{print $NF}'
 
 
 
@@ -32,3 +33,6 @@ who -b
 
 #id of vmstat
 vmstat | awk 'NR==1 {for (i=1; i<=NF; i++) if ($i=="id") col=i} NR==3 {print $col}'
+awk '{counter++; print $0} END {print "Number of lines: " counter}' filename
+lsblk | awk '/LVM/ {print "yes"; exit} END {print "no"}'
+lsblk | awk '/LVM/ {print "Found LVM " ++count}'
