@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 14:08:40 by fandre-b          #+#    #+#             */
-/*   Updated: 2023/12/04 21:03:53 by marvin           ###   ########.fr       */
+/*   Updated: 2024/01/26 01:41:41 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*get_next_line(int fd)
 	static char	buffer[FOPEN_MAX][BUFFER_SIZE + 1];
 
 	if (fd < 0 || fd > FOPEN_MAX || read(fd, 0, 0) < 0)
-	{
+	{	
 		ft_clearbuffer(buffer[fd], BUFFER_SIZE + 1);
 		return (NULL);
 	}
