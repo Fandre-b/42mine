@@ -1,14 +1,16 @@
-#include <limits.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_swap.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/16 22:25:51 by fandre-b          #+#    #+#             */
+/*   Updated: 2024/02/17 12:29:37 by fandre-b         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-typedef struct s_stack
-{
-	int				value;
-	struct s_stack	*next;
-	struct s_stack	*prev;
-} 					t_stack;
+#include "push_swap.h"
 
 t_stack	*ft_lstnew(int nbr)
 {
@@ -78,6 +80,7 @@ void	ft_lstdel(t_stack *lst)
 		temp = lst;
 		lst = lst->next;
 		free(temp);
+		temp = NULL;
 	}
 	return ;
 }
@@ -99,7 +102,7 @@ long	ft_atoi(char *str, int *error)
 		*error = 1;
 	while(*str && *str >= '0' && *str <= '9')
 		nbr = nbr * 10 + sign * (*str++ - '0');
-	if(*str && (*str < '0' || *str > '9') || nbr > INT_MAX || nbr < INT_MIN)
+	if(*str && ((*str < '0' || *str > '9') || nbr > INT_MAX || nbr < INT_MIN))
 		*error = 1;
 	return(nbr);
 }
@@ -158,6 +161,8 @@ void	ft_checkrepeated(t_stack **binary_tree, t_stack *node, int *error)
 	}
 	if (temp && node->value == temp->value && temp != node)
 		*error = 1;
+	if((temp && node->value == temp->value && temp != node) || temp == node)
+		free(node);
 	return;
 }
 
@@ -183,6 +188,7 @@ t_stack *ft_extract_stack(int argc, char **argv, int *error)
 		ft_lstadd_back(&stack_a, node);
 //		ft_push(&stack_a, node);
 	}
+	free(binary_tree);
 	return (stack_a);
 }
 
@@ -237,6 +243,6 @@ int	main(int argc, char **argv)
 	return(0);
 }
 
-//mechanical turk
+//mechanical turk/best neighbour
 
 //quicksort, heapsort, or merge sort

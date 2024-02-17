@@ -1,5 +1,4 @@
 #include "push_swap.h"
-#include <stdlib.h>
 
 /*Bubble Sort
 Selection Sort
@@ -13,30 +12,23 @@ Radix Sort
 (sa, sb, ss, pa, pb, ra, rb, rr, rra, rrb, rrr).*/
 //sacar 3 4 5 11
 
-typedef struct s_stack
-{
-	int				value;
-	struct s_stack	*next;
-	struct s_stack	*prev;
-} 					t_stack;
-
 void	ft_swap(t_stack **stack)
 {
 	t_stack *first;
     t_stack *second;
 
-    if (*stack_a && (*stack_a)->next)
+    if (*stack && (*stack)->next)
     {
 		//checks for existence of nodes in the stack
-        first = *stack_a;
-        second = (*stack_a)->next;
+        first = *stack;
+        second = (*stack)->next;
 		if (second->next) //lida com 3th elem se existir
 			second->next->prev = first;
 		second->prev = first->prev;
 		first->next = second->next;
 		second->next = first;
 		first->prev = second;
-		*stack_a = second;
+		*stack = second;
 		second = first;
     }
 	return ;
@@ -87,7 +79,7 @@ void	ft_push_top(t_stack **stack_from, t_stack **stack_to)
 
 void    pa(t_stack **stack_a, t_stack **stack_b)
 {
-	ft_push_top(stack_b, stack_b);
+	ft_push_top(stack_a, stack_b);
 	return ;
 }
 
@@ -154,13 +146,13 @@ void	ft_rev_rotate(t_stack **stack)
 	return ;
 }
 
-void    rra(t_stack **stack_a, t_stack **stack_b)
+void    rra(t_stack **stack_a)
 {
 	ft_rev_rotate(stack_a);
 	return ;
 }
 
-void    rrb(t_stack **stack_a, t_stack **stack_b)
+void    rrb(t_stack **stack_b)
 {
 	ft_rev_rotate(stack_b);
 	return ;
