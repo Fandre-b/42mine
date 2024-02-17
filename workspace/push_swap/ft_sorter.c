@@ -9,7 +9,7 @@
 /*   Updated: 2024/02/11 17:47:30 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
+//
 #include "push_swap.h"
 
 void in_order_traversal(t_stack **stack_a, t_stack *binary_tree)
@@ -26,7 +26,7 @@ void in_order_traversal(t_stack **stack_a, t_stack *binary_tree)
         ft_rotate(stack_a);
     ft_push_top(stack_a, &stack_b);
     in_order_traversal(stack_a, binary_tree->prev);  // visita arvore à esquerda
-    return ;
+    return;
 }
 
 //enquanto addiciono nos à BST faço push
