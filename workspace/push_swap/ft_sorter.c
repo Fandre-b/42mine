@@ -9,7 +9,7 @@
 /*   Updated: 2024/02/11 17:47:30 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-//
+
 #include "push_swap.h"
 
 void in_order_traversal(t_stack **stack_a, t_stack *binary_tree)
