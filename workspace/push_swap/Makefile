@@ -31,6 +31,10 @@ $(NAME):		$(OBJS)
 
 teste:			$(NAME)
 				$(CC) $(CFLAGS) $(OBJS) -o $(TEST_NAME)
+			
+debug:			$(NAME)
+				@gcc -g $(CFLAGS) -o $(TEST_NAME) $(OBJS)
+				@gdb ./$(TEST_NAME)
 
 clean:
 				$(RM) $(OBJS) $(BONUS_OBJS)

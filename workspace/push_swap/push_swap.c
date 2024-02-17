@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/16 22:25:51 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/02/17 12:29:37 by fandre-b         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "push_swap.h"
 
 t_stack	*ft_lstnew(int nbr)
@@ -24,27 +12,6 @@ t_stack	*ft_lstnew(int nbr)
 	current->prev = NULL;
 	return (current);
 }
-
-void	ft_push(t_stack **lst, t_stack *new)
-{
-	t_stack *first;
-
-	if (*lst)
-	{
-		first = *lst;
-		*lst = new;
-		first->prev = new;
-		new->next = first;
-		if (first->prev)
-			new->prev = first->prev;
-		else
-			new->prev = first;
-	}
-	else
-		*lst = new;
-	return ;
-}
-
 
 void	ft_lstadd_back(t_stack **lst, t_stack *new)
 {
@@ -80,8 +47,18 @@ void	ft_lstdel(t_stack *lst)
 		temp = lst;
 		lst = lst->next;
 		free(temp);
-		temp = NULL;
 	}
+	return ;
+}
+
+void free_tree(t_stack *node)
+{
+	if (!node) // Base case: if the node is null, return
+		return;
+	free_tree(node->prev); // Recursively delete left subtree
+	free_tree(node->next); // Recursively delete right subtree
+	free(node); // Delete this node
+	node = NULL; // Set the pointer to NULL to avoid dangling pointers
 	return ;
 }
 
@@ -102,40 +79,10 @@ long	ft_atoi(char *str, int *error)
 		*error = 1;
 	while(*str && *str >= '0' && *str <= '9')
 		nbr = nbr * 10 + sign * (*str++ - '0');
-	if(*str && ((*str < '0' || *str > '9') || nbr > INT_MAX || nbr < INT_MIN))
+	if(*str && (*str < '0' || *str > '9' || nbr > INT_MAX || nbr < INT_MIN))
 		*error = 1;
 	return(nbr);
 }
-
-/*void	ft_checkrepeated(t_stack **binary_tree, t_stack *node, int *error)
-{
-	t_stack	*temp;
-
-	temp = *binary_tree;
-	if (!temp)
-		*binary_tree = node;
-	while (temp && temp != node)
-	{
-		if(node->value > temp->value)
-		{
-			if(!temp->next)
-				temp->next = node;
-			temp = temp->next;
-		}
-		else if(node->value < temp->value)
-		{
-			if (!temp->prev)
-				temp->prev = node;
-			temp = temp->prev;
-		}
-		else
-			break;
-	}
-	if (temp && node->value == temp->value && temp != node)
-		*error = 1;
-	return ;
-}*/
-
 
 void	ft_checkrepeated(t_stack **binary_tree, t_stack *node, int *error)
 {
@@ -161,8 +108,8 @@ void	ft_checkrepeated(t_stack **binary_tree, t_stack *node, int *error)
 	}
 	if (temp && node->value == temp->value && temp != node)
 		*error = 1;
-	if((temp && node->value == temp->value && temp != node) || temp == node)
-		free(node);
+	if (temp && (node->value == temp->value && temp != node))
+		free(node); //node nao foi add
 	return;
 }
 
@@ -188,7 +135,7 @@ t_stack *ft_extract_stack(int argc, char **argv, int *error)
 		ft_lstadd_back(&stack_a, node);
 //		ft_push(&stack_a, node);
 	}
-	free(binary_tree);
+	free_tree(binary_tree);
 	return (stack_a);
 }
 
@@ -243,6 +190,6 @@ int	main(int argc, char **argv)
 	return(0);
 }
 
-//mechanical turk/best neighbour
+//mechanical turk
 
 //quicksort, heapsort, or merge sort

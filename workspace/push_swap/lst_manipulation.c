@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lst_manipulation.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/17 20:47:59 by fandre-b          #+#    #+#             */
+/*   Updated: 2024/02/17 20:47:59 by fandre-b         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 /*Bubble Sort
@@ -31,6 +43,26 @@ void	ft_swap(t_stack **stack)
 		*stack = second;
 		second = first;
     }
+	return ;
+}
+
+void	ft_push(t_stack **lst, t_stack *new)
+{
+	t_stack *first;
+
+	if (*lst)
+	{
+		first = *lst;
+		*lst = new;
+		first->prev = new;
+		new->next = first;
+		if (first->prev)
+			new->prev = first->prev;
+		else
+			new->prev = first;
+	}
+	else
+		*lst = new;
 	return ;
 }
 
