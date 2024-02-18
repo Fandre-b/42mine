@@ -26,6 +26,8 @@ void in_order_traversal(t_stack **stack_a, t_stack *binary_tree)
         ft_rotate(stack_a);
     ft_push_top(stack_a, &stack_b);
     in_order_traversal(stack_a, binary_tree->prev);  // visita arvore à esquerda
+    *stack_a = stack_b;
+    stack_b = NULL;
     return;
 }
 

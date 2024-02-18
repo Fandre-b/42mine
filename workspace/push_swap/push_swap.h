@@ -45,7 +45,7 @@ void	ft_lstadd_back(t_stack **lst, t_stack *new);
 void	ft_lstdel(t_stack *lst);
 long	ft_atoi(char *str, int *error);
 void	ft_checkrepeated(t_stack **binary_tree, t_stack *node, int *error);
-t_stack *ft_extract_stack(int argc, char **argv, int *error);
+t_stack *ft_extract_stack(int argc, char **argv, t_stack **binary_tree, int *error);
 void	ft_putnbr(int nbr);
 void	ft_lstprint(t_stack *lst);
 //int	push_swap(int argc, char **argv);
