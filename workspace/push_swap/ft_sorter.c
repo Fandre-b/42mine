@@ -12,23 +12,29 @@
 
 #include "push_swap.h"
 
-void in_order_traversal(t_stack **stack_a, t_stack *binary_tree)
+void    in_order_traversal(t_stack **stack_a, t_stack **stack_b, t_stack *binary_tree)
+{
+    if (!binary_tree || !stack_a)
+        return ;
+    in_order_traversal(stack_a, stack_b, binary_tree->prev);  // começa pela arvore à direita (biggest value)
+    //poderia adicionar aqui uma forma de detectar posicao para rr ou rrr
+    //corre ix e dps da rr ou rrr ix ou total-ix
+    while(*stack_a && (*stack_a)->value != binary_tree->value)
+        ra(stack_a);
+    pa(stack_a, stack_b);
+    in_order_traversal(stack_a, stack_b, binary_tree->next);  // visita arvore à esquerda
+    return ;
+}
+
+void    ft_sorter(t_stack **stack_a, t_stack *binary_tree)
 {
     t_stack *stack_b;
 
     stack_b = NULL;
-    if (!binary_tree || !stack_a)
-        return;
-    in_order_traversal(stack_a, binary_tree->next);  // começa pela arvore à direita (biggest value)
-    //processamento de cada nó
-    //poderia adicionar aqui uma forma de detectar posicao para rr ou rrr
-    while(*stack_a && (*stack_a)->value != binary_tree->value)
-        ft_rotate(stack_a);
-    ft_push_top(stack_a, &stack_b);
-    in_order_traversal(stack_a, binary_tree->prev);  // visita arvore à esquerda
-    *stack_a = stack_b;
-    stack_b = NULL;
-    return;
+    in_order_traversal(stack_a, &stack_b, binary_tree);
+    while (stack_b) 
+        pb(stack_a, &stack_b);
+    if (stack_b)
+        ft_lstdel(stack_b);
+    return ;
 }
-
-//enquanto addiciono nos à BST faço push

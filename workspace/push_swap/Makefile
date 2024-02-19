@@ -13,7 +13,7 @@
 NAME			= push_swap.a
 TEST_NAME		= push_swap
 
-RANDOM_NUMBERS := $(shell shuf -i 1-100 -n 10)
+RANDOM_NUMBERS := $(shell shuf -i 1-500 -n 100)
 
 SRCS			= push_swap.c lst_manipulation.c ft_sorter.c
 
@@ -34,15 +34,15 @@ all:			$(NAME)
 $(NAME):		$(OBJS)
 				@ar rcs $(NAME) $(OBJS)
 
-teste:			$(NAME)
+test:			$(NAME)
 				$(CC) $(CFLAGS) $(OBJS) -o $(TEST_NAME)
-#				$(VAL) ./push_swap $(RANDOM_NUMBERS) > output.txt 2>&1
-				$(VAL) ./push_swap 42 1 36 37 52 60 70 57 61 86 > output.txt 2>&1
-				./push_swap 42 1 36 37 52 60 70 57 61 86
-				@grep -B 2 "HEAP SUMMARY" output.txt | awk 'NR==1'
+				@echo "Number of movements: $$(./push_swap $(RANDOM_NUMBERS) | wc -l)"
+				$(VAL) ./push_swap $(RANDOM_NUMBERS) > output.txt 2>&1
+#				$(VAL) ./push_swap 42 1 36 37 52 60 70 57 61 86 > output.txt 2>&1
+#				@grep -B 2 "HEAP SUMMARY" output.txt | awk 'NR==1'
 				@grep "total heap usage" output.txt
 				@grep -A 2 "total heap usage" output.txt | tail -n 1
-				$(RM) output.txt
+				$(RM) output.txt $(TEST_NAME)
 				
 			
 debug:			$(NAME)
@@ -51,11 +51,10 @@ debug:			$(NAME)
 
 clean:
 				$(RM) $(OBJS) $(BONUS_OBJS)
-				@echo "created"
 
 fclean:			clean
 				$(RM) $(NAME)
 
 re:				fclean $(NAME)
 
-.PHONY:			all teste debug clean fclean re
+.PHONY:			all test debug clean fclean re

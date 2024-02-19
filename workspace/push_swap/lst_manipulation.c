@@ -54,15 +54,19 @@ void	ft_push(t_stack **lst, t_stack *new)
 	{
 		first = *lst;
 		*lst = new;
-		first->prev = new;
-		new->next = first;
-		if (first->prev)
-			new->prev = first->prev;
-		else
-			new->prev = first;
+		(*lst)->next = first; //aponta next pra ex headed
+		if (first->prev) //verifica se existe prev no ex head
+			(*lst)->prev = first->prev;
+		else //senao prev aponta para o ex headed
+			(*lst)->prev = first;
+		first->prev = new; //redefine o prev do ex header
 	}
 	else
+	{
 		*lst = new;
+		(*lst)->prev = NULL;
+		(*lst)->next = NULL;
+	}
 	return ;
 }
 
@@ -97,10 +101,10 @@ void	ft_push_top(t_stack **stack_from, t_stack **stack_to)
 		if (first->next) //check se ha 2 elem
 		{
 			*stack_from = first->next;
-			if (first->prev) //check se ha  mais que 2 elem
-				first->next->prev = first->prev;
+			if (first->prev && first->prev != first->next) //check se ha mais que 2 elem
+				(*stack_from)->prev = first->prev;
 			else //aponta o prev, se for unico aponta null
-				first->next->prev = NULL;
+				(*stack_from)->prev = NULL;
 		}
 		else
 			*stack_from = NULL;
@@ -112,12 +116,18 @@ void	ft_push_top(t_stack **stack_from, t_stack **stack_to)
 void    pa(t_stack **stack_a, t_stack **stack_b)
 {
 	ft_push_top(stack_a, stack_b);
+	write(1, "pa\n", 3);
+	//(*stack_b)->size++;
+	//(*stack_a)->size++;
 	return ;
 }
 
 void    pb(t_stack **stack_a, t_stack **stack_b)
 {
-	ft_push_top(stack_a, stack_b);
+	ft_push_top(stack_b, stack_a);
+	//(*stack_b)->size--;
+	//(*stack_a)->size++;
+	write(1, "pb\n", 3);
 	return ;
 }
 
@@ -132,10 +142,9 @@ void	ft_rotate(t_stack **stack)
 	{
 		first = *stack;
 		last = (*stack)->prev;
-		*stack = first ->next; //update the header list
-		first->next = last->next;
+		*stack = first->next; //update the header list
 		last->next = first;
-		first->prev = last;
+		first->next = NULL;
 	}
 	return ;
 }
@@ -143,6 +152,7 @@ void	ft_rotate(t_stack **stack)
 void    ra(t_stack **stack_a)
 {
 	ft_rotate(stack_a);
+	write(1, "ra\n", 3);
 	return ;
 }
 

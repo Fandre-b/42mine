@@ -29,6 +29,7 @@ void	ft_swap(t_stack **stack);
 void    sa(t_stack **stack_a);
 void    ss(t_stack **stack_a, t_stack **stack_b);
 void	ft_push_top(t_stack **stack_from, t_stack **stack_to);
+void    pa(t_stack **stack_a, t_stack **stack_b);
 void    pb(t_stack **stack_a, t_stack **stack_b);
 void	ft_rotate(t_stack **stack);
 void    ra(t_stack **stack_a);
@@ -45,11 +46,12 @@ void	ft_lstadd_back(t_stack **lst, t_stack *new);
 void	ft_lstdel(t_stack *lst);
 long	ft_atoi(char *str, int *error);
 void	ft_checkrepeated(t_stack **binary_tree, t_stack *node, int *error);
-t_stack *ft_extract_stack(int argc, char **argv, t_stack **binary_tree, int *error);
+t_stack *ft_extract_stack(int argc, char **argv, int *error);
 void	ft_putnbr(int nbr);
 void	ft_lstprint(t_stack *lst);
 //int	push_swap(int argc, char **argv);
 
-void in_order_traversal(t_stack **stack_a, t_stack *binary_tree);
+void    in_order_traversal(t_stack **stack_a, t_stack **stack_b, t_stack *binary_tree);
+void    ft_sorter(t_stack **stack_a, t_stack *binary_tree);
 
 #endif

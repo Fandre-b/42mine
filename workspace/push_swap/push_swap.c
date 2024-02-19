@@ -113,7 +113,7 @@ void	ft_checkrepeated(t_stack **binary_tree, t_stack *node, int *error)
 	return;
 }
 
-t_stack *ft_extract_stack(int argc, char **argv, t_stack **binary_tree, int *error)
+t_stack *ft_extract_stack(int argc, char **argv, int *error)
 {
 	int i;
 	int	nbr;
@@ -121,19 +121,22 @@ t_stack *ft_extract_stack(int argc, char **argv, t_stack **binary_tree, int *err
 	t_stack *node;
 	t_stack *node_tree;
 	t_stack *stack_a;
+	t_stack *binary_tree;
 
 	i = 1;
 	stack_a = NULL;
+	binary_tree = NULL;
 	while(i < argc && !*error)
 	{
 		nbr = ft_atoi(argv[i++], error);
 		node = ft_lstnew(nbr);
 		node_tree = ft_lstnew(nbr);
-		ft_checkrepeated(binary_tree, node_tree, error);
+		ft_checkrepeated(&binary_tree, node_tree, error);
 		ft_lstadd_back(&stack_a, node);
-//		ft_push(&stack_a, node);
+		//ft_push(&stack_a, node);
 	}
-	free_tree(*binary_tree);
+	ft_sorter(&stack_a, binary_tree);
+	free_tree(binary_tree);
 	return (stack_a);
 }
 
@@ -173,10 +176,9 @@ int	main(int argc, char **argv)
 {
 	int error;
 	t_stack	*stack_a;
-	t_stack *binary_tree;
 
-	binary_tree = NULL;
-	stack_a = ft_extract_stack(argc, argv, &binary_tree, &error);
+	error = 0;
+	stack_a = ft_extract_stack(argc, argv, &error);
 	//adicionar possibilidade de fazer com string ou com argumentos.
 	if (error)
 	{
@@ -185,7 +187,7 @@ int	main(int argc, char **argv)
 		return(1);
 	}
 //	ft_sorter(stack_a, algoritm name)
-	ft_lstprint(stack_a);
+	//ft_lstprint(stack_a);
 	ft_lstdel(stack_a);
 	return(0);
 }
@@ -193,3 +195,26 @@ int	main(int argc, char **argv)
 //mechanical turk
 
 //quicksort, heapsort, or merge sort
+
+//sa, sb, ss, pa, pb, ra, rb, rr, rra, rrb, rrr
+
+//best case: O(n log n)
+//worst case: O(n^2)
+//best neighborhood: O(n)
+
+
+//falta:
+// 1. implementar quicksort, heapsort, or merge sort best neighborhood
+// 2. is_sorted
+// 3. aplicar rrr ao meu algo
+// 4. melhorar movimentos
+// 5. implementar checker
+// 6. implementar visualizador
+// 7. implementar bonus (get_next_line, is_sorted, run movements from get)
+// 8. reorganizar codigo
+// 9. norminette
+
+
+//add size
+//add bucket nmr
+
