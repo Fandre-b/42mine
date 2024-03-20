@@ -13,7 +13,7 @@
 NAME			= push_swap
 BONUS_NAME		= checker
 
-SRCS			=	new_split.c ft_general_utils.c ft_lst_general_utils.c ft_lst_moves_push.c ft_lst_moves_revrot.c ft_lst_moves_rot.c ft_lst_moves_swap.c ft_push_swap.c ft_sorter.c ft_sorter_utils.c
+SRCS			=	ft_split.c bonus.c ft_gnl.c ft_lst_general_utils.c ft_lst_moves_push.c ft_lst_moves_revrot.c ft_lst_moves_rot.c ft_lst_moves_swap.c ft_general_utils.c
 
 OBJS			=	$(SRCS:%.c=%.o)
 #OBJS 			= 	$(SRCS:srcs/%.c=$(OBJ_DIR)/%.o)
@@ -37,25 +37,6 @@ $(NAME):		$(OBJS)
 
 ${CHECK}:		$(BONUS_OBJS)
 				$(CC) $(CFLAGS) $(OBJS) -o $(BONUS_NAME)
-
-
-test:			$(NAME)
-				$(VAL) ./push_swap $(RANDOM_NUMBERS) > output.txt 2>&1
-				@./push_swap $(RANDOM_NUMBERS)
-				@echo "Number of movements: $$(./push_swap $(RANDOM_NUMBERS) | wc -l)"
-				@grep "total heap usage" output.txt
-				@grep -A 2 "total heap usage" output.txt | tail -n 1
-				$(RM) output.txt
-				@$(MAKE) fclean
-
-settest:		$(NAME)
-				$(VAL) ./push_swap $(SET_NUMBERS) > output.txt 2>&1
-				@./push_swap $(SET_NUMBERS)
-				@echo "Number of movements: $$(./push_swap $(SET_NUMBERS) | wc -l)"
-				@grep "total heap usage" output.txt
-				@grep -A 2 "total heap usage" output.txt | tail -n 1
-				@$(RM) output.txt
-				@$(MAKE) fclean
 
 debug:
 				@gcc -g $(CFLAGS) -o $(NAME) $(OBJS)
