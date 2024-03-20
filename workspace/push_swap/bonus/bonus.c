@@ -65,6 +65,8 @@ void	ft_extract_stack(t_stack **stack, int argc, char **argv, int *error)
 	{
 		i = 0;
 		tokens = ft_split(&n_elem, *(++argv), 32);
+		if (n_elem == 0)
+			*error = 1;
 		while (i < n_elem && tokens[i])
 		{
 			nbr = ft_atoi(tokens[i], error);
