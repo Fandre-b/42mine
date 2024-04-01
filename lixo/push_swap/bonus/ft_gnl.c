@@ -12,6 +12,46 @@
 
 #include "bonus.h"
 
+char	*ft_strnjoin(char *old_str, char *str_add, int size)
+{
+	int		len;
+	int		i;
+	char	*new_str;
+
+	len = 0;
+	while (old_str && old_str[len])
+		len++;
+	i = 0;
+	while (str_add && str_add[i])
+		i++;
+	if (i < size)
+		size = i;
+	new_str = (char *) malloc (size + len + 1);
+	if (!new_str)
+		return (NULL);
+	i = -1;
+	while (old_str && ++i < len)
+		new_str[i] = old_str[i];
+	i = -1;
+	while (str_add && ++i < size)
+		new_str[len + i] = str_add[i];
+	new_str[len + i] = '\0';
+	free(old_str);
+	return (new_str);
+}
+
+int	ft_strchr_index(char *str, char c)
+{
+	int	i;
+
+	i = 0;
+	if (!str)
+		return (-1);
+	while (str[i] && str[i] != c)
+		i++;
+	return (i);
+}
+
 char	*ft_memshift(void *str, int n_shift)
 {
 	int		i;
@@ -45,13 +85,12 @@ char	*get_next_line(int fd)
 	{
 		if (buffer[0] == '\0')
 			count = read(fd, buffer, 10);
-		if (count < 0)
+		if (count <= 0)
 			break ;
 		pos = ft_strchr_index(buffer, '\n');
-		new_str = ft_strnjoin(new_str, buffer, ++pos);
-		ft_memshift(buffer, pos);
-		pos = ft_strchr_index(new_str, '\n');
-		if (count == 0 || !new_str || new_str[pos] == '\n')
+		new_str = ft_strnjoin(new_str, buffer, pos);
+		ft_memshift(buffer, pos + 1);
+		if (((pos < 10 && pos >= 0))
 			break ;
 	}
 	if (count == -1 || (count == 0 && (!new_str || !new_str[0])))

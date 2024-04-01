@@ -82,29 +82,29 @@ void	ft_extract_stack(t_stack **stack, int argc, char **argv, int *error)
 
 void	execute_command(char *call, t_stack **s_a, t_stack **s_b, int *error)
 {
-	if (call && ft_strcmp(call, "sa\n") == 0)
+	if (call && ft_strcmp(call, "sa") == 0)
 		sa(s_a, 1, 0);
-	else if (call && ft_strcmp(call, "sb\n") == 0)
+	else if (call && ft_strcmp(call, "sb") == 0)
 		sb(s_b, 1, 0);
-	else if (call && ft_strcmp(call, "ss\n") == 0)
+	else if (call && ft_strcmp(call, "ss") == 0)
 		ss(s_a, s_b, 1, 0);
-	else if (call && ft_strcmp(call, "pa\n") == 0)
+	else if (call && ft_strcmp(call, "pa") == 0)
 		pa(s_a, s_b, 1, 0);
-	else if (call && ft_strcmp(call, "pb\n") == 0)
+	else if (call && ft_strcmp(call, "pb") == 0)
 		pb(s_a, s_b, 1, 0);
-	else if (call && ft_strcmp(call, "ra\n") == 0)
+	else if (call && ft_strcmp(call, "ra") == 0)
 		ra(s_a, 1, 0);
-	else if (call && ft_strcmp(call, "rb\n") == 0)
+	else if (call && ft_strcmp(call, "rb") == 0)
 		rb(s_b, 1, 0);
-	else if (call && ft_strcmp(call, "rr\n") == 0)
+	else if (call && ft_strcmp(call, "rr") == 0)
 		rr(s_a, s_b, 1, 0);
-	else if (call && ft_strcmp(call, "rra\n") == 0)
+	else if (call && ft_strcmp(call, "rra") == 0)
 		rra(s_a, 1, 0);
-	else if (call && ft_strcmp(call, "rrb\n") == 0)
+	else if (call && ft_strcmp(call, "rrb") == 0)
 		rrb(s_b, 1, 0);
-	else if (call && ft_strcmp(call, "rrr\n") == 0)
+	else if (call && ft_strcmp(call, "rrr") == 0)
 		rrr(s_a, s_b, 1, 0);
-	else if (call && ft_strcmp(call, "\n") != 0)
+	else if (call)
 		*error = 1;
 }
 
@@ -133,5 +133,7 @@ int	main(int argc, char **argv)
 		write (1, "KO\n", 3);
 	else
 		write (1, "OK\n", 3);
-	return (ft_lstdel(s_a), ft_lstdel(s_b), 0);
+	ft_lstdel(s_a);
+	ft_lstdel(s_b);
+	return (0);
 }

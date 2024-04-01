@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bonus.c                                            :+:      :+:    :+:   */
+/*   ft_push_swap.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/12 16:39:12 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/03/12 16:39:12 by fandre-b         ###   ########.fr       */
+/*   Created: 2024/03/12 23:09:14 by fandre-b          #+#    #+#             */
+/*   Updated: 2024/03/12 23:09:14 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "bonus.h"
+#include "push_swap.h"
 
 void	free_tree(t_stack *node)
 {
@@ -65,8 +65,6 @@ void	ft_extract_stack(t_stack **stack, int argc, char **argv, int *error)
 	{
 		i = 0;
 		tokens = ft_split(&n_elem, *(++argv), 32);
-		if (n_elem == 0 || !tokens)
-			*error = 1;
 		while (i < n_elem && tokens[i])
 		{
 			nbr = ft_atoi(tokens[i], error);
@@ -76,62 +74,28 @@ void	ft_extract_stack(t_stack **stack, int argc, char **argv, int *error)
 		}
 		free(tokens);
 	}
+	if (error)
+		ft_lstdel(*stack);
 	free_tree(binary_tree);
 	return ;
-}
-
-void	execute_command(char *call, t_stack **s_a, t_stack **s_b, int *error)
-{
-	if (call && ft_strcmp(call, "sa\n") == 0)
-		sa(s_a, 1, 0);
-	else if (call && ft_strcmp(call, "sb\n") == 0)
-		sb(s_b, 1, 0);
-	else if (call && ft_strcmp(call, "ss\n") == 0)
-		ss(s_a, s_b, 1, 0);
-	else if (call && ft_strcmp(call, "pa\n") == 0)
-		pa(s_a, s_b, 1, 0);
-	else if (call && ft_strcmp(call, "pb\n") == 0)
-		pb(s_a, s_b, 1, 0);
-	else if (call && ft_strcmp(call, "ra\n") == 0)
-		ra(s_a, 1, 0);
-	else if (call && ft_strcmp(call, "rb\n") == 0)
-		rb(s_b, 1, 0);
-	else if (call && ft_strcmp(call, "rr\n") == 0)
-		rr(s_a, s_b, 1, 0);
-	else if (call && ft_strcmp(call, "rra\n") == 0)
-		rra(s_a, 1, 0);
-	else if (call && ft_strcmp(call, "rrb\n") == 0)
-		rrb(s_b, 1, 0);
-	else if (call && ft_strcmp(call, "rrr\n") == 0)
-		rrr(s_a, s_b, 1, 0);
-	else if (call && ft_strcmp(call, "\n") != 0)
-		*error = 1;
 }
 
 int	main(int argc, char **argv)
 {
 	int		error;
-	char	*line;
-	t_stack	*s_a;
-	t_stack	*s_b;
+	t_stack	*stack_a;
 
-	s_a = NULL;
-	s_b = NULL;
 	error = 0;
-	ft_extract_stack(&s_a, argc, argv, &error);
+	if (argc < 2)
+		return (0);
+	stack_a = NULL;
+	ft_extract_stack(&stack_a, argc, argv, &error);
 	if (error)
-		return (ft_lstdel(s_a), write (1, "Error\n", 6));
-	while (!error)
+		write(1, "Error\n", 6);
+	else if (stack_a)
 	{
-		line = get_next_line(0);
-		execute_command(line, &s_a, &s_b, &error);
-		free(line);
-		if (line == NULL || error)
-			break ;
+		ft_sorter_push3(&stack_a);
+		ft_lstdel(stack_a);
 	}
-	if (error || s_b || !ft_issorted(s_a, &error))
-		write (1, "KO\n", 3);
-	else
-		write (1, "OK\n", 3);
-	return (ft_lstdel(s_a), ft_lstdel(s_b), 0);
+	return (error);
 }
