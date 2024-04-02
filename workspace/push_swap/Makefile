@@ -93,4 +93,4 @@ fclean:	clean
 
 re:	fclean all
 
-PHONY:	all $(NAME) bonus test debug clean fclean re
+PHONY:	all $(NAME) bonus test clean fclean re
