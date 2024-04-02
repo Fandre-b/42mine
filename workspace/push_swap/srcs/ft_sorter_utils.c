@@ -39,7 +39,7 @@ int	ft_getstack_index(t_stack *stack_a, int find_val)
 	t_stack	*temp;
 
 	temp = stack_a;
-	save_val = 2147483647;
+	save_val = INT_MAX;
 	temp_index = 0;
 	index = 0;
 	while (temp)

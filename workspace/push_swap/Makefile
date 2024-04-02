@@ -48,7 +48,7 @@ bonus/utils/ft_split.c\
 OBJS := $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 OBJ_BONUS := $(addprefix $(OBJ_DIR)/, $(BONUS:.c=.o))
 
-all:	$(NAME) bonus
+all:	$(NAME)
 
 $(OBJ_DIR)/%.o:	%.c
 	@mkdir -p $(dir $@)
@@ -62,22 +62,22 @@ bonus:	$(BONUS_NAME)
 $(BONUS_NAME):	$(OBJ_BONUS)
 	$(CC) $(CFLAGS) $(OBJ_BONUS) -o $(BONUS_NAME)
 
-test:	re
-	@echo "<Teste sorter>"
+test:	re bonus
+	@echo "\n<Teste sorter>\n"
 	@echo $(RANDOM_NUMBERS) > random_numbers.txt
 	@echo "//Number of movements: $$(./$(NAME) "$$(cat random_numbers.txt)" | tee output.txt | wc -l)"
 	-@$(VAL) --leak-check=full --show-leak-kinds=all -s ./$(NAME) "$$(cat random_numbers.txt)" > output2.txt 2>&1
 	@grep "total heap usage" output2.txt
 #	@awk '/HEAP SUMMARY:/ {flag=1} flag' output2.txt
 	@echo "________________________________________________________________________________\n"
-	@echo "<Teste checker>"
+	@echo "<Teste checker>\n"
 	@ARG=$$(cat random_numbers.txt); ./push_swap $$ARG | ./checker $$ARG > output.txt 2>&1
 	@echo "//checker result: $$(cat output.txt)"
 	-@ARG=$$(cat random_numbers.txt); $(VAL) ./push_swap $$ARG 2>&1 | $(VAL) ./checker $$ARG > output2.txt 2>&1
 	@grep "total heap usage" output2.txt
 #	@awk '/HEAP SUMMARY:/ {flag=1} flag' output.txt
 	@echo "________________________________________________________________________________\n"
-	@echo "<Teste Norminette>"
+	@echo "<Teste Norminette>\n"
 	@norminette -R CheckDefine . | awk '/Error/'
 	@echo "\n"
 	$(RM) output.txt output2.txt random_numbers.txt

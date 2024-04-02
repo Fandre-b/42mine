@@ -83,6 +83,7 @@ void	ft_extract_stack(t_stack **stack, int argc, char **argv, int *error)
 int	main(int argc, char **argv)
 {
 	int		error;
+	int		garbage;
 	t_stack	*stack_a;
 
 	error = 0;
@@ -91,8 +92,8 @@ int	main(int argc, char **argv)
 	stack_a = NULL;
 	ft_extract_stack(&stack_a, argc, argv, &error);
 	if (error)
-		write(1, "Error\n", 6);
-	else if (stack_a)
+		write(2, "Error\n", 6);
+	else if (stack_a && !ft_issorted(stack_a, &garbage))
 	{
 		ft_sorter_push3(&stack_a);
 		ft_lstdel(stack_a);
