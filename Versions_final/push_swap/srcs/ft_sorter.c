@@ -132,4 +132,5 @@ void	ft_sorter_push3(t_stack **stack_a)
 	else
 		rra(stack_a, size_a - size_b - 1, 1);
 	return ;
+	ft_lstdel(stack_b);
 }

@@ -120,7 +120,7 @@ int	main(int argc, char **argv)
 	error = 0;
 	ft_extract_stack(&s_a, argc, argv, &error);
 	if (error)
-		return (ft_lstdel(s_a), write (1, "Error\n", 6));
+		return (ft_lstdel(s_a), write (2, "Error\n", 6));
 	while (!error)
 	{
 		line = get_next_line(0);
