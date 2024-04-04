@@ -14,6 +14,7 @@
 
 # define WIDTH 800
 # define LENGTH 800
+# define MAXI 200
 
 int	main(void)
 {

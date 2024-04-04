@@ -17,7 +17,7 @@ RM := -@rm -rf
 CFLAGS := -Wall -Wextra -Werror -std=c99
 VAL := valgrind --leak-check=full --show-leak-kinds=all -s
 
-FT := libft
+#FT := libft
 OBJ_DIR := obj
 INCLUDES_DIR := includes
 
@@ -29,34 +29,34 @@ OBJS := $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 # mlx library
 #ifeq ($(OS), Linux)
 MLX		= ./minilibx-linux/
-MLX_LNK	= -L $(MLX) -lmlx -lXext -lX11
+MLX_LNK	= -L$(MLX) -lmlx -lXext -lX11 -lm -lz
+#MLX_LNK	= -L $(MLX) -lmlx -lXext -lX11 -lm -lz
 #else
 #	MLX		= ./miniLibX/
 #	MLX_LNK	= -L $(MLX) -l mlx -framework OpenGL -framework AppKit
 #endif
 
-MLX_INC	= -I $(MLX)
 MLX_LIB	= $(addprefix $(MLX),mlx.a)
 
-# ft library
-FT_LIB	= $(addprefix $(FT)/,libft.a)
-#FT_INC	= -I $(FT)
-FT_LNK	= -L $(FT) -l ft -l pthread
-#########not mine
-#$(FT_INC)
-#$(FT_LNK)
+# # ft library
+# FT_LIB	= $(addprefix $(FT)/,libft.a)
+# #FT_INC	= -I $(FT)
+# FT_LNK	= -L $(FT) -l ft -l pthread
+# #########not mine
+# #$(FT_INC)
+# #$(FT_LNK)
 
 all:	$(NAME)
 
-$(FT_LIB):
-	@make -C $(FT)
+# $(FT_LIB):
+# 	@make -C $(FT)
 
 $(MLX_LIB):
-	@make -C $(MLX)
+	-@make -s -C $(MLX)
 
-$(OBJ_DIR)/%.o:	%.c
+$(OBJ_DIR)/%.o:	%.c $(MLX_LIB)
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(MLX_INC) -I $(INCLUDES_DIR) -c $< -o $@
+	$(CC) $(CFLAGS) -I$(MLX) -I$(INCLUDES_DIR) -c $< -o $@
 
 $(NAME):	$(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(MLX_LNK) -lm -o $(NAME)
@@ -65,13 +65,13 @@ test:
 	@echo "<Still need to set up>"
 
 clean:
-	$(RM) $(OBJDIR)
-	make -C $(FT) clean
-	make -C $(MLX) clean
+	$(RM) $(OBJ_DIR)
+	-@make -s -C $(MLX) clean
+#	make -C $(FT) clean
 
 fclean:	clean
 	$(RM) $(NAME)
-	make -C $(FT) fclean
+#	make -C $(FT) fclean
 
 re:	fclean all
 

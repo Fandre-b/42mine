@@ -1,13 +1,4 @@
-#include "mlx.h"
-
-# define WIDTH 800
-# define LENGTH 800
-# define MAXI 200
-
-typedef struct {
-    double x;
-    double y;
-} Point;
+#include "fractol.h" 
 
 int main(void)
 {
