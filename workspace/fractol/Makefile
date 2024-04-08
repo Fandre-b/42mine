@@ -21,7 +21,7 @@ VAL := valgrind --leak-check=full --show-leak-kinds=all -s
 OBJ_DIR := obj
 INCLUDES_DIR := includes
 
-SRCS := ./test.c
+SRCS := test.c
 
 OBJS := $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 

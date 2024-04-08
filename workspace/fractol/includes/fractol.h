@@ -1,4 +1,5 @@
 // #include <libft.h>
+# include <mlx.h>
 
 #ifndef FRACTOL_H
 # define FRACTOL_H
@@ -13,12 +14,12 @@ typedef struct {
     double y;
 } Point;
 
-typedef struct s_data
-{
-	void	*img
+typedef struct	s_data {
+	void	*img;
 	char	*addr;
-	int		bits_per_pixer;
-	int		endian
-}			t_data;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}				t_data;
 
 #endif

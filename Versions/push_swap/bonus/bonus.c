@@ -131,7 +131,7 @@ int	main(int argc, char **argv)
 		return (ft_lstdel(s_a), write (2, "Error\n", 6));
 	if (s_b || !ft_issorted(s_a, &error))
 		write (1, "KO\n", 3);
-	else
+	else if (argc > 1)
 		write (1, "OK\n", 3);
 	return (ft_lstdel(s_a), ft_lstdel(s_b), 0);
 }

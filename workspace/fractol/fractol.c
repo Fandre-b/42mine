@@ -16,39 +16,40 @@ int main(void)
 double **map_pixels(threshold, margin)
 {
 	double map[WIDHT][LENGHT];
-	Point coord;
+	t_complex coord;
 
 	coord.x = 0;
 	while(coord.x <= WIDHT)
 	{
 		coord.y = 0;
 		while(coord.y <= LENGHT)
-			map[coord.x][coord.y++] = actualfractol(coord, threshold, margin);
+			colour = actualfractol(coord, threshold, margin);
 				//instead of using actual fractol, use function pointer
+				//maybe just print the pixel
 		coord.x++;
 	}
 	color_scheme(&map, color_mode); //change colours with images histogramming
 	return (map);
 }
 
-double actualfractol(coord, threshold, margin)
+double actualfractol(t_complex coord, double threshold, double margin)
 {
 	double i;
 	double th_margin;
-	double zx;
-	double zy;
+	t_complex z;
 
-	zx = 0.0;
-    zy = 0.0;
-	th_margin = threshold - threshold * margin;
+	z.x = 0.0;
+    z.y = 0.0;
+	i = 0;
+	th_margin = threshold - threshold * margin; //might not be necessaty
 	//using int uses less resources.
 	while (++i <= MAXI)
 	{
-		zx = (zx * zx) - (zy * zy) + coord.x;
-		zy = (2*zx*zy) + coord.y;
-		if (zx >= threshold)
+		z.x = (z.x * z.x) - (z.y * z.y) + coord.x;
+		z.y = (2*z.x*z.y) + coord.y;
+		if (z.x >= threshold)
 			return (i / MAXI);
-		if (zx >= th_margin)
+		if (z.x >= th_margin)
 			return (1);
 		i++;
 	}
