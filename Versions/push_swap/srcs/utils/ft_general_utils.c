@@ -49,9 +49,9 @@ long	ft_atoi(char *str, int *error)
 	}
 	while (*str && *str >= '0' && *str <= '9' && !(*error))
 	{
-		if (*str && (nbr > INT_MAX || nbr < INT_MIN))
+		nbr = nbr * 10 + sign * (*str - '0');
+		if (*str++ && (nbr > INT_MAX || nbr < INT_MIN))
 			*error = 1;
-		nbr = nbr * 10 + sign * (*str++ - '0');
 	}
 	if (*str && (*str < '0' || *str > '9'))
 		*error = 1;

@@ -1,78 +1,126 @@
-#include "fractol.h" 
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fractol.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/10 15:14:37 by fandre-b          #+#    #+#             */
+/*   Updated: 2024/04/16 00:42:04 by fandre-b         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int main(void)
+#include "fractol.h"
+
+void	map_pixels(t_complex range, float margin, t_fractol *fractol);
+void	init_mlx(t_fractol *fractol);
+float	actualfractol(t_complex coord, double threshold, double margin);
+
+
+int		main(void)
 {
-	void	*img;
-	void	*mlx;
-	int threshold = 2; //temp
-	int margin = 5; //temp
-
-	mlx = mlx_init();
-	img = mlx_new_image(mlx, 1920, 1080);
-	map_pixels(threshold, margin);
-	return;
+	t_fractol	*fractol;
+	t_complex	range;
+	float	margin;
+	
+	range.x = -2.0f;
+	range.y = 2.0f;
+	fractol = (t_fractol *) malloc (sizeof(t_fractol));
+	if (!fractol)
+		return(write(2, "fail", 5), 0);
+	printf("ola\n");
+	init_mlx(fractol);
+	margin = 0.0f;
+	map_pixels(range, margin, fractol);
+	//mlx_put_pixels();
+	mlx_loop(fractol->mlx);
+	return (0);
 }
 
-double **map_pixels(threshold, margin)
+void	init_mlx(t_fractol *fractol)
 {
-	double map[WIDHT][LENGHT];
-	t_complex coord;
+	fractol->mlx = mlx_init();
+	if (NULL == fractol->mlx)
+		return ;
+	fractol->win = mlx_new_window(fractol->mlx, WIDTH, HEIGHT, fractol->name);
+	fractol->img.img = mlx_new_image(fractol->mlx, WIDTH, HEIGHT);
+	fractol->img.addr = mlx_get_data_addr(fractol->img.img, &fractol->img.bpp, &fractol->img.len_line, &fractol->img.endian);
+	return ;
+}
 
-	coord.x = 0;
-	while(coord.x <= WIDHT)
+unsigned int colour_convert(float *colour_grad)
+{
+	float val;
+	int r;
+	int g;
+	int b;
+	unsigned int rgb;
+
+	//r = 0.5f * (1.0f + cos(2.0f * M_PI * (*val + 0.0f)));
+	//g = 0.5f * (1.0f + cos(2.0f * M_PI * (*val + 0.33f)));
+	//b = 0.5f * (1.0f + cos(2.0f * M_PI * (*val + 0.67f)));
+	r = 0;
+	g = 0;
+	b = 0;
+	val = *colour_grad;
+	if (val > 0.5f)
+		r = (val - 0.5f)/0.5f * 250;
+	else if (val < 0.5f)
+		g = (val)/0.5f * 250;
+	rgb = (r << 16) | (g << 8) | b;
+	printf("%d\n", rgb);
+	return (rgb);
+}
+
+void	map_pixels(t_complex range, float margin, t_fractol *fractol)
+{
+	t_complex	coord;
+	float		threshold;
+	float		colour_grad;
+
+	threshold = 2.0f; //hip(range.x, range.y); //TODO
+	coord.x = -2.0f;
+	colour_grad = -1.0f;
+	while(coord.x <= range.x)
 	{
-		coord.y = 0;
-		while(coord.y <= LENGHT)
-			colour = actualfractol(coord, threshold, margin);
-				//instead of using actual fractol, use function pointer
-				//maybe just print the pixel
-		coord.x++;
+		coord.y = -2.0f;
+		while(coord.y <= range.y) // && hip(coord.x, coord.y) <= threshold)
+		{
+			colour_grad = actualfractol(coord, threshold, margin);
+			//colour_convert(&colour_grad); //TODO
+			//printf("%f\n", colour_grad);
+			mlx_pixel_put(fractol->mlx, fractol->win, coord.x*(WIDTH/2), coord.y*(HEIGHT/2), colour_convert(&colour_grad)); //TODO
+			coord.y += range.y/HEIGHT;
+			//Create from start convertion array this float
+			//can also be helpfull in other cases// //TODO
+			//also because pixel put needs int values.
+		}
+		coord.x += range.x/WIDTH;
 	}
-	color_scheme(&map, color_mode); //change colours with images histogramming
-	return (map);
+	//if (colour_grad == -1.0f) //is outside from the start
+	return ;
 }
 
-double actualfractol(t_complex coord, double threshold, double margin)
+float	actualfractol(t_complex coord, double threshold, double margin)
 {
-	double i;
-	double th_margin;
+	int i;
+	float th_margin;
 	t_complex z;
 
-	z.x = 0.0;
-    z.y = 0.0;
+	z.x = 0.0f;
+    z.y = 0.0f;
 	i = 0;
-	th_margin = threshold - threshold * margin; //might not be necessaty
-	//using int uses less resources.
-	while (++i <= MAXI)
+	th_margin = threshold - threshold * margin; 
+	while (++i <= MAXI && z.x <= 2.0f && z.x >= -2.0f)
 	{
 		z.x = (z.x * z.x) - (z.y * z.y) + coord.x;
 		z.y = (2*z.x*z.y) + coord.y;
-		if (z.x >= threshold)
-			return (i / MAXI);
-		if (z.x >= th_margin)
-			return (1);
-		i++;
+		if ((threshold > 0 && z.x >= threshold) || (threshold < 0 && z.x <= threshold))
+			return ((float) (i / MAXI));
+		if ((th_margin > 0 && z.x >= th_margin) || (th_margin < 0 && z.x <= th_margin))
+			return (1.0f);
 	}
 	if (i == MAXI)
-		return (0);
-	//this way i can return max value for borther, min inside and have float for outside
-}
-
-	// z = z^2 + cxy
-	// z^2 = (zx + zy)^2 = zx^2 + 2*zx*zy + zy^2
-	// zy^2 = (val*i) = -val
-	// 2*zx*zy = 2zx*val*i
-	//for each pixel discover if it goes out of bounds
-	//so if i had 800x800 i had to run fractol calculations 640k times 1 for each pixel? YES
-	//map pixels for nmb of interations needed to converge to inf
-	//then remap those pixels to colour, using threshholded value
-	//mlx just picks up this map and prints it
-	//so image stroct would have **matix, resolution, 
-		//mlx
-		//initialize window, intialize pixels
-		//set pixels
-		//whait for instructios
-			//set actions
-			//set mouse position as 0,0
-			//
+		return (0.0f);
+	return (0.0f);
 }

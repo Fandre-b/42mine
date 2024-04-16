@@ -101,8 +101,8 @@ void	ft_push_prep(t_stack **stack_a, t_stack **stack_b, int a, int b)
 		rb(stack_b, (b - rr_mov), 1);
 	else if (b < rrr_mov)
 		rrb(stack_b, -(b - rrr_mov), 1);
-	rr(stack_a, stack_b, abs(rr_mov), 1);
-	rrr(stack_a, stack_b, abs(rrr_mov), 1);
+	rr(stack_a, stack_b, ft_abs(rr_mov), 1);
+	rrr(stack_a, stack_b, ft_abs(rrr_mov), 1);
 	return ;
 }
 

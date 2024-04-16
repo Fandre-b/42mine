@@ -61,7 +61,7 @@ void	ft_extract_stack(t_stack **stack, int argc, char **argv, int *error)
 	t_stack	*binary_tree;
 
 	binary_tree = NULL;
-	while (argc-- > 1 && !*error)
+	while (argc > 1 && argc-- > 1 && !*error)
 	{
 		i = 0;
 		tokens = ft_split(&n_elem, *(++argv), 32);
@@ -119,9 +119,7 @@ int	main(int argc, char **argv)
 	s_b = NULL;
 	error = 0;
 	ft_extract_stack(&s_a, argc, argv, &error);
-	if (error)
-		return (ft_lstdel(s_a), write (2, "Error\n", 6));
-	while (!error)
+	while (!error && argc > 1)
 	{
 		line = get_next_line(0);
 		execute_command(line, &s_a, &s_b, &error);
@@ -129,9 +127,11 @@ int	main(int argc, char **argv)
 		if (line == NULL || error)
 			break ;
 	}
-	if (error || s_b || !ft_issorted(s_a, &error))
+	if (error)
+		return (ft_lstdel(s_a), write (2, "Error\n", 6));
+	if (s_b || !ft_issorted(s_a, &error))
 		write (1, "KO\n", 3);
-	else
+	else if (argc > 1)
 		write (1, "OK\n", 3);
 	return (ft_lstdel(s_a), ft_lstdel(s_b), 0);
 }

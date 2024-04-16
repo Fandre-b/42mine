@@ -16,15 +16,15 @@ int	main(void)
 {
 	void	*mlx;
 	void	*mlx_win;
-	t_data	img;
+	//t_data	img;
 
 	mlx = mlx_init();
 	if (!mlx)
 		return (0);
-	mlx_win = mlx_new_window(mlx, LENGTH, WIDTH, "Hello world!");
+	mlx_win = mlx_new_window(mlx, HEIGHT, WIDTH, "Hello world!");
 	if (!mlx_win)
 		return (0);
     (void)mlx_win;
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
+	//img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
 	mlx_loop(mlx);
 }

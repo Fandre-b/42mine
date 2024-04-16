@@ -71,9 +71,9 @@ test:	re bonus
 #	@awk '/HEAP SUMMARY:/ {flag=1} flag' output2.txt
 	@echo "________________________________________________________________________________\n"
 	@echo "<Teste checker>\n"
-	@ARG=$$(cat random_numbers.txt); ./push_swap $$ARG | ./checker $$ARG > output.txt 2>&1
+	@ARG=$$(cat random_numbers.txt); ./$(NAME) $$ARG | ./$(BONUS_NAME) $$ARG > output.txt 2>&1
 	@echo "//checker result: $$(cat output.txt)"
-	-@ARG=$$(cat random_numbers.txt); $(VAL) ./push_swap $$ARG 2>&1 | $(VAL) ./checker $$ARG > output2.txt 2>&1
+	-@ARG=$$(cat random_numbers.txt); ./$(NAME) $$ARG 2>&1 | $(VAL) ./$(BONUS_NAME) $$ARG > output2.txt 2>&1
 	@grep "total heap usage" output2.txt
 #	@awk '/HEAP SUMMARY:/ {flag=1} flag' output.txt
 	@echo "________________________________________________________________________________\n"

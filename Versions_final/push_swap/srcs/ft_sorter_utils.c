@@ -45,7 +45,7 @@ int	ft_getstack_index(t_stack *stack_a, int find_val)
 	while (temp)
 	{
 		temp_val = temp->value - find_val;
-		if (abs(temp_val) < abs(save_val))
+		if (abs(temp_val) < ft_abs(save_val))
 		{
 			save_val = temp_val;
 			index = temp_index;
