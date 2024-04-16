@@ -42,7 +42,7 @@ long	ft_atoi(char *str, int *error)
 		if (*str++ && (nbr > INT_MAX || nbr < INT_MIN))
 			*error = 1;
 	}
-	if (*str && (*str < '0' || *str > '9'))
+	if ((*str && ((*str < '0' || *str > '9'))) || (sign == -1 && nbr == 0))
 		*error = 1;
 	return (nbr);
 }

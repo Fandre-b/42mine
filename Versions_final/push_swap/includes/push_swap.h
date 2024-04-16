@@ -31,7 +31,7 @@ char	**ft_split(int *size, char *str, char c);
 //general utils
 int		ft_min(int a, int b);
 int		ft_max(int a, int b);
-int		ft_abs(int a);
+long	ft_abs(long a);
 long	ft_atoi(char *str, int *error);
 void	ft_putnbr(int nbr);
 //list manipulation utils
