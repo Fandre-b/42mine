@@ -20,25 +20,30 @@ char	*ft_witch(char *first_cmd)
 	char *path;
 
 	path = NULL;
-	cmd[0] = "/bin/witch";
+	cmd[0] = "/bin/which";
 	cmd[1] = first_cmd;
 	cmd[2] = NULL;
 	if (pipe(fd_which) == -1)
 		return (perror("pipe failed"), NULL);
-	execute_command(fd_which[0], fd_which[1], cmd);
+	execute_command(STDIN_FILENO, fd_which[1], cmd);
 	close(fd_which[1]);
 	while (get_next_line(fd_which[0], &line) > 0)
 		path = ft_strnjoin(path, line, ft_strlen(line));
 	close(fd_which[0]);
+	if (!path)
+		return (path);
+	path[ft_strchr_index(path, '\n')] = '\0';
 	return (path);
 }
 
-int	input_gnl(t_info *info)
+int	input_gnl(t_info *info) //[] have to pipegetnextline for cmd processes.
 {
 	char	*line;
 	int		n_error;
 
 	n_error = 1;
+	line = NULL;
+	printf("entered manual input\n");
 	while (n_error)
 	{
 		n_error = get_next_line(STDIN_FILENO, &line);
@@ -86,8 +91,10 @@ int	parcel_open_fd(int argc, char **argv, t_info *info)
 int	parcel_argv(int argc, char **argv, t_info *info)
 {
 	int i;
+	char c;
 
-	if (ft_strstr(argv[1], "here_doc") && argc > 4)
+	c = ' ';
+	if ( argc > 4 && ft_strstr(argv[1], "here_doc"))
 	{
 		info->here_doc = 1;
 		info->arg_cmd = (char ***) malloc((argc - 3) * sizeof(char **));
@@ -104,7 +111,9 @@ int	parcel_argv(int argc, char **argv, t_info *info)
 	i = 0;
 	while (++i + info->here_doc + 2 < argc)
 	{
-		info->arg_cmd[i - 1] = ft_split(argv[i + info->here_doc + 1], ' ');
+		if(ft_strchr_index(argv[i + info->here_doc + 1]) == '\'')
+			c = '\'';
+		info->arg_cmd[i - 1] = ft_split(argv[i + info->here_doc + 1], c);
 		info->arg_cmd[i - 1][0] = ft_witch(info->arg_cmd[i - 1][0]);
 	}
 	info->arg_cmd[i - 1] = NULL;

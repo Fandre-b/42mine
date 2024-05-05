@@ -22,6 +22,10 @@
 # include <unistd.h>
 # include <fcntl.h>
 
+#ifndef BUFFER_SIZE
+# define BUFFER_SIZE 32
+#endif
+
 typedef struct	s_info
 {
     int		fd[2];
@@ -32,27 +36,36 @@ typedef struct	s_info
 
 
 int		main(int argc, char **argv);
-void	pipe_arg_cmd(t_info *info);
+int		pipe_arg_cmd(t_info *info);
 void	free_info(t_info *info);
 //extract info
 int		parcel_argv(int argc, char **argv, t_info *info);
 int		parcel_open_fd(int argc, char **argv, t_info *info);
 char	*ft_witch(char *first_cmd);
-int	input_gnl(t_info *info);
+int		input_gnl(t_info *info);
 //run program/command
-void	exe_cmd_parent(int *fd_error);
+void	exe_cmd_child(int input_fd, int output_fd, int *fd_error,  char **cmd);
 void	exe_cmd_child(int input_fd, int output_fd, int *fd_error,  char **cmd);
 
-int		execute_command(pid_t input_fd, pid_t output_fd, char **cmd);
+int		execute_command(int input_fd, int output_fd, char **cmd);
 //big utils
 int		get_next_line(int fd, char **new_str);
 char	**ft_split(char *str, char c);
 
 	//split TODO static rest of functions
 //libft utils
-int	ft_strlen(char *s);
+int		ft_strlen(char *s);
 char	*ft_strstr(const char *big, const char *little);
-int ft_strchr_index(char *str, char c);
+int		ft_strchr_index(char *str, char c);
 char	*ft_strnjoin(char *old_str, char *str_add, int size);
+
+char	*ft_strnjoin_gnl(char *old_str, char *str_add, int size);
+int	ft_strchr_index_gnl(char *str, char c);
+char	*ft_clearbuffer(void *str, int size);
+char	*ft_memshift_gnl(void *str, int n_shift);
+
+void	print_struct(char *str, t_info *info);
+void	print_cmds(char *str, char **matrix);
+
 
 #endif

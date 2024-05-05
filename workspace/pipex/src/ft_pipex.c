@@ -31,7 +31,7 @@ void	free_info(t_info *info)
 	return ;
 }
 
-void	pipe_arg_cmd(t_info *info)
+int	pipe_arg_cmd(t_info *info)//TOdo: fix
 {
 	int     fd[2];
 	int     input_fd;
@@ -44,26 +44,71 @@ void	pipe_arg_cmd(t_info *info)
 		if (info->arg_cmd[n + 1] != NULL)
 		{
 			pipe(fd);
-			execute_command(input_fd, fd[1], info->arg_cmd[n]);
+			if (execute_command(input_fd, fd[1], info->arg_cmd[n]) == -1)
+				return (-1);
 			//close(fd[1]); exe will close
 			input_fd = fd[0];
 		}
 		if (info->arg_cmd[n + 1] == NULL)
-			execute_command(input_fd, info->fd[1], info->arg_cmd[n]);
+		{
+			if (execute_command(input_fd, info->fd[1], info->arg_cmd[n]) == -1)
+				return (-1);
+			close(info->fd[0]);
+		}
 	}
+	return (0);
+}
+
+void	print_struct(char *str, t_info *info)
+{
+	int i;
+
+	printf("\n---%s---\n\n", str);
+	printf("fd: %d, %d\n", info->fd[0], info->fd[1]);
+	printf("here_doc: %d\n", info->here_doc);
+	printf("limiter: %s\n", info->limiter);
+	i = 0;
+	while (info->arg_cmd && info->arg_cmd[i] != NULL)
+	{
+		printf("cmd%d: ", i);
+		print_cmds("", info->arg_cmd[i++]);
+	}
+	if (info->arg_cmd[i] == NULL)
+		printf("cmd%d: NULL\n", i);
+	printf("----------\n\n");
 	return ;
+}
+
+void	print_cmds(char *str, char **matrix)
+{
+	int j;
+
+	printf("%s", str);
+	j = 0;
+	while (matrix[j] != NULL)
+	{
+		printf("%s, ", matrix[j++]);
+	}
+	if (matrix[j] == NULL)
+		printf("NULL");
+	printf("\n");
 }
 
 int main(int argc, char **argv)
 {
 	t_info	*info;
 
+	if (argc < 4)
+		return (-1);
 	info = (t_info *) malloc(sizeof(t_info));
 	if (!info)
 		return (perror("malloc struct failed"), -1);
 	//extract_info(argc, argv, info);
-	parcel_argv(argc, argv, info);
-	parcel_open_fd(argc, argv, info);
+	if (parcel_argv(argc, argv, info) == -1)
+		return (1);
+	if (parcel_open_fd(argc, argv, info) == -1)
+		return (1);
+	print_struct("info", info);
 	pipe_arg_cmd(info);
 	free_info(info);
 	return (0);

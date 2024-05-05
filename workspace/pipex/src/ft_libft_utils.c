@@ -54,7 +54,7 @@ int	ft_strchr_index(char *str, char c)
 	return (i);
 }
 
-char	*ft_strnjoin(char *old_str, char *str_add, int size)
+char	*ft_strnjoin(char *old_str, char *str_add, int size)//this
 {
 	int		len;
 	int		i;

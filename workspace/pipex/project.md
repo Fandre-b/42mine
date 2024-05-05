@@ -1,3 +1,12 @@
+//TODO
+
+//check strnjoin and sttindex char unify
+//GNL that passes all stricts in francinette
+//manage better closing files inside the fork
+//manage better the error handling
+
+__________________________________
+ 
  open, close, read, write,
 malloc, free, perror,
 strerror, access, dup, dup2,

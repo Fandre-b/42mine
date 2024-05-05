@@ -22,8 +22,8 @@ VAL := valgrind --leak-check=full --show-leak-kinds=all -s
 OBJ_DIR := obj
 INCLUDES_DIR := includes
 
-SRCS := ./src/ft_gnl.c ./src/ft_extract_info.c ./src/ft_pipex.c ./src/ft_split.c ./src/ft_exe_program.c ./src/ft_libft_utils.c
-
+SRCS := src/get_next_line_utils.c src/get_next_line.c src/ft_extract_info.c src/ft_pipex.c src/ft_split.c src/ft_exe_program.c src/ft_libft_utils.c
+#src/ft_gnl.c
 BONUS := 
 
 OBJS := $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
@@ -45,7 +45,7 @@ $(BONUS_NAME):	$(OBJ_BONUS)
 
 $(DEBUG_NAME):	$(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(DEBUG_NAME) -g
-	gdb -tui -ex "layout split" ./$(DEBUG_NAME) -q
+	gdb -ex "layout split" ./$(DEBUG_NAME) -q
 
 test:	re bonus
 	@echo "\n<To be made>\n"
