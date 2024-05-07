@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:05:46 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/03/12 23:05:46 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/04/16 15:51:22 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,20 @@ int	ft_issorted(t_stack	*lst, int *index)
 
 int	ft_getstack_index(t_stack *stack_a, int find_val)
 {
-	int		temp_val;
-	int		save_val;
+	long	temp_val;
+	long	save_val;
 	int		temp_index;
 	int		index;
 	t_stack	*temp;
 
 	temp = stack_a;
-	save_val = INT_MAX;
+	save_val = LONG_MAX;
 	temp_index = 0;
 	index = 0;
 	while (temp)
 	{
-		temp_val = temp->value - find_val;
-		if (abs(temp_val) < ft_abs(save_val))
+		temp_val = (long) temp->value - (long) find_val;
+		if ((long) ft_abs(temp_val) < (long) ft_abs(save_val))
 		{
 			save_val = temp_val;
 			index = temp_index;

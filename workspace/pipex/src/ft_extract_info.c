@@ -91,31 +91,55 @@ int	parcel_open_fd(int argc, char **argv, t_info *info)
 int	parcel_argv(int argc, char **argv, t_info *info)
 {
 	int i;
-	char c;
 
-	c = ' ';
 	if ( argc > 4 && ft_strstr(argv[1], "here_doc"))
-	{
 		info->here_doc = 1;
-		info->arg_cmd = (char ***) malloc((argc - 3) * sizeof(char **));
-	}
 	else if (argc > 3)
-	{
 		info->here_doc = 0;
-		info->arg_cmd = (char ***) malloc((argc - 2) * sizeof(char **));
-	}
 	else
 		return (perror("Short on arguments"), -1);
+	i = (argc - (2 + info->here_doc));
+	info->arg_cmd = (char ***) malloc( i * sizeof(char **));
 	if (!info->arg_cmd)
 		return (perror("Malloc cmd failed"), -1);
 	i = 0;
 	while (++i + info->here_doc + 2 < argc)
 	{
-		if(ft_strchr_index(argv[i + info->here_doc + 1]) == '\'')
-			c = '\'';
-		info->arg_cmd[i - 1] = ft_split(argv[i + info->here_doc + 1], c);
+		info->arg_cmd[i - 1] = ft_split(argv[i + info->here_doc + 1], ' ');
 		info->arg_cmd[i - 1][0] = ft_witch(info->arg_cmd[i - 1][0]);
+		//rejoin_quoted_args(info->arg_cmd[i - 1]);
 	}
 	info->arg_cmd[i - 1] = NULL;
 	return (0);
+}
+
+rejoin_quoted_args(char **arg_cmd)
+{
+	int word;
+	int ch;
+	word = -1;
+	while(args[++word]) //corre palavras
+	{
+		i = 0;
+		while(args[word][i]) //procura 
+		{
+			new_srch:
+			if (args[word][i] == '\'' || args[word][i] == '\"' )
+			{
+				ch = args[word][i];
+				memshift(&args[word][i], 1);
+				while(args[word])
+				{
+					temp = strnjoin(temp, args[word])
+					while(args[word][i] && args[word][i] != ch)
+						i++;
+					if (args[word++][i - 1] == ch)
+					{
+						memshift(&args[word - 1][i - 1], 1);
+						goto new_srch;
+					}
+				}
+			}
+		}
+	}
 }

@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 14:08:40 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/04/29 19:37:59 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/01/26 01:41:41 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*get_next_line(int fd)
 {
 	char		*new_str;
-	static char	buffer[BUFFER_SIZE + 1];
+	static char	buffer[FOPEN_MAX][BUFFER_SIZE + 1];
 
 	if (fd < 0 || fd > FOPEN_MAX || read(fd, 0, 0) < 0)
-	{
-		ft_clearbuffer(buffer, BUFFER_SIZE + 1);
+	{	
+		ft_clearbuffer(buffer[fd], BUFFER_SIZE + 1);
 		return (NULL);
 	}
 	new_str = NULL;
-	new_str = ft_process_buffer(fd, new_str, buffer);
+	new_str = ft_process_buffer(fd, new_str, buffer[fd]);
 	return (new_str);
 }
 
@@ -55,15 +55,15 @@ char	*ft_process_buffer(int fd, char *new_str, char *buffer)
 	}
 	return (new_str);
 }
-/* 
-int	main(void)
+
+/* int	main(void)
 {
-	int		fd;
+	int	fd;
 	char	*str;
 
 	fd = open("Loren.txt", O_RDONLY);
 	while (1)
-	{
+	{	
 		str = get_next_line(fd);
 		printf("%s\n//////////\n", str);
 		if (!str)
@@ -72,15 +72,4 @@ int	main(void)
 			free(str);
 	}
 	return (0);
-	close(fd);
-	fd = open("Loren.txt", O_RDONLY);
-	while (1)
-	{
-		str = get_next_line(fd);
-		printf("%s\n//////////\n", str);
-		if (!str)
-			break ;
-		else
-			free(str);
-	}
-}*/
+} */

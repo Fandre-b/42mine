@@ -1,5 +1,6 @@
 //TODO
 
+//add ability to use ' and " and $ in the commands
 //check strnjoin and sttindex char unify
 //GNL that passes all stricts in francinette
 //manage better closing files inside the fork
@@ -70,3 +71,30 @@ execve: executes a program with arguments
 ________________________________
 status = unlink("file.txt");
 status = 0 se der delete ao ficheiro, outro val se der error
+
+
+Parsing shell commands with quotes can be tricky because the behavior of the shell is different inside single quotes ('), double quotes ("), and outside of quotes. Here's a simplified plan for how you might do it:
+
+Initialize an empty string to hold the current argument.
+Initialize a variable to keep track of whether you're currently inside single quotes, double quotes, or outside of quotes.
+Iterate over the characters in the command.
+___________
+If you encounter a single quote:
+If you're currently inside single quotes, end the quoted section.
+If you're currently outside of quotes, start a new quoted section.
+If you're currently inside double quotes, add the single quote to the current argument.
+___________
+If you encounter a double quote:
+If you're currently inside double quotes, end the quoted section.
+If you're currently outside of quotes, start a new quoted section.
+If you're currently inside single quotes, add the double quote to the current argument.
+___________
+If you encounter a space:
+If you're currently inside quotes, add the space to the current argument.
+If you're currently outside of quotes, end the current argument and start a new one.
+If you encounter any other character, add it to the current argument.
+Continue until you've processed all the characters in the command.
+
+spaces do the argument seperation.
+" and ' are used to set what are strings
+if " add do nothing just delete " (shell was suposed to do the subs)
