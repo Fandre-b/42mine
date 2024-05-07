@@ -135,48 +135,48 @@ char	**ft_split(char *str, char c)
 // 		if
 // 			shift
 //{"/usr/bin/awk", '/ur/, END, {print, $1}', NULL};
-			1		 2		3	  4		 	  5
+// 			1		 2		3	  4		 	  5
 
 
-void rejoin_quoted_args(char **arg_cmd)
-{
-	int w;
-	int i;
-	int idx;
-	char ch;
-	char *temp;
+// void rejoin_quoted_args(char **arg_cmd)
+// {
+// 	int w;
+// 	int i;
+// 	int idx;
+// 	char ch;
+// 	char *temp;
 
-	w = 0;
-	i = 0;
-	temp = NULL;
-	idx = 0;
-	while(arg_cmd[w + i] != NULL)
-	{
-		if (arg_cmd[w][idx] == '\'' || arg_cmd[w][idx] == '\"')
-		{
-			ch = arg_cmd[w][idx];
-			ft_memshift(&arg_cmd[w][idx], 1);
-			while(arg_cmd[w + i] != NULL && ft_strchr_index(arg_cmd[w + i], ch) < 0)
-			{
-				temp = strnjoin(temp, arg_cmd[w + i], ft_strlen(arg_cmd[w + i]));
-				free(arg_cmd[w + i]);//free current saved word first
-				arg_cmd[w + i++] = NULL; //set current to be empty no need tho
-			}
-			ft_memshift(&temp[ft_strchr_index(temp, ch)], 1);
-			arg_cmd[w] = temp;
-		}
-		if (ft_strchr_index(arg_cmd[w], ch) < 0 && arg_cmd[w + i][++idx] == '\0')
-		{//so transfere para o proximo se nao tiver encontrado 
-			while(arg_cmd[++w + 1]);
-			{
-				w++;
-				i = 0;
-			}
-		}
-	}
-	return ;
-}//gotta do 2 functions this aint working
+// 	w = 0;
+// 	i = 0;
+// 	temp = NULL;
+// 	idx = 0;
+// 	while(arg_cmd[w + i] != NULL)
+// 	{
+// 		if (arg_cmd[w][idx] == '\'' || arg_cmd[w][idx] == '\"')
+// 		{
+// 			ch = arg_cmd[w][idx];
+// 			ft_memshift(&arg_cmd[w][idx], 1);
+// 			while(arg_cmd[w + i] != NULL && ft_strchr_index(arg_cmd[w + i], ch) < 0)
+// 			{
+// 				temp = strnjoin(temp, arg_cmd[w + i], ft_strlen(arg_cmd[w + i]));
+// 				free(arg_cmd[w + i]);//free current saved word first
+// 				arg_cmd[w + i++] = NULL; //set current to be empty no need tho
+// 			}
+// 			ft_memshift(&temp[ft_strchr_index(temp, ch)], 1);
+// 			arg_cmd[w] = temp;
+// 		}
+// 		if (ft_strchr_index(arg_cmd[w], ch) < 0 && arg_cmd[w + i][++idx] == '\0')
+// 		{//so transfere para o proximo se nao tiver encontrado 
+// 			while(arg_cmd[++w + 1]);
+// 			{
+// 				w++;
+// 				i = 0;
+// 			}
+// 		}
+// 	}
+// 	return ;
+// }//gotta do 2 functions this aint working
 
 
-while words
-idx = 
+// while words
+// idx = 

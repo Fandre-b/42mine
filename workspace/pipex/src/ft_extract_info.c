@@ -113,33 +113,33 @@ int	parcel_argv(int argc, char **argv, t_info *info)
 	return (0);
 }
 
-rejoin_quoted_args(char **arg_cmd)
-{
-	int word;
-	int ch;
-	word = -1;
-	while(args[++word]) //corre palavras
-	{
-		i = 0;
-		while(args[word][i]) //procura 
-		{
-			new_srch:
-			if (args[word][i] == '\'' || args[word][i] == '\"' )
-			{
-				ch = args[word][i];
-				memshift(&args[word][i], 1);
-				while(args[word])
-				{
-					temp = strnjoin(temp, args[word])
-					while(args[word][i] && args[word][i] != ch)
-						i++;
-					if (args[word++][i - 1] == ch)
-					{
-						memshift(&args[word - 1][i - 1], 1);
-						goto new_srch;
-					}
-				}
-			}
-		}
-	}
-}
+// rejoin_quoted_args(char **arg_cmd)
+// {
+// 	int word;
+// 	int ch;
+// 	word = -1;
+// 	while(args[++word]) //corre palavras
+// 	{
+// 		i = 0;
+// 		while(args[word][i]) //procura 
+// 		{
+// 			new_srch:
+// 			if (args[word][i] == '\'' || args[word][i] == '\"' )
+// 			{
+// 				ch = args[word][i];
+// 				memshift(&args[word][i], 1);
+// 				while(args[word])
+// 				{
+// 					temp = strnjoin(temp, args[word])
+// 					while(args[word][i] && args[word][i] != ch)
+// 						i++;
+// 					if (args[word++][i - 1] == ch)
+// 					{
+// 						memshift(&args[word - 1][i - 1], 1);
+// 						goto new_srch;
+// 					}
+// 				}
+// 			}
+// 		}
+// 	}
+// }
