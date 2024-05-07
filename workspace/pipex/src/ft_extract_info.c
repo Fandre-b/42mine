@@ -12,7 +12,7 @@
 
 #include "pipex.h"
 
-char	*ft_witch(char *first_cmd)
+char	*ft_witch(char *first_cmd, char **envp)
 {
 	char *cmd[3];
 	int fd_which[2];
@@ -20,12 +20,12 @@ char	*ft_witch(char *first_cmd)
 	char *path;
 
 	path = NULL;
-	cmd[0] = "/bin/which";
+	cmd[0] = "NULL";
 	cmd[1] = first_cmd;
 	cmd[2] = NULL;
 	if (pipe(fd_which) == -1)
 		return (perror("pipe failed"), NULL);
-	execute_command(STDIN_FILENO, fd_which[1], cmd);
+	execute_command(STDIN_FILENO, fd_which[1], cmd, envp);
 	close(fd_which[1]);
 	while (get_next_line(fd_which[0], &line) > 0)
 		path = ft_strnjoin(path, line, ft_strlen(line));
@@ -33,6 +33,7 @@ char	*ft_witch(char *first_cmd)
 	if (!path)
 		return (path);
 	path[ft_strchr_index(path, '\n')] = '\0';
+	free(first_cmd);
 	return (path);
 }
 
@@ -106,7 +107,7 @@ int	parcel_argv(int argc, char **argv, t_info *info)
 	while (++i + info->here_doc + 2 < argc)
 	{
 		info->arg_cmd[i - 1] = ft_split(argv[i + info->here_doc + 1], ' ');
-		info->arg_cmd[i - 1][0] = ft_witch(info->arg_cmd[i - 1][0]);
+		info->arg_cmd[i - 1][0] = ft_witch(info->arg_cmd[i - 1][0], info->envp);
 		//rejoin_quoted_args(info->arg_cmd[i - 1]);
 	}
 	info->arg_cmd[i - 1] = NULL;

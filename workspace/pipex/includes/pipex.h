@@ -31,23 +31,24 @@ typedef struct	s_info
     int		fd[2];
     int		here_doc;
     char	***arg_cmd;
+    char    **envp;
     char	*limiter;
 }				t_info;
 
 
-int		main(int argc, char **argv);
+int		main(int argc, char **argv, char **envp);
 int		pipe_arg_cmd(t_info *info);
 void	free_info(t_info *info);
 //extract info
 int		parcel_argv(int argc, char **argv, t_info *info);
 int		parcel_open_fd(int argc, char **argv, t_info *info);
-char	*ft_witch(char *first_cmd);
+char	*ft_witch(char *first_cmd, char **envp);
 int		input_gnl(t_info *info);
 //run program/command
-void	exe_cmd_child(int input_fd, int output_fd, int *fd_error,  char **cmd);
-void	exe_cmd_child(int input_fd, int output_fd, int *fd_error,  char **cmd);
+void	exe_cmd_child(int input_fd, int output_fd, int *fd_error,  char **cmd, char **envp);
+void	exe_cmd_parent(int input_fd, int output_fd, int *fd_error);
 
-int		execute_command(int input_fd, int output_fd, char **cmd);
+int		execute_command(int input_fd, int output_fd, char **cmd, char **envp);
 //big utils
 int		get_next_line(int fd, char **new_str);
 char	**ft_split(char *str, char c);

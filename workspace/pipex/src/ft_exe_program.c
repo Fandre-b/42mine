@@ -32,7 +32,7 @@ void	exe_cmd_parent(int input_fd, int output_fd, int *fd_error)
 	return ;
 }
 
-void	exe_cmd_child(int input_fd, int output_fd, int *fd_error,  char **cmd)
+void	exe_cmd_child(int input_fd, int output_fd, int *fd_error,  char **cmd, char **envp)
 {
 		close(fd_error[0]);
 		dup2(fd_error[1], STDERR_FILENO); //set 
@@ -47,7 +47,7 @@ void	exe_cmd_child(int input_fd, int output_fd, int *fd_error,  char **cmd)
 			dup2(output_fd, STDOUT_FILENO);
 			close(output_fd);
 		}
-		if (cmd[0] != NULL && execve(cmd[0], cmd, NULL) == -1) 
+		if (cmd[0] != NULL && execve(cmd[0], cmd, envp) == -1) 
 		{
 			perror("execve failed");
 			exit(EXIT_FAILURE);  // Terminate the child process if execve fails
@@ -60,7 +60,7 @@ void	exe_cmd_child(int input_fd, int output_fd, int *fd_error,  char **cmd)
     return ;
 }
 
-int    execute_command(int input_fd, int output_fd, char **cmd)
+int    execute_command(int input_fd, int output_fd, char **cmd, char **envp)
 {
 	pid_t pid;
 	int fd_error[2];
@@ -71,7 +71,7 @@ int    execute_command(int input_fd, int output_fd, char **cmd)
 	if (pid == -1)//basta em returm
 		return (perror("fork failed"), -1);
 	if (0 == pid)
-		exe_cmd_child(input_fd, output_fd, fd_error, cmd);
+		exe_cmd_child(input_fd, output_fd, fd_error, cmd, envp);
 	else
 		exe_cmd_parent(input_fd, output_fd, fd_error);
 	return (0);

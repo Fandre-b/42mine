@@ -44,14 +44,14 @@ int	pipe_arg_cmd(t_info *info)//TOdo: fix
 		if (info->arg_cmd[n + 1] != NULL)
 		{
 			pipe(fd);
-			if (execute_command(input_fd, fd[1], info->arg_cmd[n]) == -1)
+			if (execute_command(input_fd, fd[1], info->arg_cmd[n], info->envp) == -1)
 				return (-1);
 			//close(fd[1]); exe will close
 			input_fd = fd[0];
 		}
 		if (info->arg_cmd[n + 1] == NULL)
 		{
-			if (execute_command(input_fd, info->fd[1], info->arg_cmd[n]) == -1)
+			if (execute_command(input_fd, info->fd[1], info->arg_cmd[n], info->envp) == -1)
 				return (-1);
 			close(info->fd[0]);
 		}
@@ -94,7 +94,7 @@ void	print_cmds(char *str, char **matrix)
 	printf("\n");
 }
 
-int main(int argc, char **argv)
+int main(int argc, char **argv, char **envp)
 {
 	t_info	*info;
 
@@ -104,6 +104,7 @@ int main(int argc, char **argv)
 	if (!info)
 		return (perror("malloc struct failed"), -1);
 	//extract_info(argc, argv, info);
+	info->envp = envp;
 	if (parcel_argv(argc, argv, info) == -1)
 		return (1);
 	if (parcel_open_fd(argc, argv, info) == -1)
