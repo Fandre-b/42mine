@@ -22,7 +22,7 @@ VAL := valgrind --leak-check=full --show-leak-kinds=all -s
 OBJ_DIR := obj
 INCLUDES_DIR := includes
 
-SRCS := src/get_next_line_utils.c src/get_next_line.c src/ft_extract_info.c src/ft_pipex.c src/ft_split.c src/ft_exe_program.c src/ft_libft_utils.c
+SRCS := src/get_next_line.c src/ft_extract_info.c src/ft_pipex.c src/ft_split.c src/ft_exe_program.c src/ft_libft_utils.c
 #src/ft_gnl.c
 BONUS := 
 

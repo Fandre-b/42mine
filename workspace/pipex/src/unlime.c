@@ -1,73 +1,107 @@
 #include "pipex.h"
 
-int    execute_command(pid_t input_fd, pid_t output_fd, char **cmd)
-{
-	pid_t pid;
-	int fd_error[2];
-	char *line;
+void	**ft_ptrshift(void **ptr, int n_shift)
+{//ft_ptrshift
+	int		i;
+	void	**shifted_str;
 
-	pid = fork();
-	if (pid == -1)
-		return (perror("fork failed"), -1);
-	if (pipe(fd_error) == -1)
-		return (perror("pipe failed"), -1);
-	if (0 == pid)
-	{
-        pritnf("inside child process\n")
-		close(fd_error[0]);
-		dup2(fd_error[1], STDERR_FILENO);
-		close(fd_error[1]);
-		if (input_fd != STDIN_FILENO)
-		{
-			dup2(input_fd, STDIN_FILENO);
-			close(input_fd);
-		}
-		if (output_fd != STDOUT_FILENO)
-		{
-			dup2(output_fd, STDOUT_FILENO);
-			close(output_fd);
-		}
-        if (execve(cmd[0], cmd, NULL) == -1) 
-        {
-            perror("execve");
-            exit(EXIT_FAILURE);  // Terminate the child process if execve fails
-        }
-	}
-	else
-	{
-        pritnf("inside parent process\n")
-		line = NULL;
-		wait(NULL);
-		close(fd_error[1]);
-		while (get_next_line(fd_error[0], &line) > 0)
-			write(STDOUT_FILENO, line, ft_strlen(line));
-		close(fd_error[0]);
-	}
-	return (0);
+	if (!ptr)
+		return (ptr);
+	shifted_str = ptr;
+	i = -1;
+	while (shifted_str[++i + n_shift])
+		shifted_str[i] = shifted_str[n_shift + i];
+	while (n_shift-- >= 0)
+		shifted_str[i++] = NULL;
+	return (shifted_str);
 }
 
-char	*ft_witch(char *first_cmd)
+void	*ft_strshift(void *ptr, int n_shift)
 {
-	char *cmd[3];
-	int fd_which[2];
-	char *line;
-	char *path;
+	int		i;
+	char	*shifted_str;
 
-	path = NULL;
-	cmd[0] = "/bin/witch";
-	cmd[1] = first_cmd;
-	cmd[2] = NULL;
-	if (pipe(fd_which) == -1)
-		return (perror("pipe failed"), NULL);
-	execute_command(STDIN_FILENO, fd_which[1], cmd);
-	close(fd_which[1]);
-	while (get_next_line(fd_which[0], &line) > 0)
+	if (!ptr)
+		return (ptr);
+	shifted_str = (char *) ptr;
+	i = -1;
+	while (shifted_str[++i + n_shift])
+		shifted_str[i] = shifted_str[n_shift + i];
+	while (n_shift-- >= 0)
+		shifted_str[i++] = 0;
+	return (shifted_str);
+}
+
+void	*ft_memshift(void *ptr, int n_shift, int size, int ele_size)
+{
+	int		i;
+	char	*shifted_str;
+	int		shift_size;
+
+	if (!ptr)
+		return (ptr);
+	shifted_str = (char *) ptr;
+	if (n_shift > size)
+		n_shift = size;
+	shift_size = n_shift * ele_size;
+	i = -1;
+	while (++i < n_shift * ele_size)
+		shifted_str[i] = shifted_str[i + n_shift * ele_size];
+	while (i < size * ele_size)
+		shifted_str[i++] = 0;
+	return ((void *) shifted_str);
+}
+
+
+char *ft_strpbrk(char *str, char *chrs)
+{
+	int i;
+	
+	i = 0;
+	if (!chrs || !str)
+		return (NULL);
+	while(*str)
 	{
-		printf("from witch: %s \n", line);
-		path = ft_strnjoin(path, line, ft_strlen(line));
+		i = -1;
+		while (chrs[++i])
+		{
+			if (*str == chrs[i])
+				return (str);
+		}
+		str++;
 	}
-	close(fd_which[0]);
-	if (!path)
-		return (perror("cmd path not found"), path);
-	return (path);
+	return (NULL);
+}
+
+char *ft_strchr(char *str, char ch)
+{
+	if (!str)
+		return (NULL);
+	while(*str && *str != ch)
+		str++;
+	if (!*str)
+		return (NULL);
+	return (str);
+}
+
+int	ft_strchr_idx(char *str, char ch)
+{
+	char *first_occur;
+
+	first_occur = ft_strchr(str, ch);
+	if (!first_occur)
+		return (-1);
+	else
+		return(first_occur - str);
+}
+
+int	ft_strpbrk_idx(char *str, char *chrs)
+{
+	char *first_occur;
+
+	first_occur = ft_strpbrk(str, chrs);
+	if (!first_occur)
+		return (-1);
+	else
+		return(first_occur - str);
 }

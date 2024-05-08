@@ -6,11 +6,21 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 14:08:40 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/05/03 15:07:41 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/05/08 16:10:18 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+char	*ft_clearbuffer(void *str, int size)
+{
+	char	*char_str;
+
+	char_str = (char *) str;
+	while (size > 0)
+		char_str[--size] = (char) '\0';
+	return (str);
+}
 
 char	*ft_process_buffer(int fd, char *new_str, char *buffer)
 {
@@ -20,14 +30,14 @@ char	*ft_process_buffer(int fd, char *new_str, char *buffer)
 	count = 1;
 	while (count > 0 || buffer[0] != '\0')
 	{
-		newline_pos = ft_strchr_index_gnl(buffer, '\n');
+		newline_pos = ft_strchr_idx(buffer, '\n');
 		if (newline_pos >= 0 && buffer[0] != '\0')
 		{
-			new_str = ft_strnjoin_gnl(new_str, buffer, newline_pos + 1);
-			buffer = ft_memshift_gnl(buffer, newline_pos + 1);
+			new_str = ft_strnjoin(new_str, buffer, newline_pos + 1);
+			buffer = ft_strshift(buffer, newline_pos + 1);
 			break ;
 		}
-		new_str = ft_strnjoin_gnl(new_str, buffer, BUFFER_SIZE);
+		new_str = ft_strnjoin(new_str, buffer, BUFFER_SIZE);
 		buffer = ft_clearbuffer(buffer, BUFFER_SIZE + 1);
 		count = read (fd, buffer, BUFFER_SIZE);
 	}

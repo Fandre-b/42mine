@@ -87,11 +87,11 @@ void	print_cmds(char *str, char **matrix)
 	j = 0;
 	while (matrix[j] != NULL)
 	{
-		printf("%s, ", matrix[j++]);
+		printf("%s - ", matrix[j++]);
 	}
 	if (matrix[j] == NULL)
-		printf("NULL");
-	printf("\n");
+		printf("NULL\n");
+	return ;
 }
 
 int main(int argc, char **argv, char **envp)
@@ -103,7 +103,6 @@ int main(int argc, char **argv, char **envp)
 	info = (t_info *) malloc(sizeof(t_info));
 	if (!info)
 		return (perror("malloc struct failed"), -1);
-	//extract_info(argc, argv, info);
 	info->envp = envp;
 	if (parcel_argv(argc, argv, info) == -1)
 		return (1);

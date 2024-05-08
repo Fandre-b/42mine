@@ -6,14 +6,14 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 14:09:00 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/04/30 10:34:24 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/05/08 15:29:22 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
 char	*ft_strnjoin_gnl(char *old_str, char *str_add, int size)
-{
+{//troca
 	char	*new_str;
 	int		i;
 
@@ -39,7 +39,7 @@ char	*ft_strnjoin_gnl(char *old_str, char *str_add, int size)
 }
 
 int	ft_strchr_index_gnl(char *str, char c)//this
-{
+{//troca
 	int	i;
 
 	i = 0;
@@ -63,7 +63,7 @@ char	*ft_clearbuffer(void *str, int size)
 }
 
 char	*ft_memshift_gnl(void *str, int n_shift)
-{
+{//ft_strshift
 	int		i;
 	char	*shifted_str;
 
@@ -80,3 +80,5 @@ char	*ft_memshift_gnl(void *str, int n_shift)
 		shifted_str[i++] = '\0';
 	return (shifted_str);
 }
+
+

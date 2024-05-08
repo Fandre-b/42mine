@@ -43,6 +43,8 @@ void	free_info(t_info *info);
 int		parcel_argv(int argc, char **argv, t_info *info);
 int		parcel_open_fd(int argc, char **argv, t_info *info);
 char	*ft_witch(char *first_cmd, char **envp);
+char *get_path(char *cmd, char **envp);
+
 int		input_gnl(t_info *info);
 //run program/command
 void	exe_cmd_child(int input_fd, int output_fd, int *fd_error,  char **cmd, char **envp);
@@ -57,16 +59,24 @@ char	**ft_split(char *str, char c);
 //libft utils
 int		ft_strlen(char *s);
 char	*ft_strstr(const char *big, const char *little);
-int		ft_strchr_index(char *str, char c);
+int		ft_strchr_idx(char *str, char ch);
+int ft_strpbrk_idx(char *str, char *chrs);
 char	*ft_strnjoin(char *old_str, char *str_add, int size);
+void	**ft_ptrshift(void **ptr, int n_shift);
+void	*ft_strshift(void *ptr, int n_shift);
 
-char	*ft_strnjoin_gnl(char *old_str, char *str_add, int size);
-int	ft_strchr_index_gnl(char *str, char c);
+
+// char	*ft_strnjoin_gnl(char *old_str, char *str_add, int size);
+// int	ft_strchr_index_gnl(char *str, char c);
 char	*ft_clearbuffer(void *str, int size);
 char	*ft_memshift_gnl(void *str, int n_shift);
 
 void	print_struct(char *str, t_info *info);
 void	print_cmds(char *str, char **matrix);
+
+void rejoin_quoted_args(char **arg_cmd);//
+// void junta(char **arg_cmd);//
+
 
 
 #endif

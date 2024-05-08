@@ -12,24 +12,24 @@
 
 #include "pipex.h"
 
-char	*ft_memshift(void *str, int n_shift)
-{
-	int		i;
-	char	*shifted_str;
+// char	*ft_memshift(void *str, int n_shift)
+// {
+// 	int		i;
+// 	char	*shifted_str;
 
-	i = 0;
-	if (n_shift == 0)
-		return (str);
-	shifted_str = (char *) str;
-	while (shifted_str[i + n_shift])
-	{
-		shifted_str[i] = shifted_str[n_shift + i];
-		i++;
-	}
-	while (i != (10 + 1))
-		shifted_str[i++] = '\0';
-	return (shifted_str);
-}
+// 	i = 0;
+// 	if (n_shift == 0)
+// 		return (str);
+// 	shifted_str = (char *) str;
+// 	while (shifted_str[i + n_shift])
+// 	{
+// 		shifted_str[i] = shifted_str[n_shift + i];
+// 		i++;
+// 	}
+// 	while (i != (10 + 1))
+// 		shifted_str[i++] = '\0';
+// 	return (shifted_str);
+// }
 
 int	get_next_line(int fd, char **new_str)
 {
@@ -45,11 +45,11 @@ int	get_next_line(int fd, char **new_str)
 			count = read(fd, buffer, 10);
 		if (count < 0)
 			break ;
-		pos = ft_strchr_index(buffer, '\n');
+		pos = ft_strchr_idx(buffer, '\n');
 		*new_str = ft_strnjoin(*new_str, buffer, ++pos);
-		ft_memshift(buffer, pos);
-		pos = ft_strchr_index(*new_str, '\n');
-		if (count == 0 || !*new_str ||(*new_str)[pos] == '\n')
+		ft_strshift(buffer, pos);
+		pos = ft_strchr_idx(*new_str, '\n');
+		if (count == 0 || !*new_str || ((*new_str)[pos] == '\n' && pos >= 0))
 			break ;
 	}
 	if (count == -1 ||(count == 0 &&(!*new_str || !(*new_str)[0])))

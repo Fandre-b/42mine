@@ -12,30 +12,30 @@
 
 #include "pipex.h"
 
-char	*ft_witch(char *first_cmd, char **envp)
-{
-	char *cmd[3];
-	int fd_which[2];
-	char *line;
-	char *path;
+// char	*ft_witch(char *first_cmd, char **envp)
+// {
+// 	char *cmd[3];
+// 	int fd_which[2];
+// 	char *line;
+// 	char *path;
 
-	path = NULL;
-	cmd[0] = "NULL";
-	cmd[1] = first_cmd;
-	cmd[2] = NULL;
-	if (pipe(fd_which) == -1)
-		return (perror("pipe failed"), NULL);
-	execute_command(STDIN_FILENO, fd_which[1], cmd, envp);
-	close(fd_which[1]);
-	while (get_next_line(fd_which[0], &line) > 0)
-		path = ft_strnjoin(path, line, ft_strlen(line));
-	close(fd_which[0]);
-	if (!path)
-		return (path);
-	path[ft_strchr_index(path, '\n')] = '\0';
-	free(first_cmd);
-	return (path);
-}
+// 	path = NULL;
+// 	cmd = "NULL";
+// 	cmd[1] = first_cmd;
+// 	cmd[2] = NULL;
+// 	if (pipe(fd_which) == -1)
+// 		return (perror("pipe failed"), NULL);
+// 	execute_command(STDIN_FILENO, fd_which[1], cmd, envp);
+// 	close(fd_which[1]);
+// 	while (get_next_line(fd_which, &line) > 0)
+// 		path = ft_strnjoin(path, line, ft_strlen(line));
+// 	close(fd_which);
+// 	if (!path)
+// 		return (path);
+// 	path[ft_strchr_idx(path, '\n')] = '\0';
+// 	free(first_cmd);
+// 	return (path);
+// }
 
 int	input_gnl(t_info *info) //[] have to pipegetnextline for cmd processes.
 {
@@ -89,10 +89,69 @@ int	parcel_open_fd(int argc, char **argv, t_info *info)
 	return (0);
 }
 
+// char *get_path(char *cmd, char **envp)
+// {
+// 	char *temp;
+// 	int perm;
+// 	char **paths;
+
+// 	perm = -1;
+// 	temp = NULL;
+// 	while(*envp != NULL || temp != NULL)
+// 		temp = ft_strstr(*envp++, "PATH=");
+// 	if (temp != NULL)
+// 		paths = ft_split (temp + 5, ':');
+// 	while (*paths != NULL || perm != 0)
+// 	{
+// 		free(temp);
+// 		temp = ft_strnjoin(*paths++, cmd, ft_strlen(cmd));
+// 		perm = access(temp, F_OK | X_OK);
+// 	}
+// 	while (paths != NULL)
+// 		free(*paths++);
+// 	free(paths);
+// 	if (perm == 0)
+// 	{
+// 		free (cmd);
+// 		cmd = temp;
+// 	}
+// 	return (cmd);
+// }
+
+char *get_path(char *cmd, char **envp)
+{
+	char *temp;
+	char *paths;
+	int perm;
+	int i;
+
+	perm = -1;
+	paths = NULL;
+	printf("getting path\n");
+	while(*envp != NULL && paths == NULL)
+		paths = ft_strstr(*envp++, "PATH=");
+	if (paths != NULL)
+		paths = paths + 5;
+	while (paths && *paths != '\0' && perm != 0)
+	{
+		i = 0;
+		while (paths[i] && paths[i] != ':' && paths[i] != '\0')
+			i++;
+		temp = ft_strnjoin(ft_strnjoin(NULL, paths, i++), "/", 1);
+		temp = ft_strnjoin(temp , cmd, ft_strlen(cmd));
+		perm = access(temp, F_OK | X_OK);
+		paths += i;
+	}
+	if (perm == 0)
+		return (free(cmd), temp);
+	return (free(temp), cmd);
+}
+
 int	parcel_argv(int argc, char **argv, t_info *info)
 {
 	int i;
 
+	//print_cmds("envp", info->envp);
 	if ( argc > 4 && ft_strstr(argv[1], "here_doc"))
 		info->here_doc = 1;
 	else if (argc > 3)
@@ -107,8 +166,10 @@ int	parcel_argv(int argc, char **argv, t_info *info)
 	while (++i + info->here_doc + 2 < argc)
 	{
 		info->arg_cmd[i - 1] = ft_split(argv[i + info->here_doc + 1], ' ');
-		info->arg_cmd[i - 1][0] = ft_witch(info->arg_cmd[i - 1][0], info->envp);
+		if (access(info->arg_cmd[i - 1][0], F_OK | X_OK) != 0)
+			info->arg_cmd[i - 1][0] = get_path(info->arg_cmd[i - 1][0], info->envp);
 		//rejoin_quoted_args(info->arg_cmd[i - 1]);
+		print_cmds("cmd", info->arg_cmd[i - 1]);
 	}
 	info->arg_cmd[i - 1] = NULL;
 	return (0);

@@ -41,8 +41,8 @@ char	**ft_getsplitted(char **matrix, char *str, char c, int size)
 	i_words = 0;
 	while (*str && i_words < size)
 	{
-		i = ft_strchr_index(str, c);
-		if (i > 0)
+		i = ft_strchr_idx(str, c);
+		if (i > 0 || i == -1)
 		{
 			matrix[i_words] = ft_strnjoin(NULL, str, i);
 			if (!matrix[i_words])
@@ -74,6 +74,40 @@ char	**ft_split(char *str, char c)
 	matrix = ft_getsplitted(matrix, str, c, size);
 	return (matrix);
 }
+
+void rejoin_quoted_args(char **arg_cmd)
+{
+	int idx;//
+	int i;
+	char ch;
+	char *temp;
+
+	printf("arg_cmd: %s\n", *(++arg_cmd));
+	while (*(++arg_cmd))
+	{
+		printf("arg_cmd: %s\n", *arg_cmd);
+		idx = ft_strpbrk_idx(*arg_cmd, "\'\"/");
+		printf("idx: %d\n", idx);
+		if (idx >= 0)
+		{
+			ch = (*arg_cmd)[idx];
+			ft_strshift(&((*arg_cmd)[idx]), 1);
+			temp = NULL;
+			i = 0;
+			while (arg_cmd[i] != NULL && ft_strchr_idx(temp, ch) < 0)
+			{
+				temp = ft_strnjoin(temp, arg_cmd[i], ft_strlen(arg_cmd[i]));
+				free(arg_cmd[i++]);
+			}
+			if (ft_strchr_idx(temp, ch))
+				ft_strshift(&temp[ft_strchr_idx(temp, ch)], 1);
+			*arg_cmd = temp;
+			ft_ptrshift((void **)&arg_cmd[1], i);
+		}
+	}
+	return ;
+}
+
 
 // //count words (this is the max value possible)
 // //have matrix 2 by n_words
@@ -180,3 +214,50 @@ char	**ft_split(char *str, char c)
 
 // while words
 // idx = 
+
+// se ' ou "
+// enquanto nao houver passa
+// -guarda val
+// -limpa
+// enquanto i[0] nao houver val em temp 
+// junta em temp
+// free currente
+// limpa temp
+// enquanto i[0] + i[1]
+// "'
+
+// void junta(char **arg_cmd)
+// {
+// 	int idx;//
+// 	int i;
+// 	char *temp;
+// 	char ch;
+
+// 	idx = 0;
+// 	while (*arg_cmd)
+// 	{
+// 		if ((*arg_cmd)[idx] == '\'' || (*arg_cmd)[idx] == '\"')
+// 		{
+// 			ch = (*arg_cmd)[idx];
+// 			ft_memshift(&((*arg_cmd)[idx]), 1);
+// 			temp = NULL;
+// 			i = 0;
+// 			while (arg_cmd[i] != NULL && strchr_idx(temp, ch) < 0)
+// 			{
+// 				temp = strnjoin(temp, arg_cmd[i], ft_strlen(arg_cmd[i]));
+// 				free(arg_cmd[i++]);
+// 			}
+// 			if (ft_strchr_index(temp, ch))
+// 				ft_memshift(&temp[ft_strchr_index(temp, ch)], 1);
+// 			*arg_cmd = temp;
+// 			ft_memshift(&arg_cmd[1], i);
+// 		}
+// 		if ((*arg_cmd)[idx++] == '\0')
+// 		{
+// 			arg_cmd++;
+// 			idx = 0;
+// 		}
+// 	}
+// 	return ;
+// }
+
