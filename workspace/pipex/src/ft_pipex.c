@@ -64,7 +64,7 @@ void	print_struct(char *str, t_info *info)
 {
 	int i;
 
-	printf("\n     ---%s---\n", str);
+	printf("\n   ---%s---\n", str);
 	printf("fd: %d, %d\n", info->fd[0], info->fd[1]);
 	printf("here_doc: %d\n", info->here_doc);
 	printf("\n    //COMANDS//\n");
@@ -107,7 +107,7 @@ int main(int argc, char **argv, char **envp)
 	info->envp = envp;
 	if (parcel_argv(argc, argv, info) == -1)
 		return (1);
-	print_struct("info", info);
+	print_struct("struct info", info);
 	if (parcel_open_fd(argc, argv, info) == -1)
 		return (1);
 	pipe_arg_cmd(info);
