@@ -47,15 +47,16 @@ void	exe_cmd_child(int input_fd, int output_fd, int *fd_error,  char **cmd, char
 		dup2(output_fd, STDOUT_FILENO);
 		close(output_fd);
 	}
-	if (access(cmd[0], F_OK | X_OK) != 0) 
+	if (cmd[0] && access(cmd[0], F_OK | X_OK) != 0) 
 	{
 		write(STDERR_FILENO, "Command ", 8);
 		write(STDERR_FILENO, cmd[0], ft_strlen(cmd[0]));
 		write(STDERR_FILENO, " not found\n", 11);
-		exit(1);
 	}
-	else if( execve(cmd[0], cmd, envp) == -1)
-		exit(1);
+	if (!cmd[0])
+		write(2, "empty command is still ran\n", 27);
+	if(execve(cmd[0], cmd, envp) == -1)
+		exit(ENOENT);
     exit(0);
 }
 
@@ -64,8 +65,6 @@ int    execute_command(int input_fd, int output_fd, char **cmd, char **envp)
 	pid_t pid;
 	int fd_error[2];
 
-	if (!cmd[0])
-		return (0);
 	if (pipe(fd_error) == -1)
 		return (perror("pipe failed"), -1);
 	pid = fork();
@@ -75,5 +74,5 @@ int    execute_command(int input_fd, int output_fd, char **cmd, char **envp)
 		exe_cmd_child(input_fd, output_fd, fd_error, cmd, envp);
 	else
 		exe_cmd_parent(input_fd, output_fd, fd_error);
-	return (0);
+	return (ENOENT);
 }

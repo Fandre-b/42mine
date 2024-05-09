@@ -42,6 +42,8 @@ int	pipe_arg_cmd(t_info *info)//TOdo: fix
 	input_fd = info->fd[0];
 	while (info->arg_cmd[++n] != NULL)
 	{
+		if ((info->arg_cmd[n + 1] != NULL && info->arg_cmd[n + 1][0] == NULL))
+			n++;
 		if (info->arg_cmd[n + 1] != NULL)
 		{
 			pipe(fd);
@@ -74,7 +76,7 @@ void	print_struct(char *str, t_info *info)
 		print_cmds("", info->arg_cmd[i++]);
 	}
 	if (info->arg_cmd[i] == NULL)
-		printf("cmd%d: NULL\n", i);
+		printf("cmd%d: ->NULL<-\n", i);
 	printf("-------------\n\n");
 	return ;
 }
@@ -87,11 +89,11 @@ void	print_cmds(char *str, char **matrix)
 	j = 0;
 	while (matrix[j] != NULL)
 	{
-		printf("arg%d:%s\n", j,  matrix[j]);
+		printf("arg%d: | %s |\n", j,  matrix[j]);
 		j++;
 	}
 	if (matrix[j] == NULL)
-		printf("arg%d:NULL\n\n", j);
+		printf("arg%d:|NULL|\n\n", j);
 	return ;
 }
 
@@ -107,7 +109,7 @@ int main(int argc, char **argv, char **envp)
 	info->envp = envp;
 	if (parcel_argv(argc, argv, info) == -1)
 		return (1);
-	print_struct("struct info", info);
+	//print_struct("struct info", info);
 	if (parcel_open_fd(argc, argv, info) == -1)
 		return (1);
 	pipe_arg_cmd(info);
