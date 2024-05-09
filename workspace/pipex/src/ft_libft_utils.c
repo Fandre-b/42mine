@@ -62,6 +62,8 @@ char	*ft_strnjoin(char *old_str, char *str_add, int size)//this
 	int		i;
 	char	*new_str;
 
+	if (!str_add[0])
+		return (old_str);
 	len = 0;
 	while (old_str && old_str[len])
 		len++;
@@ -80,34 +82,32 @@ char	*ft_strnjoin(char *old_str, char *str_add, int size)//this
 	while (str_add && ++i < size)
 		new_str[len + i] = str_add[i];
 	new_str[len + i] = '\0';
-	free(old_str);
-	return (new_str);
+	return (free(old_str), new_str);
 }
 
 int ft_strpbrk_idx(char *str, char *chrs)
 {
 	int i;
-	char *save;
+	int j;
 	
 	if (!chrs || !str)
 		return (-2);
-	save = str;
-	i = 0;
-	while(*str)
+	j = 0;
+	while(str[j] != '\0')
 	{
-		i = -1;
-		while (chrs[++i])
+		i = 0;
+		while (chrs[i] != '\0')
 		{
-			if (*str == chrs[i])
-				return (str - save);
+			if (str[j] == chrs[i++])
+				return (j);
 		}
-		str++;
+		j++;
 	}
 	return (-1);
 }
 
 void	**ft_ptrshift(void **ptr, int n_shift)
-{//ft_ptrshift
+{
 	int		i;
 	void	**shifted_str;
 
@@ -125,15 +125,20 @@ void	**ft_ptrshift(void **ptr, int n_shift)
 void	*ft_strshift(void *ptr, int n_shift)
 {
 	int		i;
+	int		len;
 	char	*shifted_str;
 
 	if (!ptr)
 		return (ptr);
 	shifted_str = (char *) ptr;
-	i = -1;
-	while (shifted_str[++i + n_shift])
+	i = 0;
+	len = ft_strlen(ptr);
+	while (shifted_str[i + n_shift])
+	{
 		shifted_str[i] = shifted_str[n_shift + i];
-	while (n_shift-- >= 0)
+		i++;
+	}
+	while (i != len)
 		shifted_str[i++] = '\0';
 	return (shifted_str);
 }

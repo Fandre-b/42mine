@@ -26,7 +26,7 @@ void	free_info(t_info *info)
 		free(info->arg_cmd[i][j]);
 		free(info->arg_cmd[i++]);
 	}
-	free((info->arg_cmd[i]));
+	free((info->arg_cmd[i++]));
 	free(info);
 	return ;
 }
@@ -83,14 +83,15 @@ void	print_cmds(char *str, char **matrix)
 {
 	int j;
 
-	printf("%s", str);
+	printf("%s\n", str);
 	j = 0;
 	while (matrix[j] != NULL)
 	{
-		printf("%s - ", matrix[j++]);
+		printf("arg%d:%s\n", j,  matrix[j]);
+		j++;
 	}
 	if (matrix[j] == NULL)
-		printf("NULL\n");
+		printf("arg%d:NULL\n\n", j);
 	return ;
 }
 
@@ -106,9 +107,9 @@ int main(int argc, char **argv, char **envp)
 	info->envp = envp;
 	if (parcel_argv(argc, argv, info) == -1)
 		return (1);
+	print_struct("info", info);
 	if (parcel_open_fd(argc, argv, info) == -1)
 		return (1);
-	print_struct("info", info);
 	pipe_arg_cmd(info);
 	free_info(info);
 	return (0);

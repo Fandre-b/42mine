@@ -6,21 +6,11 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 14:08:40 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/05/08 16:10:18 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/05/08 20:00:50 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-char	*ft_clearbuffer(void *str, int size)
-{
-	char	*char_str;
-
-	char_str = (char *) str;
-	while (size > 0)
-		char_str[--size] = (char) '\0';
-	return (str);
-}
 
 char	*ft_process_buffer(int fd, char *new_str, char *buffer)
 {

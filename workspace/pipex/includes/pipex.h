@@ -64,12 +64,14 @@ int ft_strpbrk_idx(char *str, char *chrs);
 char	*ft_strnjoin(char *old_str, char *str_add, int size);
 void	**ft_ptrshift(void **ptr, int n_shift);
 void	*ft_strshift(void *ptr, int n_shift);
+char	*ft_strdup(char *s);
 
 
-// char	*ft_strnjoin_gnl(char *old_str, char *str_add, int size);
-// int	ft_strchr_index_gnl(char *str, char c);
-char	*ft_clearbuffer(void *str, int size);
+
+char	*ft_strnjoin_gnl(char *old_str, char *str_add, int size);
+int	ft_strchr_index_gnl(char *str, char c);
 char	*ft_memshift_gnl(void *str, int n_shift);
+char	*ft_clearbuffer(void *str, int size);
 
 void	print_struct(char *str, t_info *info);
 void	print_cmds(char *str, char **matrix);

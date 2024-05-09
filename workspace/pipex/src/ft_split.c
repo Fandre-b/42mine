@@ -42,7 +42,7 @@ char	**ft_getsplitted(char **matrix, char *str, char c, int size)
 	while (*str && i_words < size)
 	{
 		i = ft_strchr_idx(str, c);
-		if (i > 0 || i == -1)
+		if (i >= -1)
 		{
 			matrix[i_words] = ft_strnjoin(NULL, str, i);
 			if (!matrix[i_words])
@@ -77,32 +77,28 @@ char	**ft_split(char *str, char c)
 
 void rejoin_quoted_args(char **arg_cmd)
 {
-	int idx;//
+	int idx[2];
 	int i;
-	char ch;
-	char *temp;
+	static char *temp;
 
-	printf("arg_cmd: %s\n", *(++arg_cmd));
-	while (*(++arg_cmd))
+	while (*(++arg_cmd) != NULL)
 	{
-		printf("arg_cmd: %s\n", *arg_cmd);
-		idx = ft_strpbrk_idx(*arg_cmd, "\'\"/");
-		printf("idx: %d\n", idx);
-		if (idx >= 0)
+		idx[0] = ft_strpbrk_idx(*arg_cmd, "\"\'");
+		if (idx[0] >= 0)
 		{
-			ch = (*arg_cmd)[idx];
-			ft_strshift(&((*arg_cmd)[idx]), 1);
-			temp = NULL;
+			idx[1] = (*arg_cmd)[idx[0]];
+			ft_strshift(&((*arg_cmd)[idx[0]]), 1);
 			i = 0;
-			while (arg_cmd[i] != NULL && ft_strchr_idx(temp, ch) < 0)
+			while (arg_cmd[i] != NULL && ft_strchr_idx(temp, idx[1]) < 0)
 			{
+				temp = ft_strnjoin(temp, " ", 1);
 				temp = ft_strnjoin(temp, arg_cmd[i], ft_strlen(arg_cmd[i]));
 				free(arg_cmd[i++]);
 			}
-			if (ft_strchr_idx(temp, ch))
-				ft_strshift(&temp[ft_strchr_idx(temp, ch)], 1);
+			if (ft_strchr_idx(temp, idx[1]))
+				ft_strshift(&temp[ft_strchr_idx(temp, idx[1])], 1);
 			*arg_cmd = temp;
-			ft_ptrshift((void **)&arg_cmd[1], i);
+			ft_ptrshift((void **)&arg_cmd[1], i - 1);
 		}
 	}
 	return ;

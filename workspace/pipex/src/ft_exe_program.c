@@ -25,7 +25,7 @@ void	exe_cmd_parent(int input_fd, int output_fd, int *fd_error)
 		close(output_fd);
 	while (get_next_line(fd_error[0], &line) > 0)
 	{
-		write(STDOUT_FILENO, line, ft_strlen(line));
+		write(1, line, ft_strlen(line));
 		free(line);
 	}
 	close(fd_error[0]);
@@ -34,29 +34,26 @@ void	exe_cmd_parent(int input_fd, int output_fd, int *fd_error)
 
 void	exe_cmd_child(int input_fd, int output_fd, int *fd_error,  char **cmd, char **envp)
 {
-		close(fd_error[0]);
-		dup2(fd_error[1], STDERR_FILENO); //set 
-		close(fd_error[1]);
-		if (input_fd != STDIN_FILENO)
-		{
-			dup2(input_fd, STDIN_FILENO);
-			close(input_fd);
-		}
-		if (output_fd != STDOUT_FILENO)
-		{
-			dup2(output_fd, STDOUT_FILENO);
-			close(output_fd);
-		}
-		if (cmd[0] != NULL && execve(cmd[0], cmd, envp) == -1) 
-		{
-			perror("execve failed");
-			exit(EXIT_FAILURE);  // Terminate the child process if execve fails
-		}
-		else if (cmd[0] == NULL)
-		{
-			perror("please insert valid command");
-			exit(EXIT_FAILURE) ;
-		}
+	close(fd_error[0]);
+	dup2(fd_error[1], STDERR_FILENO); //set 
+	close(fd_error[1]);
+	if (input_fd != STDIN_FILENO)
+	{
+		dup2(input_fd, STDIN_FILENO);
+		close(input_fd);
+	}
+	if (output_fd != STDOUT_FILENO)
+	{
+		dup2(output_fd, STDOUT_FILENO);
+		close(output_fd);
+	}
+	if (access(cmd[0], F_OK | X_OK) != 0 || execve(cmd[0], cmd, envp) == -1) 
+	{
+		write(STDERR_FILENO, "Command ", 8);
+		write(STDERR_FILENO, cmd[0], ft_strlen(cmd[0]));
+		write(STDERR_FILENO, " not found\n", 11);
+		exit(EXIT_FAILURE);  // Terminate the child process if execve fails
+	}
     return ;
 }
 

@@ -46,7 +46,10 @@ int	get_next_line(int fd, char **new_str)
 		if (count < 0)
 			break ;
 		pos = ft_strchr_idx(buffer, '\n');
-		*new_str = ft_strnjoin(*new_str, buffer, ++pos);
+		if (pos >= 0)
+			*new_str = ft_strnjoin(*new_str, buffer, ++pos);
+		else
+			*new_str = ft_strnjoin(*new_str, buffer, pos++);
 		ft_strshift(buffer, pos);
 		pos = ft_strchr_idx(*new_str, '\n');
 		if (count == 0 || !*new_str || ((*new_str)[pos] == '\n' && pos >= 0))

@@ -12,31 +12,6 @@
 
 #include "pipex.h"
 
-// char	*ft_witch(char *first_cmd, char **envp)
-// {
-// 	char *cmd[3];
-// 	int fd_which[2];
-// 	char *line;
-// 	char *path;
-
-// 	path = NULL;
-// 	cmd = "NULL";
-// 	cmd[1] = first_cmd;
-// 	cmd[2] = NULL;
-// 	if (pipe(fd_which) == -1)
-// 		return (perror("pipe failed"), NULL);
-// 	execute_command(STDIN_FILENO, fd_which[1], cmd, envp);
-// 	close(fd_which[1]);
-// 	while (get_next_line(fd_which, &line) > 0)
-// 		path = ft_strnjoin(path, line, ft_strlen(line));
-// 	close(fd_which);
-// 	if (!path)
-// 		return (path);
-// 	path[ft_strchr_idx(path, '\n')] = '\0';
-// 	free(first_cmd);
-// 	return (path);
-// }
-
 int	input_gnl(t_info *info) //[] have to pipegetnextline for cmd processes.
 {
 	char	*line;
@@ -44,7 +19,6 @@ int	input_gnl(t_info *info) //[] have to pipegetnextline for cmd processes.
 
 	n_error = 1;
 	line = NULL;
-	printf("entered manual input\n");
 	while (n_error)
 	{
 		n_error = get_next_line(STDIN_FILENO, &line);
@@ -89,35 +63,6 @@ int	parcel_open_fd(int argc, char **argv, t_info *info)
 	return (0);
 }
 
-// char *get_path(char *cmd, char **envp)
-// {
-// 	char *temp;
-// 	int perm;
-// 	char **paths;
-
-// 	perm = -1;
-// 	temp = NULL;
-// 	while(*envp != NULL || temp != NULL)
-// 		temp = ft_strstr(*envp++, "PATH=");
-// 	if (temp != NULL)
-// 		paths = ft_split (temp + 5, ':');
-// 	while (*paths != NULL || perm != 0)
-// 	{
-// 		free(temp);
-// 		temp = ft_strnjoin(*paths++, cmd, ft_strlen(cmd));
-// 		perm = access(temp, F_OK | X_OK);
-// 	}
-// 	while (paths != NULL)
-// 		free(*paths++);
-// 	free(paths);
-// 	if (perm == 0)
-// 	{
-// 		free (cmd);
-// 		cmd = temp;
-// 	}
-// 	return (cmd);
-// }
-
 char *get_path(char *cmd, char **envp)
 {
 	char *temp;
@@ -127,7 +72,6 @@ char *get_path(char *cmd, char **envp)
 
 	perm = -1;
 	paths = NULL;
-	printf("getting path\n");
 	while(*envp != NULL && paths == NULL)
 		paths = ft_strstr(*envp++, "PATH=");
 	if (paths != NULL)
@@ -151,7 +95,6 @@ int	parcel_argv(int argc, char **argv, t_info *info)
 {
 	int i;
 
-	//print_cmds("envp", info->envp);
 	if ( argc > 4 && ft_strstr(argv[1], "here_doc"))
 		info->here_doc = 1;
 	else if (argc > 3)
@@ -159,6 +102,7 @@ int	parcel_argv(int argc, char **argv, t_info *info)
 	else
 		return (perror("Short on arguments"), -1);
 	i = (argc - (2 + info->here_doc));
+	printf("i: %d\n", i);
 	info->arg_cmd = (char ***) malloc( i * sizeof(char **));
 	if (!info->arg_cmd)
 		return (perror("Malloc cmd failed"), -1);
@@ -168,40 +112,8 @@ int	parcel_argv(int argc, char **argv, t_info *info)
 		info->arg_cmd[i - 1] = ft_split(argv[i + info->here_doc + 1], ' ');
 		if (access(info->arg_cmd[i - 1][0], F_OK | X_OK) != 0)
 			info->arg_cmd[i - 1][0] = get_path(info->arg_cmd[i - 1][0], info->envp);
-		//rejoin_quoted_args(info->arg_cmd[i - 1]);
-		print_cmds("cmd", info->arg_cmd[i - 1]);
+		rejoin_quoted_args(info->arg_cmd[i - 1]);
 	}
 	info->arg_cmd[i - 1] = NULL;
 	return (0);
 }
-
-// rejoin_quoted_args(char **arg_cmd)
-// {
-// 	int word;
-// 	int ch;
-// 	word = -1;
-// 	while(args[++word]) //corre palavras
-// 	{
-// 		i = 0;
-// 		while(args[word][i]) //procura 
-// 		{
-// 			new_srch:
-// 			if (args[word][i] == '\'' || args[word][i] == '\"' )
-// 			{
-// 				ch = args[word][i];
-// 				memshift(&args[word][i], 1);
-// 				while(args[word])
-// 				{
-// 					temp = strnjoin(temp, args[word])
-// 					while(args[word][i] && args[word][i] != ch)
-// 						i++;
-// 					if (args[word++][i - 1] == ch)
-// 					{
-// 						memshift(&args[word - 1][i - 1], 1);
-// 						goto new_srch;
-// 					}
-// 				}
-// 			}
-// 		}
-// 	}
-// }
