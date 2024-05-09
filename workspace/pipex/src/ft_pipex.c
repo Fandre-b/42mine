@@ -27,6 +27,7 @@ void	free_info(t_info *info)
 		free(info->arg_cmd[i++]);
 	}
 	free((info->arg_cmd[i++]));
+	free((info->arg_cmd));
 	free(info);
 	return ;
 }
@@ -63,19 +64,18 @@ void	print_struct(char *str, t_info *info)
 {
 	int i;
 
-	printf("\n---%s---\n\n", str);
+	printf("\n     ---%s---\n", str);
 	printf("fd: %d, %d\n", info->fd[0], info->fd[1]);
 	printf("here_doc: %d\n", info->here_doc);
-	printf("limiter: %s\n", info->limiter);
-	i = 0;
+	printf("\n    //COMANDS//\n");
 	while (info->arg_cmd && info->arg_cmd[i] != NULL)
 	{
-		printf("cmd%d: ", i);
+		printf(" ->cmd%d: ", i);
 		print_cmds("", info->arg_cmd[i++]);
 	}
 	if (info->arg_cmd[i] == NULL)
 		printf("cmd%d: NULL\n", i);
-	printf("----------\n\n");
+	printf("-------------\n\n");
 	return ;
 }
 
@@ -107,7 +107,7 @@ int main(int argc, char **argv, char **envp)
 	info->envp = envp;
 	if (parcel_argv(argc, argv, info) == -1)
 		return (1);
-	print_struct("info", info);
+	// print_struct("info", info);
 	if (parcel_open_fd(argc, argv, info) == -1)
 		return (1);
 	pipe_arg_cmd(info);

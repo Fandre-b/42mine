@@ -47,14 +47,16 @@ void	exe_cmd_child(int input_fd, int output_fd, int *fd_error,  char **cmd, char
 		dup2(output_fd, STDOUT_FILENO);
 		close(output_fd);
 	}
-	if (access(cmd[0], F_OK | X_OK) != 0 || execve(cmd[0], cmd, envp) == -1) 
+	if (access(cmd[0], F_OK | X_OK) != 0) 
 	{
 		write(STDERR_FILENO, "Command ", 8);
 		write(STDERR_FILENO, cmd[0], ft_strlen(cmd[0]));
 		write(STDERR_FILENO, " not found\n", 11);
-		exit(EXIT_FAILURE);  // Terminate the child process if execve fails
+		exit(1);
 	}
-    return ;
+	else if( execve(cmd[0], cmd, envp) == -1)
+		exit(1);
+    exit(0);
 }
 
 int    execute_command(int input_fd, int output_fd, char **cmd, char **envp)

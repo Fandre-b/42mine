@@ -72,6 +72,7 @@ char *get_path(char *cmd, char **envp)
 
 	perm = -1;
 	paths = NULL;
+	temp = NULL;
 	while(*envp != NULL && paths == NULL)
 		paths = ft_strstr(*envp++, "PATH=");
 	if (paths != NULL)
@@ -79,6 +80,7 @@ char *get_path(char *cmd, char **envp)
 	while (paths && *paths != '\0' && perm != 0)
 	{
 		i = 0;
+		free(temp);
 		while (paths[i] && paths[i] != ':' && paths[i] != '\0')
 			i++;
 		temp = ft_strnjoin(ft_strnjoin(NULL, paths, i++), "/", 1);
@@ -102,7 +104,6 @@ int	parcel_argv(int argc, char **argv, t_info *info)
 	else
 		return (perror("Short on arguments"), -1);
 	i = (argc - (2 + info->here_doc));
-	printf("i: %d\n", i);
 	info->arg_cmd = (char ***) malloc( i * sizeof(char **));
 	if (!info->arg_cmd)
 		return (perror("Malloc cmd failed"), -1);
