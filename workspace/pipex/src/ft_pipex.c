@@ -107,7 +107,7 @@ int main(int argc, char **argv, char **envp)
 	info->envp = envp;
 	if (parcel_argv(argc, argv, info) == -1)
 		return (1);
-	// print_struct("info", info);
+	print_struct("info", info);
 	if (parcel_open_fd(argc, argv, info) == -1)
 		return (1);
 	pipe_arg_cmd(info);
