@@ -111,7 +111,7 @@ int	parcel_argv(int argc, char **argv, t_info *info)
 	while (++i + info->here_doc + 2 < argc)
 	{
 		info->arg_cmd[i - 1] = ft_split(argv[i + info->here_doc + 1], ' ');
-		if (access(info->arg_cmd[i - 1][0], F_OK | X_OK) != 0)
+		if (info->arg_cmd[i - 1][0] && access(info->arg_cmd[i - 1][0], F_OK | X_OK) != 0)
 			info->arg_cmd[i - 1][0] = get_path(info->arg_cmd[i - 1][0], info->envp);
 		rejoin_quoted_args(info->arg_cmd[i - 1]);
 	}

@@ -64,7 +64,7 @@ void	print_struct(char *str, t_info *info)
 {
 	int i;
 
-	printf("\n   ---%s---\n", str);
+	printf("\n  ---%s---\n", str);
 	printf("fd: %d, %d\n", info->fd[0], info->fd[1]);
 	printf("here_doc: %d\n", info->here_doc);
 	printf("\n    //COMANDS//\n");

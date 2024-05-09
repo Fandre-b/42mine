@@ -64,6 +64,8 @@ int    execute_command(int input_fd, int output_fd, char **cmd, char **envp)
 	pid_t pid;
 	int fd_error[2];
 
+	if (!cmd[0])
+		return (0);
 	if (pipe(fd_error) == -1)
 		return (perror("pipe failed"), -1);
 	pid = fork();

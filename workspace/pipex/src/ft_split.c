@@ -71,19 +71,22 @@ char	**ft_split(char *str, char c)
 	matrix = (char **) malloc (sizeof(char *) * (size + 1));
 	if (!matrix)
 		return (NULL);
-	matrix = ft_getsplitted(matrix, str, c, size);
+	if (size == 0)
+		matrix[0] = NULL;
+	else
+		matrix = ft_getsplitted(matrix, str, c, size);
 	return (matrix);
 }
 
-void rejoin_quoted_args(char **arg_cmd)
-{
+void rejoin_quoted_args(char **arg_cmd) //TODO FUN TO LONG 30L
+{//doesnt fully replicate cuz doesnt force EOF, 
 	int ch_idx[2];
 	int i;
 	char *temp;
 
-	while (*(++arg_cmd) != NULL)
+	while (arg_cmd[0] && *(++arg_cmd) != NULL)
 	{
-		ch_idx[0] = ft_strpbrk_idx(*arg_cmd, "\"\'");
+		ch_idx[0] = ft_strpbrk_idx(*arg_cmd, "\"\'"); //SRCH FOR FIRST ' OR "
 		temp = NULL;
 		if (ch_idx[0] >= 0)
 		{
@@ -98,7 +101,7 @@ void rejoin_quoted_args(char **arg_cmd)
 					break ;
 			}
 			if (ft_strchr_idx(&temp[ch_idx[0] + 2], ch_idx[1]) > 0)
-			{
+			{//criar function rm_quotes(char *str)
 				ft_strshift(&(temp[ch_idx[0] + 1]), 1);
 				ft_strshift(&temp[ft_strchr_idx(temp, ch_idx[1])], 1);
 			}
