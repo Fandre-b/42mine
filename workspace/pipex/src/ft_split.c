@@ -76,7 +76,7 @@ char	**ft_split(char *str, char c)
 }
 
 void rejoin_quoted_args(char **arg_cmd)
-{
+{//string too long, doesnt force pass of EOF when just one single quote so output is not exacly the same
 	int ch_idx[2];
 	int i;
 	char *temp;
@@ -88,16 +88,20 @@ void rejoin_quoted_args(char **arg_cmd)
 		if (ch_idx[0] >= 0)
 		{
 			ch_idx[1] = (*arg_cmd)[ch_idx[0]];
-			ft_strshift(&((*arg_cmd)[ch_idx[0]]), 1);
 			i = 0;
-			while (arg_cmd[i] != NULL && ft_strchr_idx(temp, ch_idx[1]) < 0)
+			while (arg_cmd[i] != NULL)
 			{
 				temp = ft_strnjoin(temp, " ", 1);
 				temp = ft_strnjoin(temp, arg_cmd[i], ft_strlen(arg_cmd[i]));
 				free(arg_cmd[i++]);
+				if (ft_strchr_idx(arg_cmd[i], ch_idx[1]) >= 0)
+					break ;
 			}
-			if (ft_strchr_idx(temp, ch_idx[1]) > 0)
+			if (ft_strchr_idx(&temp[ch_idx[0] + 1], ch_idx[1]) > 0)
+			{
+				ft_strshift(&((*arg_cmd)[ch_idx[0]]), 1);
 				ft_strshift(&temp[ft_strchr_idx(temp, ch_idx[1])], 1);
+			}
 			*arg_cmd = temp;
 			ft_ptrshift((void **)&arg_cmd[1], i - 1);
 		}
