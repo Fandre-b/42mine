@@ -25,7 +25,7 @@ void	exe_cmd_parent(int input_fd, int output_fd, int *fd_error)
 		close(output_fd);
 	while (get_next_line(fd_error[0], &line) > 0)
 	{
-		write(1, line, ft_strlen(line));
+		write(2, line, ft_strlen(line));
 		free(line);
 	}
 	close(fd_error[0]);

@@ -46,7 +46,7 @@ int ft_strchr_idx(char *str, char ch)
 {
 	char *save;
 
-	if (!str)
+	if (!str || !ch)
 		return (-2);
 	save = str;
 	while(*str != '\0' && *str != ch)
