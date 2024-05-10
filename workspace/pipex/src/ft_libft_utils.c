@@ -12,6 +12,16 @@
 
 #include "pipex.h"
 
+int	ft_strlen(char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
+}
+
 char	*ft_strstr(const char *big, const char *little)
 {
 	size_t	i;
@@ -32,31 +42,7 @@ char	*ft_strstr(const char *big, const char *little)
 	return (NULL);
 }
 
-int	ft_strlen(char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
-}
-
-int ft_strchr_idx(char *str, char ch)
-{
-	char *save;
-
-	if (!str || !ch)
-		return (-2);
-	save = str;
-	while(*str != '\0' && *str != ch)
-		str++;
-	if (!*str)
-		return (-1);
-	return (str - save);
-}
-
-char	*ft_strnjoin(char *old_str, char *str_add, int size)//this
+char	*ft_strnjoin(char *old_str, char *str_add, int size)
 {
 	int		len;
 	int		i;
@@ -82,63 +68,36 @@ char	*ft_strnjoin(char *old_str, char *str_add, int size)//this
 	while (str_add && ++i < size)
 		new_str[len + i] = str_add[i];
 	new_str[len + i] = '\0';
-	return (free(old_str), new_str);
+	return (free (old_str), new_str);
 }
 
-int ft_strpbrk_idx(char *str, char *chrs)
+char	*ft_clearbuffer(void *str, int size)
 {
-	int i;
-	int j;
-	
-	if (!chrs || !str)
-		return (-2);
-	j = 0;
-	while(str[j] != '\0')
-	{
-		i = 0;
-		while (chrs[i] != '\0')
-		{
-			if (str[j] == chrs[i++])
-				return (j);
-		}
-		j++;
-	}
-	return (-1);
+	char	*char_str;
+
+	char_str = (char *) str;
+	while (size > 0)
+		char_str[--size] = (char) '\0';
+	return (str);
 }
 
-void	**ft_ptrshift(void **ptr, int n_shift)
+int	ft_countword(const char *str, char c)
 {
-	int		i;
-	void	**shifted_str;
+	size_t	i;
+	size_t	count;
 
-	if (!ptr)
-		return (ptr);
-	shifted_str = ptr;
-	i = -1;
-	while (shifted_str[++i + n_shift])
-		shifted_str[i] = shifted_str[n_shift + i];
-	while (n_shift-- >= 0)
-		shifted_str[i++] = NULL;
-	return (shifted_str);
-}
-
-void	*ft_strshift(void *ptr, int n_shift)
-{
-	int		i;
-	int		len;
-	char	*shifted_str;
-
-	if (!ptr)
-		return (ptr);
-	shifted_str = (char *) ptr;
 	i = 0;
-	len = ft_strlen(ptr);
-	while (shifted_str[i + n_shift])
+	count = 0;
+	while (str[i])
 	{
-		shifted_str[i] = shifted_str[n_shift + i];
-		i++;
+		while (str[i] && c == str[i])
+			i++;
+		if (str[i] && str[i] != c)
+		{
+			count++;
+			while (str[i] && str[i] != c)
+				i++;
+		}
 	}
-	while (i != len)
-		shifted_str[i++] = '\0';
-	return (shifted_str);
+	return (count);
 }

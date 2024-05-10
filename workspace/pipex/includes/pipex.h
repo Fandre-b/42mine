@@ -26,59 +26,47 @@
 # define BUFFER_SIZE 32
 #endif
 
-typedef struct	s_info
+typedef struct s_info
 {
-    int		fd[2];
-    int		here_doc;
-    char	***arg_cmd;
-    char    **envp;
-    char	*limiter;
+	int		fd[2];
+	int		here_doc;
+	char	***cmd;
+	char	**envp;
+	char	*limiter;
 }				t_info;
-
 
 int		main(int argc, char **argv, char **envp);
 int		pipe_arg_cmd(t_info *info);
 void	free_info(t_info *info);
-//extract info
+////extract info
 int		parcel_argv(int argc, char **argv, t_info *info);
+void	rejoin_quoted_args(char **arg_cmd);
+void	foo(char **arg_cmd, char ch, int idx)
+char	*get_path(char *cmd, char **envp);
 int		parcel_open_fd(int argc, char **argv, t_info *info);
-char	*ft_witch(char *first_cmd, char **envp);
-char *get_path(char *cmd, char **envp);
-
 int		input_gnl(t_info *info);
-//run program/command
-void	exe_cmd_child(int input_fd, int output_fd, int *fd_error,  char **cmd, char **envp);
-void	exe_cmd_parent(int input_fd, int output_fd, int *fd_error);
-
+////run program ->TODO restructure passing args TO MANY ARGS
 int		execute_command(int input_fd, int output_fd, char **cmd, char **envp);
-//big utils
+void	exe_cmd_child(int input_fd, int output_fd, int *fd_error, char **cmd, char **envp);
+void	exe_cmd_parent(int input_fd, int output_fd, int *fd_error);
+////big utils
 int		get_next_line(int fd, char **new_str);
 char	**ft_split(char *str, char c);
-
-	//split TODO static rest of functions
-//libft utils
+////libft utils
+//split utils
+char	*ft_clearbuffer(void *str, int size);
+int		ft_countword(const char *str, char c);
+//string utils
 int		ft_strlen(char *s);
 char	*ft_strstr(const char *big, const char *little);
-int		ft_strchr_idx(char *str, char ch);
-int ft_strpbrk_idx(char *str, char *chrs);
 char	*ft_strnjoin(char *old_str, char *str_add, int size);
-void	**ft_ptrshift(void **ptr, int n_shift);
+int		ft_strchr_idx(char *str, char ch);
+int		ft_strpbrk_idx(char *str, char *chrs);
 void	*ft_strshift(void *ptr, int n_shift);
-char	*ft_strdup(char *s);
-
-
-
-char	*ft_strnjoin_gnl(char *old_str, char *str_add, int size);
-int	ft_strchr_index_gnl(char *str, char c);
-char	*ft_memshift_gnl(void *str, int n_shift);
-char	*ft_clearbuffer(void *str, int size);
-
+//pointer utils
+void	**ft_ptrshift(void **ptr, int n_shift);
+//debug utils TODO REMOVE
 void	print_struct(char *str, t_info *info);
 void	print_cmds(char *str, char **matrix);
-
-void rejoin_quoted_args(char **arg_cmd);//
-// void junta(char **arg_cmd);//
-
-
 
 #endif

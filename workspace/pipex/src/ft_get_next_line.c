@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   ft_get_next_line.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 14:08:40 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/05/08 20:00:50 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/05/10 12:08:10 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,18 @@ char	*ft_process_buffer(int fd, char *new_str, char *buffer)
 	{
 		ft_clearbuffer(buffer, BUFFER_SIZE + 1);
 		if (new_str)
-			free(new_str);
+			free (new_str);
 		return (NULL);
 	}
 	return (new_str);
 }
 
-int		get_next_line(int fd, char	**new_str)
+int	get_next_line(int fd, char	**new_str)
 {
 	static char	buffer[FOPEN_MAX][BUFFER_SIZE + 1];
 
 	if (fd < 0 || fd > FOPEN_MAX || read(fd, 0, 0) < 0)
-	{	
+	{
 		ft_clearbuffer(buffer[fd], BUFFER_SIZE + 1);
 		return (-1);
 	}
@@ -56,4 +56,3 @@ int		get_next_line(int fd, char	**new_str)
 		return (0);
 	return (1);
 }
-
