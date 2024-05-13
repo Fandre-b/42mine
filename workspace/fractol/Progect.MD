@@ -1,4 +1,76 @@
 
+### do inicio #################
+parcel info
+->use some kind of printf flag finder that will implement flags in arguments. maybe reuse pipex flag
+->flags will change structure that will add variation to pixel production
+->create these structures //mos just have to be malloc colour has more into it
+
+-->pixel production controll //used to change 
+	--size of the image
+	--vibration
+	--loop (kepp running) 
+	--resolution (add blur)
+	--auto zoom
+	--colour scheme //user may controll scheme, saturation, brightness, contrast, hue, etc
+	--change speed// so an variable can be used to dynamic change number of interations and window change spee
+
+->pixel production output
+	--axix pos
+	--colour (linked list)
+	--zoom (change dinamicly lots of variables (see functions for them))
+
+->mlx structure
+	-mlx
+	-mlx window
+	-mlx image
+	-mlx key
+	-mlx mouse
+	-mlx hook
+	-mlx loop //
+	-mlx pixel //center
+	-mlx color //scheme
+	-mlx xpm
+
+mlxinitiate();
+iniciate mlx
+whait for change
+->{whells zoom, esq/cross exit}
+->//{zoom follow mouse, arrow keys move, shift "make colour range shift"}
+Open fractol //this here can be tested alot with img/pixel put internat picture
+
+fractall_caller();
+->function that can loop or not depending on signal ??loop allways
+	if struct changed
+	//open while indefinitly
+	//calculate the fractal();, // keep loop for collor change
+	//if new calculations with new values
+		////my_pixel_put(buffer, struct); new pixels buffer 
+		////pass pixels into window
+		////pass window
+	//update_struct(); if(color/pos change)
+
+//foo//update_struct(); depending on what is activated change position and clours (liked list next)
+//foo//pixell production (given the output of fractall change pixels colout)
+
+update struct with new values
+//foo//change collor to into next -> have liked structures for colour change next (change colour)
+//flag//function that vibrates image with colour and axis shit (change colour and pos_dinamic)
+//pos//check how possition is passed into program with signals (pos dinamic)
+fractoll_calulations()
+
+deal errors and prints
+free all
+return
+
+-----------------
+need to have min 3 sets
+find way to imprve to run fast
+save moves, dinamic resolution, 
+see more downpage there alot of theory
+
+
+_________________
+
 ###
  So an fractol is the repetition of an strocture. Its is defined by some rule and falls out of bounds when this rule is not meet.
  f.e. mandelbrot set uses as rule the sum series Z = Z^2 + c <Z is the complex value and C the complex stating position>

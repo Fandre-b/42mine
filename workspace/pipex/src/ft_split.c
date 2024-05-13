@@ -47,17 +47,17 @@ char	**ft_split(char *str, char c)
 	if (!str)
 		return (NULL);
 	size = ft_countword(str, c);
+	if (size == 0)
+		size = 1;
 	matrix = (char **) malloc (sizeof(char *) * (size + 1));
 	if (!matrix)
 		return (NULL);
-	if (size == 0)
-		matrix[0] = NULL;
 	else
 		matrix = ft_getsplitted(matrix, str, c, size);
 	return (matrix);
 }
 
-void	foo(char **arg_cmd, char ch, int idx)
+void	join_rm_quotes(char **arg_cmd, char ch, int idx)
 {
 	int		i;
 	char	*temp;
@@ -93,7 +93,7 @@ void	rejoin_quoted_args(char **arg_cmd)
 		if (idx >= 0)
 		{
 			ch = (*arg_cmd)[idx];
-			foo(arg_cmd, ch, idx);
+			join_rm_quotes(arg_cmd, ch, idx);
 		}
 		else
 			arg_cmd++;

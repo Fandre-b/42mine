@@ -22,9 +22,9 @@
 # include <unistd.h>
 # include <fcntl.h>
 
-#ifndef BUFFER_SIZE
-# define BUFFER_SIZE 32
-#endif
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 32
+# endif
 
 typedef struct s_info
 {
@@ -41,7 +41,7 @@ void	free_info(t_info *info);
 ////extract info
 int		parcel_argv(int argc, char **argv, t_info *info);
 void	rejoin_quoted_args(char **arg_cmd);
-void	foo(char **arg_cmd, char ch, int idx)
+void	join_rm_quotes(char **arg_cmd, char ch, int idx);
 char	*get_path(char *cmd, char **envp);
 int		parcel_open_fd(int argc, char **argv, t_info *info);
 int		input_gnl(t_info *info);

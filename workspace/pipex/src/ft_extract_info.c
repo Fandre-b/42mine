@@ -70,7 +70,7 @@ int	parcel_argv(int argc, char **argv, t_info *info)
 {
 	int	i;
 
-	if (argc > 4 && ft_strstr(argv[1], "here_doc"))
+	if (argc > 4 && (ft_strstr(argv[1], "here_doc") - argv[1]) == 0)
 		info->here_doc = 1;
 	else if (argc > 3)
 		info->here_doc = 0;
@@ -79,7 +79,7 @@ int	parcel_argv(int argc, char **argv, t_info *info)
 	i = (argc - (2 + info->here_doc));
 	info->cmd = (char ***) malloc(i * sizeof(char **));
 	if (!info->cmd)
-		return (perror("Malloc cmd failed"), -1);
+		return (perror("Malloc cmd failed"), errno);
 	i = -1;
 	while (++i + 3 + info->here_doc < argc)
 	{
@@ -98,22 +98,22 @@ int	parcel_open_fd(int argc, char **argv, t_info *info)
 	{
 		info->limiter = argv[2];
 		if (-1 == pipe(info->fd))
-			return (perror("pipe failed"), -1);
+			return (perror("pipe failed"), errno);
 		if (-1 == input_gnl(info))
-			return (perror("GNL failed"), -1);
+			return (perror("GNL failed"), errno);
 		info->fd[1] = open(argv[argc - 1], O_WRONLY | O_CREAT | O_APPEND, 0666);
-		if (info->fd[1] == -1)
-			return (perror("open output failed"), -1);
+		if (-1 == info->fd[1])
+			return (perror("open output failed"), errno);
 	}
 	else
 	{
 		info->limiter = NULL;
 		info->fd[0] = open(argv[1], O_RDONLY, 0666);
-		if (info->fd[0] == -1)
-			return (perror("open input failed"), -1);
+		if (-1 == info->fd[0])
+			return (perror("open input failed"), errno);
 		info->fd[1] = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0666);
-		if (info->fd[1] == -1)
-			return (perror("open output failed"), -1);
+		if (-1 == info->fd[1])
+			return (perror("open output failed"), errno);
 	}
 	return (0);
 }

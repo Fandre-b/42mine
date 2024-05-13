@@ -16,7 +16,7 @@ DEBUG_NAME		:= debug
 
 CC := gcc
 RM := -@rm -f
-CFLAGS := -Wall -Wextra -Werror -std=c99 -fsanitize=address
+CFLAGS := -Wall -Wextra -Werror -std=c99
 VAL := valgrind --leak-check=full --show-leak-kinds=all -s
 
 OBJ_DIR := obj
@@ -24,7 +24,7 @@ INCLUDES_DIR := includes
 
 SRCS := src/ft_get_next_line.c src/ft_extract_info.c src/ft_pipex.c src/ft_split.c src/ft_exe_program.c src/ft_libft_utils.c src/ft_libft_utils2.c
 #src/ft_gnl.c
-BONUS := 
+BONUS := src/ft_get_next_line.c src/ft_extract_info.c src/ft_pipex.c src/ft_split.c src/ft_exe_program.c src/ft_libft_utils.c src/ft_libft_utils2.c
 
 OBJS := $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 OBJ_BONUS := $(addprefix $(OBJ_DIR)/, $(BONUS:.c=.o))

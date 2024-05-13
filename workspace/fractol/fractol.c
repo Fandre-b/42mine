@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 15:14:37 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/04/19 12:54:41 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/05/13 12:47:04 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,38 @@ void	init_mlx(t_fractol *fractol);
 float	actualfractol(t_complex coord, double threshold, double margin);
 
 
+
+
+
+void	init_mlx(t_fractol *fractol)
+{
+	int width;
+	int height;
+	
+	fractol->mlx = mlx_init();
+	fractol->win = mlx_new_window(fractol->mlx, WIDTH, HEIGHT, fractol->name);
+	fractol->img.img = mlx_new_image(fractol->mlx, WIDTH, HEIGHT);
+	fractol->name = "Mardelbrot";
+	fractol->img.img  = mlx_xpm_file_to_image(fractol->mlx, "fractal_broccoli.xpm", &width, &height);
+	mlx_put_image_to_window(fractol->mlx, fractol->win, fractol->img.img, 0, 0);
+	//fractol->img.addr = mlx_get_data_addr(fractol->img.img, &fractol->img.bpp, &fractol->img.len_line, &fractol->img.endian);
+	fractol->img.size [0] = width;
+	fractol->img.size [1] = height;
+	return ;
+}
+
+// int foo()
+// {
+
+// }
+
+
+
+
 int		main(void)
 {
 	t_fractol	*fractol;
+	
 	//t_complex	range;
 	//float	margin;
 	
@@ -29,54 +58,14 @@ int		main(void)
 	fractol = (t_fractol *) malloc (sizeof(t_fractol));
 	if (!fractol)
 		return(write(2, "fail", 5), 1);
-	printf("ola\n");
 	fractol->name = "Mardelbrot";
 	init_mlx(fractol);
-	//map_pixels(range, margin, fractol);
+	mlx_key_hook(fractol->win, handle_key, fractol);
+    mlx_mouse_hook(fractol->win, handle_mouse, fractol);
+	mlx_hook(fractol->win, 17, 0, handle_close, fractol);
+	mlx_loop_hook(fractol->mlx, animate_image, fractol);
 	mlx_loop(fractol->mlx);
 	return (0);
-}
-
-void	init_mlx(t_fractol *fractol)
-{
-	fractol->mlx = mlx_init();
-	fractol->win = mlx_new_window(fractol->mlx, WIDTH, HEIGHT, fractol->name);
-	fractol->img.img = mlx_new_image(fractol->mlx, WIDTH, HEIGHT);
-	printf("ola\n");
-	//fractol->img.addr = mlx_get_data_addr(fractol->img.img, &fractol->img.bpp, &fractol->img.len_line, &fractol->img.endian);
-	return ;
-}
-
-unsigned int colour_convert(float *colour_grad)
-{
-	float val;
-	int r;
-	int g;
-	int b;
-	unsigned int rgb;
-
-	//r = 0.5f * (1.0f + cos(2.0f * M_PI * (*val + 0.0f)));
-	//g = 0.5f * (1.0f + cos(2.0f * M_PI * (*val + 0.33f)));
-	//b = 0.5f * (1.0f + cos(2.0f * M_PI * (*val + 0.67f)));
-	r = 0;
-	g = 0;
-	b = 0;
-	val = *colour_grad;
-	if (val > 0.5f)
-		r = (val - 0.5f)/0.5f * 250;
-	else if (val < 0.5f)
-		g = (val)/0.5f * 250;
-	rgb = (r << 16) | (g << 8) | b;
-	printf("%d\n", rgb);
-	return (rgb);
-}
-
-void my_pixel_put(t_data *img, int x, int y,int colour)
-{
-	int	offset;
-
-	offset = (y* img->len_line) + (x + (img->bpp / 8));
-	*(unsigned int *) (img->addr + offset) = colour;
 }
 
 void	map_pixels(t_complex range, float margin, t_fractol *fractol)

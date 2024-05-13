@@ -28,6 +28,8 @@ typedef struct	s_data
 	int		bpp;
 	int		len_line;
 	int		endian;
+	int		*matrix;
+	int		size[2];
 }				t_data;
 
 typedef struct s_fractol
@@ -36,7 +38,19 @@ typedef struct s_fractol
 	void *mlx;
 	void *win;
 	t_data img;
+
 	//interation MAXI
 }               t_fractol;
+
+
+void	init_mlx(t_fractol *fractol);
+int		main(void);
+int handle_key(int keycode, void *param);
+int handle_mouse(int x, int y, void *param);
+int animate_image(void *param);
+void my_pixel_put(t_data *img, int x, int y,int colour);
+unsigned int colour_convert(float *colour_grad);
+int handle_close(void *param);
+
 
 #endif

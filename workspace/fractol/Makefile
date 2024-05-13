@@ -14,14 +14,14 @@ NAME := fractol
 
 CC := @cc
 RM := -@rm -rf
-CFLAGS := -Wall -Wextra -Werror -std=c99
+CFLAGS := -Wall -Wextra -Werror -std=c99 -fsanitize=address -g
 VAL := valgrind --leak-check=full --show-leak-kinds=all -s
 
 #FT := libft
 OBJ_DIR := obj
 INCLUDES_DIR := includes
 
-SRCS := fractol.c
+SRCS := fractol.c pixel_transf.c handles.c
 
 OBJS := $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 
