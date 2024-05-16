@@ -21,7 +21,7 @@ VAL := valgrind --leak-check=full --show-leak-kinds=all -s
 OBJ_DIR := obj
 INCLUDES_DIR := includes
 
-SRCS := fractol.c pixel_transf.c handles.c
+SRCS := ./src/handles.c ./src/pixel_transf.c ./src/new_fractol.c ./src/fractol.c 
 
 OBJS := $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 

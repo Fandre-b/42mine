@@ -40,8 +40,6 @@ void parcel_args(t_fractol *fractol) //argc argv
     return ;
 }
 
-
-
 void my_pixel_put(t_data *img, int x, int y, int colour)
 {//8 b
 	int	offset;

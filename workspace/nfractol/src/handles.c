@@ -29,7 +29,7 @@ int handle_key(int keycode, void *param)
         zoom_times(keycode, fractol);
     if (keycode == 114) //(r)
         reset_fractol(fractol); //recalls parcel_args
-    // if (keycode == 99) //(c)
+    // if (keycode == 99) //(c) //TODO upgrade colour palet and 
         //change_palete(1, fractol);
     //if (keycode >= 49 && keycode <= 57) //(1-9)
         //change_palete(keycode - 48, fractol);
@@ -46,12 +46,9 @@ int handle_mouse(int button, int x, int y, void *param)
     fractol = (t_fractol *)param;
     if(button == 4 || button == 5) //up down
         mouse_zoom(button, x, y, fractol);
-    if(button == 3) // button 4 print coord
+    if(button == 3) 
         mouse_zoom(button, x, y, fractol);
-    // if (button == 4)
-        //zoom(1, fractol);
-    // if (button == 5)
-        //zoom(-1, fractol);
+    // if button 4 print coord
     return 0;
 }
 
@@ -106,7 +103,7 @@ void    move_img(int keycode, t_fractol *fractol)
         shift.y =  20.0f * fractol->constr.step.y * (keycode - 65363);
         fractol->constr.pos.y += shift.y * fractol->constr.range.y;
     }
-    //partial_map(fractol, shift); //TODO partial_map
+    //partial_map(fractol, shift); //TODO partial_map upgrade
     map_pixels(fractol);
     return ;
 }
@@ -120,7 +117,7 @@ void mouse_zoom(int button, int x, int y, t_fractol *fractol)
     if (button == 0)
         fractol->constr.s_zoom *= 1.2f;
     else if (button < 0)
-        fractol->constr.s_zoom /= 1.2f;
+        fractol->constr.s_zoom /= 1.2f; //TODO reorganize main struct
     fractol->constr.pos.x = info.pos.x - info.range.x / 2 + info.step.x * x;
     fractol->constr.pos.y = info.pos.y - info.range.y / 2 + info.step.y * y;
     fractol->constr.update = 1;

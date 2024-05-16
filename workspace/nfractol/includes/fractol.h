@@ -26,7 +26,7 @@ typedef struct s_constr
 	int update;
 	float s_zoom;
 	float escape;
-	float inter;
+	float inter; //int
 	t_complex pos;
 	t_complex start;
 	t_complex range;

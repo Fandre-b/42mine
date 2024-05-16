@@ -1,3 +1,7 @@
+### TODO ####
+//como lidar com conversao height float values
+//se tenho altura e largura diff float
+
 
 ### do inicio #################
 parcel info
