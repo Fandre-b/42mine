@@ -11,7 +11,7 @@
 
 # define WIDTH 1280
 # define HEIGHT 800
-# define MAXI 300
+// # define MAXI 300
 # define PI 3.14159265358979323846f
 
 typedef struct s_complex 
@@ -26,10 +26,10 @@ typedef struct s_constr
 	int update;
 	float s_zoom;
 	float escape;
-	float inter; //int
+	int inter; //int
 	t_complex pos;
 	t_complex start;
-	t_complex range;
+	t_complex radius;
 	t_complex step;
 } 				t_constr; 
 

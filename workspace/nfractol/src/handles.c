@@ -16,6 +16,7 @@ int handle_key(int keycode, void *param)
 {
     t_fractol *fractol;
  
+    printf("keycode: %d\n", keycode);
     fractol = (t_fractol *)param;
     if(keycode == 65307)
     {
@@ -43,6 +44,8 @@ int handle_mouse(int button, int x, int y, void *param)
 {
     t_fractol *fractol;
  
+    printf("button: %d\n", button);
+    printf("x: %d y: %d\n", x, y);
     fractol = (t_fractol *)param;
     if(button == 4 || button == 5) //up down
         mouse_zoom(button, x, y, fractol);
@@ -95,16 +98,17 @@ void    move_img(int keycode, t_fractol *fractol)
 
     if(keycode == 65361 || keycode == 65363) //left or right
     {
-        shift.x =  20.0f * fractol->constr.step.x * (keycode - 65362);
-        fractol->constr.pos.x += shift.x * fractol->constr.range.x;
+        shift.x =  40.0f * fractol->constr.step.x * (float) (keycode - 65362);
+        fractol->constr.pos.x += shift.x; // + fractol->constr.radius.x * 2;
     }
     else if(keycode == 65362 || keycode == 65364) //up or down
     {
-        shift.y =  20.0f * fractol->constr.step.y * (keycode - 65363);
-        fractol->constr.pos.y += shift.y * fractol->constr.range.y;
+        shift.y =  40.0f * fractol->constr.step.y * (float) (keycode - 65363);
+        fractol->constr.pos.y += shift.y; // + fractol->constr.radius.y * 2;
     }
     //partial_map(fractol, shift); //TODO partial_map upgrade
-    map_pixels(fractol);
+    fractol->constr.update = 1;
+    recalc_vals(fractol);
     return ;
 }
 
@@ -118,8 +122,8 @@ void mouse_zoom(int button, int x, int y, t_fractol *fractol)
         fractol->constr.s_zoom *= 1.2f;
     else if (button < 0)
         fractol->constr.s_zoom /= 1.2f; //TODO reorganize main struct
-    fractol->constr.pos.x = info.pos.x - info.range.x / 2 + info.step.x * x;
-    fractol->constr.pos.y = info.pos.y - info.range.y / 2 + info.step.y * y;
+    fractol->constr.pos.x += (x * info.step.x) - info.radius.x;
+    fractol->constr.pos.y += (y * info.step.y) - info.radius.y;
     fractol->constr.update = 1;
     recalc_vals(fractol);
     return ;

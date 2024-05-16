@@ -23,15 +23,15 @@ float	actualfractol(t_complex coord, int maxi, float threshold)
 	z.x = 0;
 	z.y = 0;
 	real_diff = 1.0f;
-	// if (hypot(coord.x, coord.y) > threshold)
-	// 	return (0.0f);
+	if (hypot(coord.x, coord.y) > threshold)
+	 	return (0.0f);
 	while (++i <= maxi && z.x <= threshold && z.x >= -threshold)
 	{
 		old_zx = z.x;
 		z.x = (z.x * z.x) - (z.y * z.y) + coord.x;
 		z.y = (2 * old_zx * z.y) + coord.y;
 		real_diff = fabs((z.x - old_zx) / old_zx);
-		if (real_diff < 1.0f / (10 * maxi)) //* exp(-maxi / 10)) /
+		if (real_diff < 1.0f /100 * exp(-maxi / 10)) // / (10 * maxi)) // TODO change
 			return (0.0f);
 	}
 	if (i - 1 == maxi)
@@ -52,7 +52,7 @@ void    map_pixels(t_fractol *fractol)
 	idx[1] = -1;
 	while(++idx[1] < HEIGHT)
 	{
-		info.start.x = info.pos.x - info.range.x / 2;
+		info.start.x = fractol->constr.start.x;
 		idx[0] = -1;
 		while (++idx[0] < WIDTH)
 		{
@@ -98,21 +98,24 @@ void	recalc_vals(t_fractol *fractol)
     t_constr    info;
 
 	info = fractol->constr;
+	if (info.update == 0)
+		return ;
 	// info.update = 1;
     // info.s_zoom = ;     		Sao mudados     
     // info.pos.x = -0.5f; 		pelas funcoes
     // info.pos.y = 0.0f;
-    info.inter += 20 * info.s_zoom;
-    info.range.x = 3.5f * info.s_zoom;
-    info.range.y = 3.0f * info.s_zoom;
+    //info.inter *= (int) log10(info.s_zoom + 1);
+    info.radius.x = (3.5f / 2) / info.s_zoom;
+    info.radius.y = (3.0f / 2) / info.s_zoom;
     info.escape = 2.0f; //* info.s_zoom/10;
-	info.start.x = info.pos.x - info.range.x;
-	info.start.y = info.pos.y - info.range.y;
-    info.step.x = info.range.x / WIDTH;
-    info.step.y = info.range.y / HEIGHT;
+	info.start.x = info.pos.x - info.radius.x;
+	info.start.y = info.pos.y - info.radius.y;
+    info.step.x = info.radius.x * 2 / WIDTH;
+    info.step.y = info.radius.y * 2 / HEIGHT;
     fractol->constr = info;
 	if (info.update == 1)
 		map_pixels(fractol);
+	 printf("inter %d\n", info.inter);
 	//if (info.update == 2)	
 	info.update = 0;
 	fractol->constr = info;

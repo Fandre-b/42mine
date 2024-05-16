@@ -26,7 +26,7 @@ unsigned int colour_convert(float *colour_grad)
 	val = ((*colour_grad)); //(contraste)
     if(val == 0.0f)
         return (0x000000);
-    r = (val) * 250;
+    r = 2 *(val) * 250;
 	// if (val > 0.5f)
 	// 	r = (val - 0.5f)/0.5f * 250;
 	// else if (val < 0.5f)
