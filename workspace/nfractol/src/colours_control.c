@@ -26,7 +26,7 @@ unsigned int colour_convert(float *colour_grad)
 	val = ((*colour_grad)); //(contraste)
     if(val == 0.0f)
         return (0x000000);
-    r = 2 *(val) * 250;
+    r = log(val) * 250;
 	// if (val > 0.5f)
 	// 	r = (val - 0.5f)/0.5f * 250;
 	// else if (val < 0.5f)
@@ -35,6 +35,14 @@ unsigned int colour_convert(float *colour_grad)
 	//printf("%d\n", rgb);
 	return (rgb);
 }
+
+// static void	set_pixel_color(t_fractol *f, int x, int y, int color)
+// {
+// 		f->buf[x * 4 + y * WIDTH * 4] = color;
+// 		f->buf[x * 4 + y * WIDTH * 4 + 1] = color >> 8;
+// 		f->buf[x * 4 + y * WIDTH * 4 + 2] = color >> 16;
+// 		f->buf[x * 4 + y * WIDTH * 4 + 3] = color >> 24;
+// }
 
 ///////////////////////////////
 ///////////////////////////////

@@ -1,0 +1,29 @@
+ter um zoom que permita reutilizar por exemplo 50% dos pixels e de int a int muda.
+for exemple 1.5 zoom permite reutilizar 66%
+
+se der 1.2 zoom a janela é 83.33% da original.
+portanto 83.33% sao os mesmos pixeis
+16.67 necessitam de ser renderizados
+
+0.8 - 1.25 // 1 a cada 5
+0.75 - 1.33 // 1 a cada 4
+0.66 - 1.5  // 1 a cada 3
+0.5 - 1 // 1 a cada 2
+ nearest-neighbor interpolation method (which simply reuses the value of the nearest pixel), 
+ then every 4th pixel would be a new one that needs to be rendered, and the other 3 pixels 
+equanto 
+
+usar indx da imagem.
+a cada indx dar update ao index_array (do tamanho no maximo da janela)
+equanto nao for o n elemento, reutilizar os outros
+reutilizacao  
+
+array_index[max size img]
+new window size = old window / scale
+get_idx pos of first run 
+wille (row)
+    while (col)
+        if(col) % )
+
+0.2 0.4 0.6 0.8 1
+0.2 0.4 0.6 0.8 |1|

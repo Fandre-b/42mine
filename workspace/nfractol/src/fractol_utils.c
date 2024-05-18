@@ -15,13 +15,15 @@
 void parcel_args(t_fractol *fractol) //argc argv
 {
     t_constr    *info;
+    int i;
 
+    i = -1;
 	info = (t_constr *) malloc (sizeof(t_constr));
     if (!fractol->constr.backup)
 		return ;
     //info = fractol->constr;
     info->s_zoom = 1.0f;     //info->s_zoom VARIABLE
-    info->inter = 100;       //magnification - will increase this value
+    info->inter = 60;       //magnification - will increase this value
     info->pos.x = -0.5f; //info->s_zoom move and mouse - changes this
     info->pos.y = 0.0f; //info->s_zoom move and mouse 
     info->radius.x = 3.5f / 2;    //info->s_zoom - will modify this value
@@ -30,6 +32,11 @@ void parcel_args(t_fractol *fractol) //argc argv
     info->start.y = info->pos.y - info->radius.y;
     info->step.x = info->radius.x * 2 / WIDTH; //info->s_zoom - will modify this value
     info->step.y = info->radius.y * 2 / HEIGHT;
+    while (++i < fmax(HEIGHT, WIDTH))
+	{
+		info->values[i].x = info->start.x + (i * info->step.x);
+		info->values[i].y = info->start.y + (i * info->step.y);
+	}
     //escape = hip(radius.x, radius.y)
     info->escape = 2.0f; //info->s_zoom inscrises
     info->update = 1;

@@ -14,52 +14,52 @@
 
 int handle_key(int keycode, void *param)
 {
-    t_fractol *fractol;
+    t_fractol *f;
  
     // printf("keycode: %d\n", keycode);
-    fractol = (t_fractol *)param;
+    f = (t_fractol *)param;
     if(keycode == 65307)
     {
-        //exit_free(fractol);
-        mlx_destroy_window(fractol->mlx, fractol->win);
+        //exit_free(f);
+        mlx_destroy_window(f->mlx, f->win);
         exit(0);
     }
     if (keycode == 65361 || keycode == 65363 || keycode == 65362 || keycode == 65364)
-        move_img(keycode, fractol);
+        move_img(keycode, f);
     if (keycode == 44 || keycode == 46)
-        zoom_times(keycode, fractol);
+        zoom_times(keycode, f);
     if (keycode == 114) //(r)
-        reset_fractol(fractol); //recalls parcel_args
+        reset_fractol(f); //recalls parcel_args
     // if (keycode == 99) //(c) //TODO upgrade colour palet and 
-        //change_palete(1, fractol);
+        //change_palete(1, f);
     //if (keycode >= 49 && keycode <= 57) //(1-9)
-        //change_palete(keycode - 48, fractol);
+        //change_palete(keycode - 48, f);
     // if (keycode == 108) //(l)
-        //fractol->loop_colour = 1;
+        //f->loop_colour = 1;
     // if (keycode == 107) //(k)
-        //fractol->loop_zoom = 1;
+        //f->loop_zoom = 1;
     return 0;
 }
 int handle_mouse(int button, int x, int y, void *param)
 {
-    t_fractol *fractol;
+    t_fractol *f;
  
     // printf("button: %d\n", button);
     // printf("x: %d y: %d\n", x, y);
-    fractol = (t_fractol *)param;
+    f = (t_fractol *)param;
     if(button == 4 || button == 5) //up down
-        mouse_zoom(button, x, y, fractol);
+        mouse_zoom(button, x, y, f);
     if(button == 3) 
-        mouse_zoom(button, x, y, fractol);
+        mouse_zoom(button, x, y, f);
     // if button 4 print coord
     return 0;
 }
 
 int handle_close(void *param)
 {
-    t_fractol *fractol = (t_fractol *)param;
-    //free(fractol); and exit
-    mlx_put_image_to_window(fractol->mlx, fractol->win, fractol->img.img, 0, 0);
+    t_fractol *f = (t_fractol *)param;
+    //free(f); and exit
+    mlx_put_image_to_window(f->mlx, f->win, f->img.img, 0, 0);
     exit(0);
 }
 
@@ -68,15 +68,15 @@ int handle_close(void *param)
 //////////////////
 //////////////////
 
-void    reset_fractol(t_fractol *fractol)
+void    reset_fractol(t_fractol *f)
 {
-    t_constr *info;
+    t_info *info;
     
-	info = fractol->constr.backup;
-    fractol->constr = *info;
-    fractol->constr.backup = info;
-    fractol->constr.update = 1;
-    recalc_vals(fractol);
+	info = f->info.backup;
+    f->info = *info;
+    f->info.backup = info;
+    f->info.update = 1;
+    recalc_vals(f);
 }
 
 // static void	zoom(t_fractol *f, double zoom)
@@ -92,54 +92,54 @@ void    reset_fractol(t_fractol *fractol)
 // 	f->max_i = f->min_i + zoom * center_i;
 // }//TODO
 
-void    zoom_times(int keycode, t_fractol *fractol)
+void    zoom_times(int keycode, t_fractol *f)
 {
     float zoom_dir;
 
     zoom_dir = (45.0f - (float) keycode);//confusing
     if (zoom_dir > 0)
-        fractol->constr.s_zoom *= 1.2f;
+        f->info.s_zoom *= 1.2f;
     else if (zoom_dir < 0)
-        fractol->constr.s_zoom /= 1.2f;
-    fractol->constr.update = 1;
-    recalc_vals(fractol);
+        f->info.s_zoom /= 1.2f;
+    f->info.update = 1;
+    recalc_vals(f);
     return ;
 }
 
-void    move_img(int keycode, t_fractol *fractol)
+void    move_img(int keycode, t_fractol *f)
 {
     t_complex  shift;
 
     if(keycode == 65361 || keycode == 65363) //left or right
     {
-        shift.x =  40.0f * fractol->constr.step.x * (float) (keycode - 65362);
-        fractol->constr.pos.x += shift.x; // + fractol->constr.radius.x * 2;
+        shift.x =  40.0f * (f->info.step_array[1] - f->info.step_array[0]) * (float) (keycode - 65362);
+        f->info.pos.x += shift.x; // + f->info.radius.x * 2;
     }
     else if(keycode == 65362 || keycode == 65364) //up or down
     {
-        shift.y =  40.0f * fractol->constr.step.y * (float) (keycode - 65363);
-        fractol->constr.pos.y += shift.y; // + fractol->constr.radius.y * 2;
+        shift.y =  40.0f * (f->info.step_array[WIDTH + 1] - f->info.step_array[WIDTH]) * (float) (keycode - 65363);
+        f->info.pos.y += shift.y; // + f->info.radius.y * 2;
     }
-    //partial_map(fractol, shift); //TODO partial_map upgrade
-    fractol->constr.update = 1;
-    recalc_vals(fractol);
+    //partial_map(f, shift); //TODO partial_map upgrade
+    f->info.update = 1;
+    recalc_vals(f);
     return ;
 }
 
-void mouse_zoom(int button, int x, int y, t_fractol *fractol)
+void mouse_zoom(int button, int x, int y, t_fractol *f)
 {
-    t_constr info;
+    t_info info;
     
-	info = fractol->constr;
+	info = f->info;
     button = (4 - button);
     if (button == 0)
-        fractol->constr.s_zoom *= 1.2f;
+        f->info.s_zoom *= 1.2f;
     else if (button < 0)
-        fractol->constr.s_zoom /= 1.2f; //TODO reorganize main struct
-    fractol->constr.pos.x += (x * info.step.x) - info.radius.x;
-    fractol->constr.pos.y += (y * info.step.y) - info.radius.y;
-    fractol->constr.update = 1;
-    recalc_vals(fractol);
+        f->info.s_zoom /= 1.2f; //TODO reorganize main struct
+    f->info.pos.x += (x * (f->info.step_array[1] - f->info.step_array[0])) - info.radius.x;
+    f->info.pos.y += (y * (f->info.step_array[WIDTH + 1] - f->info.step_array[WIDTH])) - info.radius.y;
+    f->info.update = 1;
+    recalc_vals(f);
     return ;
 }
 
