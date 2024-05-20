@@ -14,11 +14,11 @@
 
 float	actualfractol(t_complex coord, t_fractol *f, float threshold)
 {
-	int i;
-	t_complex z;
-	float old_zx;
-	float real_diff;
-	float comp;
+	static int i;
+	static t_complex z;
+	static float old_zx;
+	static float real_diff;
+	static float comp;
 
 	i = -1;
 	z.x = 0;
@@ -36,6 +36,8 @@ float	actualfractol(t_complex coord, t_fractol *f, float threshold)
 	}
 	if (i - 1 == f->info.maxi)
 		return (0.0f);
+	else if (z.x == threshold || z.x == -threshold)
+		return (1.0f);
 	else if (z.x >= threshold || z.x <= -threshold)
 		return ((float)i / f->info.maxi);
 	return (1.0f);
@@ -52,9 +54,9 @@ int animate_image(void *param)
 
 void map_values(t_fractol *f)
 {
-    int i;
-    int j;
-    t_complex val; 
+    static int i;
+    static int j;
+    static t_complex val; 
 
 	j = -1;
 	while(++j < HEIGHT)
@@ -77,19 +79,18 @@ void	recalc_vals(t_fractol *f)
 	clock_t start, end;
 	double cpu_time_used;
 
-	if (f->info.update == 0)
-		return ;
     f->info.maxi = (int) 60 * (1 + pow((f->info.s_zoom), 0.1));
     f->info.radius.x = (3.5f / 2) / f->info.s_zoom;
     f->info.radius.y = (3.0f / 2) / f->info.s_zoom;
+	f->info.step.x = (f->info.radius.x * 2) / WIDTH;
+	f->info.step.y = (f->info.radius.y * 2) / HEIGHT;
 	create_step_array(f);
-	//printf("step x %f, step y %f\n", ->inffo.step_array[WIDTH/2], f->info.step_array[WIDTH/2]);
 	start = clock();
 	if (f->info.update == 1)
 		map_values(f);
     if(f->info.update == 2)
 	{
-        get_colours(f); //colour);
+        get_colours(f);
 	}
 	end = clock();
 	cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;

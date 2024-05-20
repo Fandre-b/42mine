@@ -33,11 +33,10 @@ void parcel_args(t_fractol *f)
 }
 
 void my_pixel_put(t_data *img, int x, int y, int colour)
-{//8 b
+{
 	int	offset;
 
 	offset = (y * img->len_line) + (x * (img->bpp / 8));
-    //line offset + inline pixel offset (8 bits per byte)
 	*(unsigned int *) (img->addr + offset) = colour;
 }
 
@@ -60,13 +59,10 @@ void    create_step_array(t_fractol *f)
 
     start.x = f->info.pos.x - f->info.radius.x;
     start.y = f->info.pos.y - f->info.radius.y;
-    step.x = (f->info.radius.x * 2) / WIDTH;
-    step.y = (f->info.radius.y * 2) / HEIGHT;
+    step = f->info.step;
     i = -1;
     while (++i < WIDTH)
-    {
         f->info.step_array[i] = start.x + step.x * (float) i;
-    }
     while (i - WIDTH < HEIGHT)
     {
         f->info.step_array[i] = start.y + step.y * (float) (i - WIDTH);

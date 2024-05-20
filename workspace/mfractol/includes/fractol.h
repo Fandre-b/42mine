@@ -13,7 +13,7 @@
 
 # define WIDTH 1280
 # define HEIGHT 800
-# define MAXI 60
+# define MAXI 120
 # define PI 3.142
 
 typedef struct s_complex 
@@ -43,6 +43,7 @@ typedef struct s_info
 	float threshold;
 	t_complex pos;
 	t_complex radius;
+	t_complex step;
 	float *array;
 	float *step_array;
 } 				t_info; 

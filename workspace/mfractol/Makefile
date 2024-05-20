@@ -12,9 +12,9 @@
 
 NAME := fractol
 
-CC := @cc
+CC := @gcc
 RM := -@rm -rf
-CFLAGS := -Wall -Wextra -Werror -std=c99 -fsanitize=address -g
+CFLAGS := -Wall -Wextra -Werror -std=c99 -fsanitize=address -Ofast -march=native -funroll-loops
 VAL := valgrind --leak-check=full --show-leak-kinds=all -s
 
 #FT := libft

@@ -27,7 +27,7 @@ int    main(void)
     
 	f = (t_fractol *) malloc (sizeof(t_fractol));
 	if (!f)
-		return(write(2, "fail", 5), 1);
+		return(1);
 	f->name = "Mardelbrot";
 	init_mlx(f);
     parcel_args(f);
@@ -36,7 +36,7 @@ int    main(void)
     mlx_key_hook(f->win, handle_key, f);
     mlx_mouse_hook(f->win, handle_mouse, f);
 	mlx_hook(f->win, 17, 0, handle_close, f);
-	//mlx_loop_hook(f->mlx, animate_image, f);
+	mlx_loop_hook(f->mlx, animate_image, f);
     mlx_loop(f->mlx);
     return (0) ;
 }

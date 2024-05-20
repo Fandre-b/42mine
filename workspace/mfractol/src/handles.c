@@ -44,13 +44,16 @@ int handle_mouse(int button, int x, int y, void *param)
 {
     t_fractol *f;
  
-    // printf("button: %d\n", button);
-    // printf("x: %d y: %d\n", x, y);
     f = (t_fractol *)param;
     if(button == 4 || button == 5) //up down
         mouse_zoom(button, x, y, f);
     if(button == 3) 
-        mouse_zoom(button, x, y, f);
+    {
+        f->info.pos.x += f->info.step.x * (x - WIDTH / 2);
+        f->info.pos.y += f->info.step.y * (y - HEIGHT / 2);
+        f->info.update = 1;
+        recalc_vals(f);
+    }
     // if button 4 print coord
     return 0;
 }
@@ -71,32 +74,21 @@ int handle_close(void *param)
 void    reset_fractol(t_fractol *f)
 {
     t_info *info;
-    
+
 	info = f->info.backup;
+    info->array = f->info.array;
+    info->step_array = f->info.step_array;
     f->info = *info;
     f->info.backup = info;
     f->info.update = 1;
     recalc_vals(f);
 }
 
-// static void	zoom(t_fractol *f, double zoom)
-// {
-// 	double	center_r;
-// 	double	center_i;
-
-// 	center_r = f->min_r - f->max_r;
-// 	center_i = f->max_i - f->min_i;
-// 	f->max_r = f->max_r + (center_r - zoom * center_r) / 2;
-// 	f->min_r = f->max_r + zoom * center_r;
-// 	f->min_i = f->min_i + (center_i - zoom * center_i) / 2;
-// 	f->max_i = f->min_i + zoom * center_i;
-// }//TODO
-
 void    zoom_times(int keycode, t_fractol *f)
 {
     float zoom_dir;
 
-    zoom_dir = (45.0f - (float) keycode);//confusing
+    zoom_dir = (45.0f - (float) keycode);
     if (zoom_dir > 0)
         f->info.s_zoom *= 1.2f;
     else if (zoom_dir < 0)
@@ -108,19 +100,10 @@ void    zoom_times(int keycode, t_fractol *f)
 
 void    move_img(int keycode, t_fractol *f)
 {
-    t_complex  shift;
-
     if(keycode == 65361 || keycode == 65363) //left or right
-    {
-        shift.x =  40.0f * (f->info.step_array[1] - f->info.step_array[0]) * (float) (keycode - 65362);
-        f->info.pos.x += shift.x; // + f->info.radius.x * 2;
-    }
+        f->info.pos.x += 40.0f * f->info.step.x * (float) (keycode - 65362);
     else if(keycode == 65362 || keycode == 65364) //up or down
-    {
-        shift.y =  40.0f * (f->info.step_array[WIDTH + 1] - f->info.step_array[WIDTH]) * (float) (keycode - 65363);
-        f->info.pos.y += shift.y; // + f->info.radius.y * 2;
-    }
-    //partial_map(f, shift); //TODO partial_map upgrade
+        f->info.pos.y += 40.0f * f->info.step.y * (float) (keycode - 65363);
     f->info.update = 1;
     recalc_vals(f);
     return ;
@@ -128,20 +111,23 @@ void    move_img(int keycode, t_fractol *f)
 
 void mouse_zoom(int button, int x, int y, t_fractol *f)
 {
-    t_info info;
+    t_complex   val;
     
-	info = f->info;
     button = (4 - button);
+    val.x = f->info.step_array[x];
+    val.y = f->info.step_array[WIDTH + y];
     if (button == 0)
         f->info.s_zoom *= 1.2f;
     else if (button < 0)
-        f->info.s_zoom /= 1.2f; //TODO reorganize main struct
-    f->info.pos.x += (x * (f->info.step_array[1] - f->info.step_array[0])) - info.radius.x;
-    f->info.pos.y += (y * (f->info.step_array[WIDTH + 1] - f->info.step_array[WIDTH])) - info.radius.y;
+        f->info.s_zoom /= 1.2f;
+    recalc_vals(f);
+    f->info.pos.x = val.x + (WIDTH / 2 - x) * f->info.step.x;
+    f->info.pos.y = val.y + (HEIGHT / 2 - y) * f->info.step.y;
     f->info.update = 1;
     recalc_vals(f);
     return ;
 }
+
 
 //loops
 //
