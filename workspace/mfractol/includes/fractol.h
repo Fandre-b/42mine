@@ -11,9 +11,9 @@
 #ifndef FRACTOL_H
 # define FRACTOL_H
 
-# define WIDTH 1280
+# define WIDTH 800
 # define HEIGHT 800
-# define MAXI 120
+# define MAXI 60
 # define PI 3.142
 
 typedef struct s_complex 

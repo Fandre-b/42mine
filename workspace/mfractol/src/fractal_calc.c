@@ -79,7 +79,7 @@ void	recalc_vals(t_fractol *f)
 	clock_t start, end;
 	double cpu_time_used;
 
-    f->info.maxi = (int) 60 * (1 + pow((f->info.s_zoom), 0.1));
+    f->info.maxi = (int) 60;// * (1 + pow((f->info.s_zoom), 0.1));
     f->info.radius.x = (3.5f / 2) / f->info.s_zoom;
     f->info.radius.y = (3.0f / 2) / f->info.s_zoom;
 	f->info.step.x = (f->info.radius.x * 2) / WIDTH;

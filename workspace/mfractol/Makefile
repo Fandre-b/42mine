@@ -30,6 +30,7 @@ OBJS := $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 #ifeq ($(OS), Linux)
 MLX		= ./minilibx-linux/
 MLX_LNK	= -L$(MLX) -lmlx -lXext -lX11 -lm -lz
+#LFLAGS := -lXext -lX11 -lm
 #MLX_LNK	= -L $(MLX) -lmlx -lXext -lX11 -lm -lz
 #else
 #	MLX		= ./miniLibX/
@@ -56,10 +57,10 @@ $(MLX_LIB):
 
 $(OBJ_DIR)/%.o:	%.c $(MLX_LIB)
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -I$(MLX) -I$(INCLUDES_DIR) -c $< -o $@
+	$(CC) $(CFLAGS) -I$(MLX) -I$(INCLUDES_DIR) -c $< -o $@ $(MLX_LNK)
 
 $(NAME):	$(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(MLX_LNK) -lm -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(MLX_LNK)
 
 test:
 	@echo "<Still need to set up>"
