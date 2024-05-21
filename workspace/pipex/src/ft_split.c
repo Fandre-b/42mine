@@ -47,8 +47,6 @@ char	**ft_split(char *str, char c)
 	if (!str)
 		return (NULL);
 	size = ft_countword(str, c);
-	if (size == 0)
-		size = 1;
 	matrix = (char **) malloc (sizeof(char *) * (size + 1));
 	if (!matrix)
 		return (NULL);

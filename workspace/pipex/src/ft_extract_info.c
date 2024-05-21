@@ -23,7 +23,10 @@ int	input_gnl(t_info *info)
 	{
 		n_error = get_next_line(STDIN_FILENO, &line);
 		if (n_error <= 0)
+		{
+			errno = n_error;
 			break ;
+		}
 		if (ft_strstr(line, info->limiter) != NULL)
 		{
 			write(info->fd[1], line, ft_strstr(line, info->limiter) - line);
@@ -33,8 +36,9 @@ int	input_gnl(t_info *info)
 		write(info->fd[1], line, ft_strlen(line));
 		free (line);
 	}
-	close(info->fd[1]);
-	return (n_error);
+	if (close(info->fd[1] == -1))
+		return (perror("close failed"), errno);
+	return (errno);
 }
 
 char	*get_path(char *cmd, char **envp)
@@ -99,7 +103,7 @@ int	parcel_open_fd(int argc, char **argv, t_info *info)
 		info->limiter = argv[2];
 		if (-1 == pipe(info->fd))
 			return (perror("pipe failed"), errno);
-		if (-1 == input_gnl(info))
+		if (0 != input_gnl(info))
 			return (perror("GNL failed"), errno);
 		info->fd[1] = open(argv[argc - 1], O_WRONLY | O_CREAT | O_APPEND, 0666);
 		if (-1 == info->fd[1])

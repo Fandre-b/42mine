@@ -16,7 +16,7 @@ DEBUG_NAME		:= debug
 
 CC := gcc
 RM := -@rm -f
-CFLAGS := -Wall -Wextra -Werror -std=c99
+CFLAGS := -Wall -Wextra -Werror -std=c99 
 VAL := valgrind --leak-check=full --show-leak-kinds=all -s
 
 OBJ_DIR := obj
