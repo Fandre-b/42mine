@@ -18,8 +18,8 @@
 
 typedef struct s_complex 
 {
-    float x;
-    float y;
+    double x;
+    double y;
 } 				t_complex;
 
 typedef struct	s_data //data structure for the image
@@ -30,8 +30,8 @@ typedef struct	s_data //data structure for the image
 	int		len_line;
 	int		endian;
 	int		size[2];
-	float	*matrix; //here or in f struct
-	float 	zoom;
+	double	*matrix; //here or in f struct
+	double 	zoom;
 }				t_data;
 
 typedef struct s_info 
@@ -39,14 +39,22 @@ typedef struct s_info
 	struct s_info	*backup;
 	int update;
 	int maxi;
-	float s_zoom;
-	float threshold;
+	double s_zoom;
+	double threshold;
 	t_complex pos;
 	t_complex radius;
 	t_complex step;
-	float *array;
-	float *step_array;
+	double *array;
+	double *step_array;
+	double *palette;
 } 				t_info; 
+
+// typedef struct s_colour 
+// {
+// 	int		*palette; //array (size maxi) pallet
+// 	int		color_pattern; //to select pallete construct
+// 	int		color; //colour? or colours?ls
+// }
 
 typedef struct s_fractol //data structure for the fractal
 {
@@ -68,13 +76,13 @@ void    create_step_array(t_fractol *f);
 
 
 //draw map functions
-float	actualfractol(t_complex coord, t_fractol *f, float threshold);
+double	actualfractol(t_complex coord, t_fractol *f, double threshold);
 void map_values(t_fractol *f);
 //// void    partial_map(t_fractol *f, t_complex shift);
 void	recalc_vals(t_fractol *f);
 //colour functions
 void get_colours(t_fractol *f); //, unsigned int colour);
-unsigned int set_colour(float val);
+unsigned int set_colour(double val);
 //events
 int handle_key(int keycode, void *param);
 int handle_mouse(int button, int x, int y, void *param);
