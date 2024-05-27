@@ -65,6 +65,7 @@ int	exe_cmd_parent(t_info *info, int *fd_error)
 		return (perror("close failed"), errno);
 	while (get_next_line(fd_error[0], &error) > 0)
 	{
+		//printf("expec: %s\n", error);
 		write(STDERR_FILENO, error, ft_strlen(error));
 		free (error);
 	}

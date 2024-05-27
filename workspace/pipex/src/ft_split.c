@@ -12,37 +12,61 @@
 
 #include "pipex.h"
 
-char	**ft_getsplitted(char **matrix, char *str, char c, int size)
-{
-	int		i;
-	int		i_words;
+// char	**ft_getsplitted(char **matrix, char *str, char c, int size)
+// {
+// 	int		i;
+// 	int		i_words;
 
-	i_words = 0;
-	while (*str && i_words < size)
-	{
-		i = ft_strchr_idx(str, c);
-		if (i >= -1)
-		{
-			matrix[i_words] = ft_strnjoin(NULL, str, i);
-			if (!matrix[i_words])
-			{
-				while (i_words-- >= 0)
-					free (matrix[i_words]);
-				free (matrix);
-				return (NULL);
-			}
-			i_words++;
-		}
-		str = str + i + 1;
-	}
-	matrix[i_words] = NULL;
-	return (matrix);
+// 	i_words = 0;
+// 	while (*str && i_words < size)
+// 	{
+// 		i = ft_strchr_idx(str, c);
+// 		if (i >= -1)
+// 		{
+// 			matrix[i_words] = ft_strnjoin(NULL, str, i);
+// 			if (!matrix[i_words])
+// 			{
+// 				while (i_words-- >= 0)
+// 					free (matrix[i_words]);
+// 				free (matrix);
+// 				return (NULL);
+// 			}
+// 			i_words++;
+// 		}
+// 		str = str + i + 1;
+// 	}
+// 	matrix[i_words] = NULL;
+// 	return (matrix);
+// }
+
+char	*ft_getsplitted(char **str, char c)
+{
+	char *new_str;
+	int i;
+	int u;
+
+	i = 0;
+	u = 0;
+	while ((*str)[i] && (*str)[i] == c)
+		i++;
+	while ((*str)[i] && (*str)[i] != c)
+		i++;
+	while ((*str)[i + u] && (*str)[i + u] == c)
+		u++;
+	if ((*str)[i + u] == '\0')
+		i += u;
+	new_str = ft_strnjoin(NULL, *str, i);
+	if ((*str)[i] == c)
+		i++;
+	*str = *str + i;
+	return (new_str);
 }
 
 char	**ft_split(char *str, char c)
 {
 	char	**matrix;
 	int		size;
+	int		i_words;
 
 	if (!str)
 		return (NULL);
@@ -50,8 +74,20 @@ char	**ft_split(char *str, char c)
 	matrix = (char **) malloc (sizeof(char *) * (size + 1));
 	if (!matrix)
 		return (NULL);
-	else
-		matrix = ft_getsplitted(matrix, str, c, size);
+	i_words = 0;
+	while (*str && i_words < size)
+	{
+		matrix[i_words] = ft_getsplitted(&str, c);
+		if (!matrix[i_words])
+		{
+			while (i_words-- >= 0)
+				free (matrix[i_words]);
+			free (matrix);
+			return (NULL);
+		}
+		i_words++;
+	}
+	matrix[i_words] = NULL;
 	return (matrix);
 }
 

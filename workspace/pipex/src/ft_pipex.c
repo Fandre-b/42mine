@@ -111,6 +111,7 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	if (parcel_open_fd(argc, argv, info) == -1)
 		return (1);
+	//print_struct("before", info);
 	status = pipe_arg_cmd(info);
 	free_info(info);
 	return (status);
