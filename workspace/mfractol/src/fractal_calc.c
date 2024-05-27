@@ -12,35 +12,67 @@
 
 #include "fractol.h"
 
-float	actualfractol(t_complex coord, t_fractol *f, float threshold)
+void	recalc_vals(t_fractol *f)
+{
+	clock_t start, end;
+	double cpu_time_used;
+
+    f->info.maxi = (int) 150;// * (1 + pow((f->info.s_zoom), 0.12));
+    f->info.radius.x = (3.5f / 2) / f->info.s_zoom;
+    f->info.radius.y = (3.0f / 2) / f->info.s_zoom;
+	f->info.step.x = (f->info.radius.x * 2) / WIDTH;
+	f->info.step.y = (f->info.radius.y * 2) / HEIGHT;
+	create_step_array(f);
+	start = clock();
+	if (f->info.update == 1)
+		map_values(f);
+    if(f->info.update == 2)
+	{
+        get_colours(f);
+	}
+	end = clock();
+	cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+	printf("Time: %f\n", cpu_time_used);
+	printf("maxi %d\n", f->info.maxi);
+	return ;
+}
+
+int	actualfractol(t_complex coord, t_fractol *f, double threshold)
 {
 	static int i;
 	static t_complex z;
-	static float old_zx;
-	static float real_diff;
-	static float comp;
+	static double old_zx;
+	// static double real_diff;
+	// static double comp;
+//0.5f around an mandelbrot set is also in it
+//i can only render top half of mandelbrot set
 
 	i = -1;
 	z.x = 0;
 	z.y = 0;
-	real_diff = 1.0f;
-	comp = (1.0f) / (f->info.maxi * 100); //
+	// comp = (1.0f) / (f->info.maxi * 1000); //
+	//comp = 1e-6f/(exp(f->info.maxi));
 	while (++i <= f->info.maxi && z.x <= threshold && z.x >= -threshold)
 	{
+		if ((z.x * z.x + z.y * z.y) > 4.0)
+			break ;
 		old_zx = z.x;
 		z.x = (z.x * z.x) - (z.y * z.y) + coord.x;
 		z.y = (2 * old_zx * z.y) + coord.y;
-		real_diff = (z.x - old_zx) / old_zx;
-		if (real_diff < comp && real_diff > -comp)
-			return (0.0f);
+		// real_diff = (z.x - old_zx) / old_zx;
+		// if (real_diff < comp && real_diff > -comp)
+		// 	return (0.0f);
 	}
-	if (i - 1 == f->info.maxi)
-		return (0.0f);
-	else if (z.x == threshold || z.x == -threshold)
-		return (1.0f);
-	else if (z.x >= threshold || z.x <= -threshold)
-		return ((float)i / f->info.maxi);
-	return (1.0f);
+	return (i);
+	// if (i - 1 == f->info.maxi)
+	// 	return (0.0f);
+	// else
+	// else if (z.x == threshold || z.x == -threshold)
+	// 	return (1.0f);
+	// else if (z.x >= threshold || z.x <= -threshold)
+	// 	return ((double)i / f->info.maxi);
+	// return (1.0f);
+	//return (i + 1 - log(log2(abs(z))));
 }
 
 int animate_image(void *param)
@@ -71,32 +103,6 @@ void map_values(t_fractol *f)
     }
     f->info.update = 2;
     return ;
-}
-
-
-void	recalc_vals(t_fractol *f)
-{
-	clock_t start, end;
-	double cpu_time_used;
-
-    f->info.maxi = (int) 60;// * (1 + pow((f->info.s_zoom), 0.1));
-    f->info.radius.x = (3.5f / 2) / f->info.s_zoom;
-    f->info.radius.y = (3.0f / 2) / f->info.s_zoom;
-	f->info.step.x = (f->info.radius.x * 2) / WIDTH;
-	f->info.step.y = (f->info.radius.y * 2) / HEIGHT;
-	create_step_array(f);
-	start = clock();
-	if (f->info.update == 1)
-		map_values(f);
-    if(f->info.update == 2)
-	{
-        get_colours(f);
-	}
-	end = clock();
-	cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-	printf("Time: %f\n", cpu_time_used);
-	printf("maxi %d\n", f->info.maxi);
-	return ;
 }
 
 void get_colours(t_fractol *f) //, unsigned int colour)
