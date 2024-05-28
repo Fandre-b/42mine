@@ -1,9 +1,0 @@
-Makefile
-grep lo
-includes
-input.txt
-obj
-output.txt
-pipex
-project.md
-src
