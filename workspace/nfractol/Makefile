@@ -6,7 +6,7 @@
 #    By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/16 21:06:41 by fandre-b          #+#    #+#              #
-#    Updated: 2024/02/16 21:06:41 by fandre-b         ###   ########.fr        #
+#    Updated: 2024/05/28 15:26:17 by fandre-b         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME := fractol
 
 CC := @cc
 RM := -@rm -rf
-CFLAGS := -Wall -Wextra -Werror -std=c99 -fsanitize=address -g
+CFLAGS := -Wall -Wextra -Werror -std=c99 #-fsanitize=address -g
 VAL := valgrind --leak-check=full --show-leak-kinds=all -s
 
 #FT := libft
