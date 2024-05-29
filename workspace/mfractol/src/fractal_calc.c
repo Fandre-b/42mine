@@ -17,7 +17,7 @@ void	recalc_vals(t_fractol *f)
 	clock_t start, end;
 	double cpu_time_used;
 
-    f->info.maxi = (int) 150;// * (1 + pow((f->info.s_zoom), 0.12));
+    f->info.maxi = (int) 60;// * (1 + pow((f->info.s_zoom), 0.12));
     f->info.radius.x = (3.5f / 2) / f->info.s_zoom;
     f->info.radius.y = (3.0f / 2) / f->info.s_zoom;
 	f->info.step.x = (f->info.radius.x * 2) / WIDTH;
@@ -37,7 +37,7 @@ void	recalc_vals(t_fractol *f)
 	return ;
 }
 
-int	actualfractol(t_complex coord, t_fractol *f, double threshold)
+double	actualfractol(t_complex coord, t_fractol *f, double threshold)
 {
 	static int i;
 	static t_complex z;
@@ -63,10 +63,10 @@ int	actualfractol(t_complex coord, t_fractol *f, double threshold)
 		// if (real_diff < comp && real_diff > -comp)
 		// 	return (0.0f);
 	}
-	return (i);
-	// if (i - 1 == f->info.maxi)
-	// 	return (0.0f);
-	// else
+	if (i - 1 == f->info.maxi)
+		return (0.0f);
+	else
+		return ((double)i / f->info.maxi);
 	// else if (z.x == threshold || z.x == -threshold)
 	// 	return (1.0f);
 	// else if (z.x >= threshold || z.x <= -threshold)

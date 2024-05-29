@@ -12,7 +12,7 @@
 
 #include "fractol.h"
 
-unsigned int set_colour(float val)
+unsigned int set_colour(double val)
 {
 	int r;
 	int g;

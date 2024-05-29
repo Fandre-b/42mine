@@ -86,9 +86,9 @@ void    reset_fractol(t_fractol *f)
 
 void    zoom_times(int keycode, t_fractol *f)
 {
-    float zoom_dir;
+    double zoom_dir;
 
-    zoom_dir = (45.0f - (float) keycode);
+    zoom_dir = (45.0f - (keycode));
     if (zoom_dir > 0)
         f->info.s_zoom *= 1.2f;
     else if (zoom_dir < 0)
@@ -101,9 +101,9 @@ void    zoom_times(int keycode, t_fractol *f)
 void    move_img(int keycode, t_fractol *f)
 {
     if(keycode == 65361 || keycode == 65363) //left or right
-        f->info.pos.x += 40.0f * f->info.step.x * (float) (keycode - 65362);
+        f->info.pos.x += 40.0f * f->info.step.x * (keycode - 65362);
     else if(keycode == 65362 || keycode == 65364) //up or down
-        f->info.pos.y += 40.0f * f->info.step.y * (float) (keycode - 65363);
+        f->info.pos.y += 40.0f * f->info.step.y * (keycode - 65363);
     f->info.update = 1;
     recalc_vals(f);
     return ;

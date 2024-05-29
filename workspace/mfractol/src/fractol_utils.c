@@ -17,7 +17,7 @@ void parcel_args(t_fractol *f)
     t_info    *info;
 
 	info = (t_info *) malloc (sizeof(t_info));
-    if (!f->info.backup)
+    if (!info)
 		return ;
     info->s_zoom = 1.0f;
     info->maxi = MAXI;
@@ -42,10 +42,10 @@ void my_pixel_put(t_data *img, int x, int y, int colour)
 
 void create_val_array(t_fractol *f)
 {   
-    f->info.array = (float *) malloc (sizeof(float) * (WIDTH * HEIGHT));
+    f->info.array = (double *) malloc (sizeof(double) * (WIDTH * HEIGHT));
     if (!f->info.array)
         return ;
-    f->info.step_array = (float *) malloc (sizeof(float) * (WIDTH + HEIGHT));
+    f->info.step_array = (double *) malloc (sizeof(double) * (WIDTH + HEIGHT));
     if (!f->info.step_array)
         return ;
     return;
@@ -62,10 +62,10 @@ void    create_step_array(t_fractol *f)
     step = f->info.step;
     i = -1;
     while (++i < WIDTH)
-        f->info.step_array[i] = start.x + step.x * (float) i;
+        f->info.step_array[i] = start.x + step.x * (double) i;
     while (i - WIDTH < HEIGHT)
     {
-        f->info.step_array[i] = start.y + step.y * (float) (i - WIDTH);
+        f->info.step_array[i] = start.y + step.y * (double) (i - WIDTH);
         i++;
     }
     return ;    
