@@ -17,65 +17,91 @@ void	recalc_vals(t_fractol *f)
 	clock_t start, end;
 	double cpu_time_used;
 
-    f->info.maxi = (int) 60;// * (1 + pow((f->info.s_zoom), 0.12));
-    f->info.radius.x = (3.5f / 2) / f->info.s_zoom;
+    f->info.maxi = (int) MAXI;// * (1 + pow((f->info.s_zoom), 0.12));
+    f->info.radius.x = (4.0f / 2) / f->info.s_zoom;
     f->info.radius.y = (3.0f / 2) / f->info.s_zoom;
 	f->info.step.x = (f->info.radius.x * 2) / WIDTH;
 	f->info.step.y = (f->info.radius.y * 2) / HEIGHT;
 	create_step_array(f);
+	my_own_set(f, 0x448EE4); // if there is no colour, pick first of the array.
+	//set_color_mono(f, 0x448EE4); // TODO create array for colours to be chosed from
+	//set_color_dual(f, 0xFF0000, 0x00FF00); //DONT need this
+	//set_rainbow(f); //DONT need this
 	start = clock();
 	if (f->info.update == 1)
 		map_values(f);
+	end = clock();
     if(f->info.update == 2)
 	{
         get_colours(f);
 	}
-	end = clock();
 	cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-	printf("Time: %f\n", cpu_time_used);
-	printf("maxi %d\n", f->info.maxi);
+	printf("Time %f with maxi = %d\n", cpu_time_used, f->info.maxi);
 	return ;
 }
 
-double	actualfractol(t_complex coord, t_fractol *f, double threshold)
+int	actualfractol(t_complex c, t_fractol *f, double threshold)
 {
 	static int i;
 	static t_complex z;
 	static double old_zx;
-	// static double real_diff;
-	// static double comp;
-//0.5f around an mandelbrot set is also in it
-//i can only render top half of mandelbrot set
 
-	i = -1;
+	i = 0;
 	z.x = 0;
 	z.y = 0;
-	// comp = (1.0f) / (f->info.maxi * 1000); //
-	//comp = 1e-6f/(exp(f->info.maxi));
-	while (++i <= f->info.maxi && z.x <= threshold && z.x >= -threshold)
+	while (++i < f->info.maxi && z.x <= threshold && z.x >= -threshold)
 	{
 		if ((z.x * z.x + z.y * z.y) > 4.0)
 			break ;
 		old_zx = z.x;
-		z.x = (z.x * z.x) - (z.y * z.y) + coord.x;
-		z.y = (2 * old_zx * z.y) + coord.y;
-		// real_diff = (z.x - old_zx) / old_zx;
-		// if (real_diff < comp && real_diff > -comp)
-		// 	return (0.0f);
+		z.x = (z.x * z.x) - (z.y * z.y) + c.x;
+		z.y = (2 * old_zx * z.y) + c.y;
 	}
-	if (i - 1 == f->info.maxi)
-		return (0.0f);
-	else
-		return ((double)i / f->info.maxi);
-	// else if (z.x == threshold || z.x == -threshold)
-	// 	return (1.0f);
-	// else if (z.x >= threshold || z.x <= -threshold)
-	// 	return ((double)i / f->info.maxi);
-	// return (1.0f);
-	//return (i + 1 - log(log2(abs(z))));
+	return (i);
 }
 
-int animate_image(void *param)
+int	burnship(t_complex c, t_fractol *f, double threshold)
+{
+	static int i;
+	static t_complex z;
+	static double old_zx;
+
+	i = 0;
+	z.x = 0;
+	z.y = 0;
+	while (++i < f->info.maxi && z.x <= threshold && z.x >= -threshold)
+	{
+		if ((z.x * z.x + z.y * z.y) > 4.0)
+			break ;
+		old_zx = z.x;
+		z.x = fabs((z.x * z.x) - (z.y * z.y) + c.x);
+		z.y = fabs((2 * old_zx * z.y) + c.y);
+	}
+	return (i);
+}
+
+int	julia(t_complex c, t_fractol *f, double threshold)
+{
+	static int i;
+	static t_complex z;
+	static double old_zx;
+
+	i = 0;
+	z = c;
+	c.x = -0.8;
+	c.y = 0.156;
+	while (++i < f->info.maxi && z.x <= threshold && z.x >= -threshold)
+	{
+		if ((z.x * z.x + z.y * z.y) > 4.0)
+			break ;
+		old_zx = z.x;
+		z.x = (z.x * z.x) - (z.y * z.y) + c.x;
+		z.y = (2 * old_zx * z.y) + c.y;
+	}
+	return (i);
+}
+
+int animate_image(void *param) // DONT need this one
 {
 	t_fractol *f;
 
@@ -88,6 +114,7 @@ void map_values(t_fractol *f)
 {
     static int i;
     static int j;
+	//static int colour;
     static t_complex val; 
 
 	j = -1;
@@ -98,30 +125,14 @@ void map_values(t_fractol *f)
         {
             val.x = f->info.step_array[i];
 			val.y = f->info.step_array[WIDTH + j];
-            f->info.array[j * WIDTH + i] = actualfractol(val, f, f->info.threshold);
+			f->info.array[j * WIDTH + i] = actualfractol(val, f, f->info.threshold);
+			// TODO this actual fractol function will be replaced by variable function.
+            // colour = f->info.palette[f->info.array[j * WIDTH + i] - 1];
+			// my_pixel_put(&f->img, i, j, colour);
+			// my_pixel_put(&f->img, i, j, f->info.palette[actualfractol(val, f, 2.0f)]);
 		}
     }
+	// mlx_put_image_to_window(f->mlx, f->win, f->img.img, 0, 0);
     f->info.update = 2;
-    return ;
-}
-
-void get_colours(t_fractol *f) //, unsigned int colour)
-{
-    int i;
-    int j;
-	int colour;
-
-	j = -1;
-	while(++j < HEIGHT)
-	{
-		i = -1;
-		while (++i < WIDTH)
-        {
-			colour = set_colour(f->info.array[j * WIDTH + i]);
-            my_pixel_put(&f->img, i, j, colour);
-        }
-    }
-	mlx_put_image_to_window(f->mlx, f->win, f->img.img, 0, 0);
-    f->info.update = 0;
     return ;
 }

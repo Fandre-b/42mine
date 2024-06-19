@@ -14,7 +14,7 @@ NAME := fractol
 
 CC := @gcc
 RM := -@rm -rf
-CFLAGS := -Wall -Wextra -Werror -std=c99 -Ofast -march=native -funroll-loops #-g -fsanitize=address
+CFLAGS := -Wall -Wextra -Werror -std=c99 -Ofast -march=native -funroll-loops #-fsanitize=address
 VAL := valgrind --leak-check=full --show-leak-kinds=all -s
 
 #FT := libft

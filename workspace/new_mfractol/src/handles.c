@@ -40,16 +40,6 @@ int handle_key(int keycode, void *param)
         //f->loop_zoom = 1;
     return 0;
 }
-
-// int handle_inter() //TODO
-// {}
-
-// int handle_swapfractol() //TODO
-// {}
-
-// int handle_swapcolour() //TODO
-// {}
-
 int handle_mouse(int button, int x, int y, void *param)
 {
     t_fractol *f;
@@ -137,3 +127,7 @@ void mouse_zoom(int button, int x, int y, t_fractol *f)
     recalc_vals(f);
     return ;
 }
+
+
+//loops
+//

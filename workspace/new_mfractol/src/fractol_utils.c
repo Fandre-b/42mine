@@ -12,6 +12,26 @@
 
 #include "fractol.h"
 
+void parcel_args(t_fractol *f)
+{
+    t_info    *info;
+
+	info = (t_info *) malloc (sizeof(t_info));
+    if (!info)
+		return ;
+    info->s_zoom = 1.0f;
+    info->maxi = MAXI;
+    info->pos.x = -0.5f;
+    info->pos.y = 0.0f;
+    info->radius.x = 3.5f / 2;
+    info->radius.y = 3.0f / 2;
+    info->threshold = 2.0f;
+    info->update = 1;
+	f->info = *info; //guarda copia
+    f->info.backup = info; //guarda pointer de backup
+    return ;
+}
+
 void my_pixel_put(t_data *img, int x, int y, int colour)
 {
 	int	offset;
@@ -20,6 +40,16 @@ void my_pixel_put(t_data *img, int x, int y, int colour)
 	*(unsigned int *) (img->addr + offset) = colour;
 }
 
+void create_val_array(t_fractol *f)
+{   
+    f->info.array = (double *) malloc (sizeof(double) * (WIDTH * HEIGHT));
+    if (!f->info.array)
+        return ;
+    f->info.step_array = (double *) malloc (sizeof(double) * (WIDTH + HEIGHT));
+    if (!f->info.step_array)
+        return ;
+    return;
+}
 
 void    create_step_array(t_fractol *f)
 {
