@@ -16,17 +16,22 @@ void	recalc_vals(t_fractol *f)
 {
 	clock_t start, end;
 	double cpu_time_used;
+	int temp_check_update = 0;
 
-    f->info.maxi = (int) MAXI;// * (1 + pow((f->info.s_zoom), 0.12));
+	if (f->info.update == 1)
+		temp_check_update = 1;
+    //f->info.maxi = (int) MAXI;// * (1 + pow((f->info.s_zoom), 0.12));
     f->info.radius.x = (4.0f / 2) / f->info.s_zoom;
     f->info.radius.y = (3.0f / 2) / f->info.s_zoom;
 	f->info.step.x = (f->info.radius.x * 2) / WIDTH;
 	f->info.step.y = (f->info.radius.y * 2) / HEIGHT;
 	create_step_array(f);
-	my_own_set(f, 0x448EE4); // if there is no colour, pick first of the array.
-	//set_color_mono(f, 0x448EE4); // TODO create array for colours to be chosed from
-	//set_color_dual(f, 0xFF0000, 0x00FF00); //DONT need this
-	//set_rainbow(f); //DONT need this
+	if (f->info.update == 1)
+	{
+	    set_colour_array(f, 7);
+		set_color_mono(f, f->info.colours[0]);
+	}
+	//my_own set_raibow set_colour_mono
 	start = clock();
 	if (f->info.update == 1)
 		map_values(f);
@@ -36,7 +41,8 @@ void	recalc_vals(t_fractol *f)
         get_colours(f);
 	}
 	cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-	printf("Time %f with maxi = %d\n", cpu_time_used, f->info.maxi);
+	if (temp_check_update == 1)
+		printf("Time %f with maxi = %d\n", cpu_time_used, f->info.maxi);
 	return ;
 }
 
@@ -106,7 +112,7 @@ int animate_image(void *param) // DONT need this one
 	t_fractol *f;
 
 	f = param;
-	map_values(f);
+	recalc_vals(f);
 	return (0);
 }
 
@@ -125,7 +131,7 @@ void map_values(t_fractol *f)
         {
             val.x = f->info.step_array[i];
 			val.y = f->info.step_array[WIDTH + j];
-			f->info.array[j * WIDTH + i] = actualfractol(val, f, f->info.threshold);
+			f->info.array[j * WIDTH + i] = f->info.fractol_set(val, f, f->info.threshold);
 			// TODO this actual fractol function will be replaced by variable function.
             // colour = f->info.palette[f->info.array[j * WIDTH + i] - 1];
 			// my_pixel_put(&f->img, i, j, colour);

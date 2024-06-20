@@ -12,22 +12,6 @@
 
 #include "fractol.h"
 
-unsigned int set_colour(double val, int colour) //DONT need this
-{
-	int r;
-	int g;
-	int b;
-
-	if (val == 1 || colour != 0)
-		return (0xFFFFFF);
-	r = val * 255 * 2;
-	g = 0;
-	b = 0;
-	// r = (val) * ((colour >> 16) & 0xFF);
-	// g = (val) * ((colour >> 8) & 0xFF);
-	// b = (val) * ((colour >> 0) & 0xFF);
-	return ((r << 16) | (g << 8) | b);
-}
 
 int	interpolate(int startcolor, int endcolor, double fraction)
 {
@@ -57,7 +41,6 @@ int		generate_rainbow(double fraction)
 	b = (int) (sin(2.0 * PI * fraction + 4.0 * PI / 3.0) * 127.5) + 127.5;
 	return ((r << 16) | (g << 8) | b);
 }
-
 void	set_rainbow (t_fractol *f) //DONT need this
 {
 	int		i;
@@ -66,26 +49,26 @@ void	set_rainbow (t_fractol *f) //DONT need this
 	i = 0;
 	while (i < f->info.maxi)
 	{
-		fraction = (double)i / (f->info.maxi);
+		fraction = (double)i / 7;
 		f->info.palette[i] = generate_rainbow(fraction);
 		i++;
 	}
 	f->info.palette[f->info.maxi -1] = 0;
 }
 
-void	my_own_set(t_fractol *f, int color)
+void	set_colour_array(t_fractol *f, int number)
 {
 	int		i;
 	double	fraction;
 
 	i = 0;
-	while (i < f->info.maxi)
+	while (i < number)
 	{
-		fraction = (double)i / (f->info.maxi - 1);
-		f->info.palette[i] = set_colour(fraction, color);
+		fraction = (double)i / (number + 1);
+		f->info.colours[i] = generate_rainbow(fraction);
 		i++;
 	}
-	f->info.palette[f->info.maxi -1] = 0;
+	return;
 }
 
 void	set_color_mono(t_fractol *f, int color)
@@ -112,66 +95,8 @@ void	set_color_mono(t_fractol *f, int color)
 		color2 = 0xFFFFFF;
 		i += j;
 	}
-	f->info.palette[f->info.maxi -1] = 0;
+	f->info.palette[f->info.maxi - 1] = 0;
 }
-
-void	set_color_dual(t_fractol *f, int col1, int col2) //DONT need this
-{
-	int		i;
-	int		j;
-	double	fraction;
-	int		color1;
-	int		color2;
-
-	color1 = 0x000000;
-	color2 = col1;
-	i = 0;
-	while (i < f->info.maxi)
-	{
-		j = 0;
-		while (j < f->info.maxi / 2)
-		{
-			fraction = (double)j / (f->info.maxi / 2);
-			f->info.palette[i + j] = interpolate(color1, color2, fraction);
-			j++;
-		}
-		color1 = color2;
-		if (col2 < 0)
-			color2 = 0xFFFFFF;
-		else
-			color2 = col2;
-		i += j;
-	}
-	f->info.palette[f->info.maxi -1] = 0;
-}
-
-void	set_color_multi(t_fractol *f, int *colors, int num_colors) //DONT need this
-{
-    int		i;
-    int		j;
-    double	fraction;
-    int		color1;
-    int		color2;
-    int		segment_size;
-
-    segment_size = f->info.maxi / num_colors;
-    i = 0;
-    while (i < f->info.maxi)
-    {
-        color1 = colors[i / segment_size];
-        color2 = colors[(i / segment_size + 1) % num_colors];
-        j = 0;
-        while (j < segment_size)
-        {
-            fraction = (double)j / segment_size;
-            f->info.palette[i + j] = interpolate(color1, color2, fraction);
-            j++;
-        }
-        i += j;
-    }
-    f->info.palette[f->info.maxi - 1] = 0;
-}
-
 
 void get_colours(t_fractol *f)
 {
@@ -197,19 +122,26 @@ void get_colours(t_fractol *f)
 int psicadelic(void *param) //just a swapper of palletes, and easy to implement
 {
 	t_fractol *f;
+
+	f = param;
+	rotate_colours(f->info.palette, f->info.maxi);
+	f->info.update = 2;
+	get_colours(f);
+	return (0);
+}
+
+int rotate_colours(int *array, int size)
+{
 	int i;
 	int temp;
 
 	i = 0;
-	f = param;
-	temp = f->info.palette[1];
-	while (i < f->info.maxi - 1)
+	temp = array[0];
+	while (i < size - 1)
 	{
-		f->info.palette[i] = f->info.palette[i + 1];
+		array[i] = array[i + 1];
 		i++;
 	}
-	f->info.palette[f->info.maxi - 2] = temp;
-	f->info.update = 2;
-	get_colours(f);
+	array[size - 1] = temp;
 	return (0);
 }

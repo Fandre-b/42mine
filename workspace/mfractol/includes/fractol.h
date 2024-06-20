@@ -22,6 +22,8 @@ typedef struct s_complex
     double y;
 } 				t_complex;
 
+typedef struct s_fractol t_fractol; // Forward declaration
+
 typedef struct	s_data //data structure for the image
 {
 	char	*addr;
@@ -49,7 +51,13 @@ typedef struct s_info
 	double 	*step_array;
 	int		*array;
 	int		*palette;
-	int	(*loop_func)(void *);
+	int 		*colours;
+	int		(*loop_func)(void *);
+	int		(*pallete)(void *);
+	int		(*fractol_set)(t_complex, t_fractol *, double);
+	int		loop_mode;
+	int		colour_mode;
+	int		fractol_mode;
 } 				t_info; 
 
 typedef struct s_fractol //data structure for the fractal
@@ -102,12 +110,15 @@ typedef struct s_fractol //data structure for the fractal
 unsigned int set_colour(double val, int colour);
 int	interpolate(int startcolor, int endcolor, double fraction);
 int		generate_rainbow(double fraction);
+int	rotate_colours(int *array, int size);
+
 //colour pallet generation
 void	set_rainbow (t_fractol *f);
 void	my_own_set(t_fractol *f, int color);
 void	set_color_mono(t_fractol *f, int color);
 void	set_color_dual(t_fractol *f, int col1, int col2);
 void	set_color_multi(t_fractol *f, int *colors, int num_colors);
+void	set_colour_array(t_fractol *f, int number);
 //colours control
 void get_colours(t_fractol *f); //, unsigned int colour);
 //animation
@@ -129,10 +140,17 @@ void    create_step_array(t_fractol *f);
 
 void	init_mlx(t_fractol *f);
 int    main(void);
+void back_up_fractol(t_fractol *f);
 //event handles
 int handle_key(int keycode, void *param);
 int handle_mouse(int button, int x, int y, void *param);
 int handle_close(void *param);
+void    change_int(t_fractol *f, int keycode);
+void    change_loop(t_fractol *f);
+void    change_palete(t_fractol *f);
+void    change_fractol(t_fractol *f);
+
+
 //events utils
 void    reset_fractol(t_fractol *f);
 void    zoom_times(int keycode, t_fractol *f);

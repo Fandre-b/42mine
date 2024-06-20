@@ -16,7 +16,7 @@ int handle_key(int keycode, void *param)
 {
     t_fractol *f;
  
-    // printf("keycode: %d\n", keycode);
+    printf("keycode: %d\n", keycode);
     f = (t_fractol *)param;
     if(keycode == 65307)
     {
@@ -30,25 +30,87 @@ int handle_key(int keycode, void *param)
         zoom_times(keycode, f);
     if (keycode == 114) //(r)
         reset_fractol(f); //recalls parcel_args
-    // if (keycode == 99) //(c) //TODO upgrade colour palet and 
-        //change_palete(1, f);
-    //if (keycode >= 49 && keycode <= 57) //(1-9)
-        //change_palete(keycode - 48, f);
-    // if (keycode == 108) //(l)
-        //f->loop_colour = 1;
-    // if (keycode == 107) //(k)
-        //f->loop_zoom = 1;
-    return 0;
+    if (keycode == 99) //(c)
+    {
+        rotate_colours(f->info.colours, 7);
+        set_color_mono(f, f->info.colours[0]);
+        f->info.update = 2;
+    }
+    if (keycode == 108) //(l)
+        change_loop(f);
+    if (keycode == 121 || keycode == 117 || keycode == 105) 
+        change_int(f, keycode);
+    if (keycode == 112) //(p)
+        change_palete(f);
+    if (keycode == 102) //(f)
+        change_fractol(f);
+    recalc_vals(f);
+    return (0);
 }
 
-// int handle_inter() //TODO
-// {}
+void    change_loop(t_fractol *f)
+{
+    f->info.loop_mode++;
+    f->info.loop_mode = f->info.loop_mode % 2;
+    if (f->info.loop_mode == 0)
+        f->info.loop_func = animate_image;
+    if (f->info.loop_mode == 1)
+        f->info.loop_func = psicadelic;
+    f->info.update = 2;
+    mlx_loop_hook(f->mlx, f->info.loop_func, f);
+    return ;
+}
 
-// int handle_swapfractol() //TODO
-// {}
+void    change_palete(t_fractol *f)
+{
+    f->info.colour_mode++;
+    f->info.colour_mode = f->info.colour_mode % 3;
+    if (f->info.colour_mode == 0)
+        set_color_mono(f, f->info.colours[0]);
+    if (f->info.colour_mode == 1)
+        set_color_mono(f, f->info.colours[0]);     
+    if (f->info.colour_mode == 2)
+        set_rainbow(f);
+    f->info.update = 2;
+}
 
-// int handle_swapcolour() //TODO
-// {}
+void    change_int(t_fractol *f, int keycode)
+{
+    if (keycode == 121 && f->info.maxi > 10) // y
+        f->info.maxi -= 10;
+    if (keycode == 117) // i
+        f->info.maxi = MAXI;
+    if (keycode == 105) // u
+        f->info.maxi += 10;
+    free (f->info.palette);
+    f->info.palette = (int *) malloc (sizeof(int) * (f->info.maxi));
+    if (!f->info.palette)
+        return ;
+    f->info.backup->palette = f->info.palette;
+    f->info.update = 1;
+}
+
+void    change_fractol(t_fractol *f)
+{
+    f->info.fractol_mode++;
+    f->info.fractol_mode = f->info.fractol_mode % 3;
+    if (f->info.fractol_mode == 0)
+        f->info.fractol_set = actualfractol;
+    if (f->info.fractol_mode == 1)
+        f->info.fractol_set = julia;
+    if (f->info.fractol_mode == 2)
+        f->info.fractol_set = burnship;
+    f->info.update = 1;
+    recalc_vals(f);
+    return ;
+
+}
+
+void back_up_fractol(t_fractol *f)
+{
+    *f->info.backup = f->info;
+    return ;
+}
 
 int handle_mouse(int button, int x, int y, void *param)
 {

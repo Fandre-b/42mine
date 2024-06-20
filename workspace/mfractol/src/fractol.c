@@ -18,6 +18,7 @@ void	free_struct(t_fractol *f)
 	free(f->info.array);
 	free(f->info.step_array);
 	free(f->info.palette);
+    free(f->info.colours);
 	free(f);
 	return ;
 }
@@ -41,7 +42,12 @@ void init_std_info(t_fractol *f)
     f->info.radius.y = 3.0f / 2;
     f->info.threshold = 2.0f;
     f->info.update = 1;
-	f->info.loop_func = NULL;
+    f->info.loop_mode = 0;
+	f->info.loop_func = animate_image;
+    f->info.colour_mode = 0;
+    f->info.fractol_set = actualfractol;
+    f->info.fractol_mode = 0;
+    //NULL animate_image psicadelic
     return ;
 }
 
@@ -62,6 +68,9 @@ void init_struct(t_fractol *f)
     f->info.palette = (int *) malloc (sizeof(int) * (f->info.maxi));
     if (!f->info.palette)
         return ;
+    f->info.colours = (int *) malloc (sizeof(int) * 7);
+    if (!f->info.colours)
+        return ;
     *f->info.backup = f->info;
     return;
 }
@@ -79,7 +88,7 @@ int    main(void)
     mlx_key_hook(f->win, handle_key, f);
     mlx_mouse_hook(f->win, handle_mouse, f);
 	mlx_hook(f->win, 17, 0, handle_close, f);
-	mlx_loop_hook(f->mlx, f->info.loop_func, f);  // TODO normal or psicadelic
+	mlx_loop_hook(f->mlx, f->info.loop_func, f);  // TODO normal(animate) or psicadelic
     mlx_loop(f->mlx);
     return (0) ;
 }
