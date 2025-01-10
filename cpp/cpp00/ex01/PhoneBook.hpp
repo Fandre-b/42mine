@@ -6,22 +6,22 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 00:04:10 by fandre-b          #+#    #+#             */
-/*   Updated: 2025/01/09 16:08:44 by fandre-b         ###   ########.fr       */
+/*   Updated: 2025/01/10 18:59:13 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHONEBOOK_HPP
 # define PHONEBOOK_HPP
+# include "Contact.hpp"
 # include <string>
 # include <iostream>
 # include <iomanip>
 # include <ctime>
-# include "Contact.hpp"
+# include <limits>
 
 class PhoneBook
 {
 	private:
-		int		_index;
 		Contact*	_contacts[8];
 		void	_removeContact(int i);
 		void	_printContact(Contact* _contact, int i);	
