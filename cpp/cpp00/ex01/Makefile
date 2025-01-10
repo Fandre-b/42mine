@@ -6,7 +6,7 @@
 #    By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/14 22:55:49 by fandre-b          #+#    #+#              #
-#    Updated: 2024/12/15 11:12:59 by fandre-b         ###   ########.fr        #
+#    Updated: 2025/01/09 16:11:58 by fandre-b         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,6 @@ CPP_FLAGS = -std=c++98 -Wall -Wextra -Werror -pedantic
 SRC_F = 	main.cpp PhoneBook.cpp Contact.cpp 
 
 OBJ_F = $(SRC_F:.cpp=.o)
-
 
 all: $(NAME)
 

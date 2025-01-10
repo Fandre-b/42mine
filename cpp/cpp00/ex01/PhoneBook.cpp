@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 00:04:13 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/12/15 03:17:07 by fandre-b         ###   ########.fr       */
+/*   Updated: 2025/01/10 10:33:14 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,9 @@ void PhoneBook::_printContact(Contact* _contact, int i)
     std::cout << std::setw(10) << std::right << i << "|";
     std::cout << std::setw(10) << std::right << formatField(_contact->getFirstName()) << "|";
     std::cout << std::setw(10) << std::right << formatField(_contact->getLastName()) << "|";
-    std::cout << std::setw(10) << std::right << formatField(_contact->getNickName());
+    std::cout << std::setw(10) << std::right << formatField(_contact->getNickName()) << "|";
+    std::cout << std::setw(10) << std::right << formatField(_contact->getPhoneNumber()) << "|";
+    std::cout << std::setw(10) << std::right << formatField(_contact->getDarkSecret());
     std::cout << std::endl;
 }
 
