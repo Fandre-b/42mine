@@ -6,7 +6,7 @@
 #    By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/14 22:55:49 by fandre-b          #+#    #+#              #
-#    Updated: 2024/12/15 11:57:05 by fandre-b         ###   ########.fr        #
+#    Updated: 2025/03/19 12:28:52 by fandre-b         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = strings
 
 CPP = c++
 CPP_FLAGS = -std=c++98 -Wall -Wextra -Werror -pedantic
-SRC_F = 	main.cpp Zombie.cpp newZombie.cpp randomChump.cpp
+SRC_F = 	main.cpp
 
 OBJ_F = $(SRC_F:.cpp=.o)
 

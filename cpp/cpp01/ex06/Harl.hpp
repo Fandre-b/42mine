@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 18:22:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/12/15 19:31:47 by fandre-b         ###   ########.fr       */
+/*   Updated: 2025/04/02 16:40:03 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ public:
     Harl();
     ~Harl();
     void complain(std::string level);
-    void harlFilter(std::string  level);
+    void harlFilter(std::string level);
 };
 
 #endif

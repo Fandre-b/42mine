@@ -6,27 +6,48 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 00:04:08 by fandre-b          #+#    #+#             */
-/*   Updated: 2025/01/09 18:26:58 by fandre-b         ###   ########.fr       */
+/*   Updated: 2025/03/18 21:50:01 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Contact.hpp"
-#include <iostream>
-#include <iomanip>
-#include <string>
 
-Contact::Contact()
-{
-	std::cout << "Enter the first name: " << std::endl;
-	std::cin >> this->_firstName;
-	std::cout << "Enter the last name: " << std::endl;
-	std::cin >> this->_lastName;
-	std::cout << "Enter the nickname: " << std::endl;
-	std::cin >> this->_nickName;
-}
+
+Contact::Contact() {}
 
 Contact::~Contact()
 {
+	_firstName.clear();
+    _lastName.clear();
+    _nickName.clear();
+    _phoneNumber.clear();
+    _darkSecret.clear();
+}
+
+void Contact::SetContact()
+{
+	std::cout << std::endl << "Enter the contact details: " << std::endl;
+	std::cout << "First name: ";
+	std::getline(std::cin, this->_firstName);
+	std::cout << "Last name: ";
+	std::getline(std::cin, this->_lastName);
+	std::cout << "Nickname: ";
+	std::getline(std::cin, this->_nickName);
+	std::cout << "Phone number: ";
+	std::getline(std::cin, this->_phoneNumber);
+	std::cout << "Darkest secret: ";
+	std::getline(std::cin, this->_darkSecret);
+}
+
+bool Contact::IsEmpty()
+{
+	if (this->_firstName.empty()
+		|| this->_lastName.empty()
+		|| this->_nickName.empty()
+		|| this->_phoneNumber.empty()
+		|| this->_darkSecret.empty())
+		return true;
+	return false;
 }
 
 void Contact::setFirstName(std::string _firstName)

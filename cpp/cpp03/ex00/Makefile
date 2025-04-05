@@ -6,15 +6,15 @@
 #    By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/14 22:55:49 by fandre-b          #+#    #+#              #
-#    Updated: 2024/12/15 19:44:04 by fandre-b         ###   ########.fr        #
+#    Updated: 2025/04/04 17:45:08 by fandre-b         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = 
+NAME = ClapTrap
 
 CPP = c++
 CPP_FLAGS = -std=c++98 -Wall -Wextra -Werror -pedantic
-SRC_F = 	main.cpp
+SRC_F = 	main.cpp ClapTrap.cpp
 
 OBJ_F = $(SRC_F:.cpp=.o)
 

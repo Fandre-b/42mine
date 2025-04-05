@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 17:30:03 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/12/15 19:33:50 by fandre-b         ###   ########.fr       */
+/*   Updated: 2025/04/02 16:34:15 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ Harl::Harl()
     _levels[3] = "ERROR";
     _levels[4] = "NONE";
     _functions[0] = &Harl::_debug;
-    _functions[1] = &Harl::_info;
-    _functions[2] = &Harl::_warning;
+    _functions[1] = &Harl::_warning;
+    _functions[2] = &Harl::_info;
     _functions[3] = &Harl::_error;
     _functions[4] = &Harl::_none;
 }
@@ -33,7 +33,8 @@ Harl::~Harl(){}
 void Harl::complain(std::string level)
 {
     int i = -1;
-    while (++i < 4 && level.compare(_levels[i]));
+    while (_levels[++i].compare("NONE") && level.compare(_levels[i]));
+    std::cout << "[ " << _levels[i] << " ]" << std::endl;
     (this->*_functions[i])();
     
 }
@@ -42,7 +43,7 @@ void Harl::_debug()
 {
     std::cout << "I love having extra bacon for my 7XL-double-cheese-triple-pickle-special-ketchup burger." << std::endl;
     std::cout << "I really do!" << std::endl;
-    }
+}
 
 void Harl::_warning()
 {

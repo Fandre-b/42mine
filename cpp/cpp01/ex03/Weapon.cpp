@@ -6,12 +6,11 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 11:57:55 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/12/15 14:57:09 by fandre-b         ###   ########.fr       */
+/*   Updated: 2025/03/19 15:04:47 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Weapon.hpp"
-#include <string>
 
 Weapon::Weapon(const std::string& type) : _type(type) {}
 

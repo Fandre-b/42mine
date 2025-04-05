@@ -6,15 +6,16 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 14:52:24 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/12/15 14:52:31 by fandre-b         ###   ########.fr       */
+/*   Updated: 2025/03/19 21:52:53 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef HUMANA_HPP
 #define HUMANA_HPP
 
-#include <string>
 #include "Weapon.hpp"
+#include <string>
+#include <iostream>
 
 class HumanA {
 private:
@@ -23,6 +24,7 @@ private:
 
 public:
     HumanA(const std::string& name, Weapon& weapon);
+    HumanA(const std::string& name);
     void attack() const;
 };
 

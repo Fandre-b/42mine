@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 17:30:03 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/12/15 19:42:31 by fandre-b         ###   ########.fr       */
+/*   Updated: 2025/04/02 17:13:54 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 
 Harl::Harl()
 {
+    // std::string levels[4] = {"DEBUG", "INFO", "WARNING", "ERROR"};
     _levels[0] = "DEBUG";
     _levels[1] = "WARNING";
     _levels[2] = "INFO";
@@ -33,16 +34,9 @@ Harl::~Harl(){}
 void Harl::complain(std::string level)
 {
     int i = -1;
-    while (++i < 4 && level.compare(_levels[i]));
+    while (_levels[++i].compare("NONE") && level.compare(_levels[i]));
     (this->*_functions[i])();
-    
-}
-
-void Harl::harlFilter(std::string level)
-{
-    int i = -1;
-    while (++i < 4 && level.compare(_levels[i]));
-    while (i < 4)
+    while (_levels[++i].compare("NONE"))
     {
         std::cout << "[ " << _levels[i] << " ]" << std::endl;
         (this->*_functions[i++])();
@@ -50,11 +44,45 @@ void Harl::harlFilter(std::string level)
     }
 }
 
+void Harl::harlFilter(std::string level)
+{
+    int i = -1;
+    // while (_levels[++i].compare("NONE") && level.compare(_levels[i]));
+    // while (_levels[++i].compare("NONE"))
+    // {
+    //     std::cout << "[ " << _levels[i] << " ]" << std::endl;
+    //     (this->*_functions[i++])();
+    //     std::cout << std::endl;
+    // }
+    while (_levels[++i].compare("NONE") && level.compare(_levels[i]));
+    std::cout << "[ " << _levels[i] << " ]" << std::endl;
+    switch (i)
+    {
+        case 0:
+            (this->*_functions[0])();
+            break;
+        case 1:
+            (this->*_functions[1])();
+            break;
+        case 2:
+            (this->*_functions[2])();
+            break;
+        case 3:
+            (this->*_functions[3])();
+            return;
+        default:
+            (this->*_functions[4])();
+            return;
+    }
+    std::cout << std::endl;
+    harlFilter(_levels[i + 1]);
+}
+
 void Harl::_debug()
 {
     std::cout << "I love having extra bacon for my 7XL-double-cheese-triple-pickle-special-ketchup burger." << std::endl;
     std::cout << "I really do!" << std::endl;
-    }
+}
 
 void Harl::_warning()
 {
@@ -75,6 +103,3 @@ void Harl::_error()
 }
 
 void Harl::_none(){}
-
-
-
