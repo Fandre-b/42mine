@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 00:04:13 by fandre-b          #+#    #+#             */
-/*   Updated: 2025/03/18 23:07:42 by fandre-b         ###   ########.fr       */
+/*   Updated: 2025/04/05 23:03:13 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void PhoneBook::searchContact()
         else
             std::cout << "Invalid input: Not an number" << std::endl;
     }
+    // TODO move these functions into the contanct class
     if (_contacts[index].getFirstName().empty())
         std::cout << "ERROR: No contact at index " << index << std::endl;
     else
@@ -107,12 +108,14 @@ void PhoneBook::printAllContacts()
     std::cout << "     index|first name| last name|  nickname" << std::endl;
     for (int i = 0; i < 8; i++)
     {
+        // TODO move these functions into the contanct class
         if (_contacts[i].getFirstName().empty())
             continue;
         std::cout << std::setw(10) << std::right << i << "|";
         std::cout << std::setw(10) << std::right << formatField(_contacts[i].getFirstName()) << "|";
         std::cout << std::setw(10) << std::right << formatField(_contacts[i].getLastName()) << "|";
         std::cout << std::setw(10) << std::right << formatField(_contacts[i].getNickName());
+        std::cout << std::endl;
     }
 }
 

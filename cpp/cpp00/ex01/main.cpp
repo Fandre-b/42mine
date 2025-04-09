@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 00:31:07 by fandre-b          #+#    #+#             */
-/*   Updated: 2025/03/18 21:47:47 by fandre-b         ###   ########.fr       */
+/*   Updated: 2025/04/05 22:32:13 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int main()
             phoneBook.searchContact();
         else if (command == "EXIT")
             break;
-        if (command.empty())
+        else if (command.empty())
             std::cerr << "Invalid input: Empty command" << std::endl;
         else
             std::cerr << "Invalid input: Command not valid" << std::endl;

@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 00:04:08 by fandre-b          #+#    #+#             */
-/*   Updated: 2025/03/18 21:50:01 by fandre-b         ###   ########.fr       */
+/*   Updated: 2025/04/05 23:04:13 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ Contact::~Contact()
 }
 
 void Contact::SetContact()
-{
+{ //TODO ctl-d guarded input, also number, 
 	std::cout << std::endl << "Enter the contact details: " << std::endl;
 	std::cout << "First name: ";
 	std::getline(std::cin, this->_firstName);
