@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 00:04:08 by fandre-b          #+#    #+#             */
-/*   Updated: 2025/04/05 23:04:13 by fandre-b         ###   ########.fr       */
+/*   Updated: 2025/04/09 17:15:41 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,41 @@ Contact::~Contact()
     _darkSecret.clear();
 }
 
+std::string Contact::getFieldLine(std::string info)
+{
+	std::string command;
+	if (std::cin.eof())
+		return "";
+	while (1)
+	{
+		std::cout << info;
+        std::getline(std::cin, command);
+        if (std::cin.eof())
+        {
+			std::cout << std::endl;
+            std::cerr << "ERROR: EOF detected" << std::endl;
+            break;
+        }
+        else if (command.empty())
+		{
+			std::cout << std::endl;
+            std::cerr << "Invalid input: Field can't be empty" << std::endl;
+		}
+		else
+			break;
+	}
+	return command;
+}
+
 void Contact::SetContact()
-{ //TODO ctl-d guarded input, also number, 
-	std::cout << std::endl << "Enter the contact details: " << std::endl;
-	std::cout << "First name: ";
-	std::getline(std::cin, this->_firstName);
-	std::cout << "Last name: ";
-	std::getline(std::cin, this->_lastName);
-	std::cout << "Nickname: ";
-	std::getline(std::cin, this->_nickName);
-	std::cout << "Phone number: ";
-	std::getline(std::cin, this->_phoneNumber);
-	std::cout << "Darkest secret: ";
-	std::getline(std::cin, this->_darkSecret);
+{
+	std::cout << std::endl << "Enter the contact details: " << std::endl << std::endl;
+	this->_firstName = getFieldLine("First name: ");
+	this->_lastName = getFieldLine("Last name: ");
+	this->_nickName = getFieldLine("Nickname: ");
+	this->_phoneNumber = getFieldLine("Phone number: ");
+	this->_darkSecret = getFieldLine("Darkest secret: ");
+	std::cout << std::endl;
 }
 
 bool Contact::IsEmpty()
@@ -50,52 +72,28 @@ bool Contact::IsEmpty()
 	return false;
 }
 
-void Contact::setFirstName(std::string _firstName)
+void Contact::getContact()
 {
-	this->_firstName = _firstName;
+        std::cout << "first name: " << this->_firstName << std::endl;
+        std::cout << "last name: " << this->_lastName << std::endl;
+        std::cout << "nickname: " << this->_nickName << std::endl;
+        std::cout << "phone number: " << this->_phoneNumber << std::endl;
+        std::cout << "darkest secret: " << this->_darkSecret << std::endl;
 }
 
-void Contact::setLastName(std::string _lastName)
+void Contact::printContact()
 {
-	this->_lastName = _lastName;
+	if (this->_firstName.empty())
+		return;
+	std::cout << std::setw(10) << std::right << formatField(this->_firstName) << "|";
+	std::cout << std::setw(10) << std::right << formatField(this->_lastName) << "|";
+	std::cout << std::setw(10) << std::right << formatField(this->_nickName);
+	std::cout << std::endl;
 }
 
-void Contact::setNickName(std::string _nickName)
+std::string Contact::formatField(const std::string& field)
 {
-	this->_nickName = _nickName;
-}
-
-std::string Contact::getFirstName()
-{
-	return this->_firstName;
-}
-
-std::string Contact::getLastName()
-{
-	return this->_lastName;
-}
-
-std::string Contact::getNickName()
-{
-	return this->_nickName;
-}
-
-void Contact::setPhoneNumber(std::string _phoneNumber)
-{
-	this->_phoneNumber = _phoneNumber;
-}
-
-void Contact::setDarkSecret(std::string _darkSecret)
-{
-	this->_darkSecret = _darkSecret;
-}
-
-std::string Contact::getPhoneNumber()
-{
-	return this->_phoneNumber;
-}
-
-std::string Contact::getDarkSecret()
-{
-	return this->_darkSecret;
+    if (field.length() > 10)
+        return field.substr(0, 9) + ".";
+    return field;
 }

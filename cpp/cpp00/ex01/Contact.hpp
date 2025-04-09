@@ -6,15 +6,17 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 00:04:05 by fandre-b          #+#    #+#             */
-/*   Updated: 2025/03/18 20:27:01 by fandre-b         ###   ########.fr       */
+/*   Updated: 2025/04/09 17:21:36 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CONTACT_HPP
 # define CONTACT_HPP
-#include <iomanip>
-#include <string>
-#include <iostream>
+# include <string>
+# include <iostream>
+# include <iomanip>
+// # include <limits>
+// #include <sstream>
 
 class Contact
 {
@@ -41,16 +43,17 @@ class Contact
 		void setPhoneNumber(std::string _phoneNumber);
 		void setDarkSecret(std::string _darkSecret);
 		
-		//getters
-		std::string getFirstName();
-		std::string getLastName();
-		std::string getNickName();
-		std::string getPhoneNumber();
-		std::string getDarkSecret();
-		
 		//methods functions
 		void SetContact();
 		bool IsEmpty();
+
+		void getContact();
+		void printContact();
+
+		std::string getFieldLine(std::string info);
+		std::string formatField(const std::string& field);
 };
+
+std::string formatField(const std::string& field);
 
 #endif

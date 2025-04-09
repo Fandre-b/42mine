@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 00:04:10 by fandre-b          #+#    #+#             */
-/*   Updated: 2025/04/04 11:41:46 by fandre-b         ###   ########.fr       */
+/*   Updated: 2025/04/09 17:20:25 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@
 # include <string>
 # include <iostream>
 # include <iomanip>
-# include <limits>
-#include <sstream>
+// # include <limits>
+// #include <sstream>
+#include <cstdlib>
+
 
 class PhoneBook
 {
@@ -35,6 +37,7 @@ class PhoneBook
 		void	searchContact();
 		void	printAllContacts();
 		void	ClearStdin();
+		bool	IsNumber(std::string input);
 };
 
 #endif

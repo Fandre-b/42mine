@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 00:04:13 by fandre-b          #+#    #+#             */
-/*   Updated: 2025/04/05 23:03:13 by fandre-b         ###   ########.fr       */
+/*   Updated: 2025/04/09 17:18:42 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,40 +24,46 @@ PhoneBook::~PhoneBook()
     std::cout << "All data has been deleted, Goodbye!" << std::endl;
 }
 
+bool PhoneBook::IsNumber(std::string input)
+{
+    for (size_t i = 0; i < input.length(); i++)
+        if (!isdigit(input[i]))
+            return false;
+    return true;
+}
+
 void PhoneBook::searchContact()
 {
     std::string input;
     int         index;
 
+    printAllContacts();
     while (true)
     {
-        std::cout << std::endl << "Enter index [0 - 7]: ";
+        std::cout << std::endl << "Enter index [1 - 8]: ";
         std::getline(std::cin, input);
-        std::stringstream ss(input);
-        if (ss >> index)
-        {
-            if (index >= 0 && index <= 7)
-                break;        
-            else
-                std::cout << "Invalid input: Out of range [0 - 7]" << std::endl;
-        }
-        else if (std::cin.eof())
+        if (std::cin.eof())
             return;
+        index = atoi(input.c_str());
+        if (!IsNumber(input))
+        {
+            std::cout << "Invalid input: Not an valid number" << std::endl;
+        }
+        else if (index >= 1 && index <= 8)
+        {
+            index--;
+            break;
+        }
         else
-            std::cout << "Invalid input: Not an number" << std::endl;
+            std::cout << "Invalid input: Out of range [1 - 8]" << std::endl;
     }
-    // TODO move these functions into the contanct class
-    if (_contacts[index].getFirstName().empty())
-        std::cout << "ERROR: No contact at index " << index << std::endl;
+    if (_contacts[index].IsEmpty())
+        std::cout << "ERROR: No contact at index " << index + 1 << std::endl;
     else
     {
-        std::cout << "index|first name| last name|  nickname" << std::endl;
-        std::cout << "index: " << index << std::endl;
-        std::cout << "first name: " << _contacts[index].getFirstName() << std::endl;
-        std::cout << "last name: " << _contacts[index].getLastName() << std::endl;
-        std::cout << "nickname: " << _contacts[index].getNickName() << std::endl;
-        std::cout << "phone number: " << _contacts[index].getPhoneNumber() << std::endl;
-        std::cout << "darkest secret: " << _contacts[index].getDarkSecret() << std::endl;
+        std::cout << std::endl << "index|first name| last name|  nickname" << std::endl;
+        std::cout << "index: " << index + 1 << std::endl;
+        _contacts[index].getContact();
     }
 }
 
@@ -67,19 +73,18 @@ void PhoneBook::addContact()
     
     i = 0;
     while (!_contacts[i].IsEmpty() && i < 8)
-        i++; 
-    if (i == 8 && !_contacts[i].IsEmpty()) {
+        i++;
+    if (i == 8) {
         _removeContact(0);
         i = 7;
     }
     _contacts[i].SetContact();
     if (_contacts[i].IsEmpty())
     {
-        std::cout << "ERROR: Saved contact can’t have empty fields." << std::endl;
         _removeContact(i);
         return ;
     }
-    printAllContacts();
+    std::cout << "Contact added, at index: " << i + 1 << std::endl;
 }
 
 void PhoneBook::_removeContact(int i)
@@ -95,27 +100,15 @@ void PhoneBook::_shiftContacts(int i)
     _contacts[7] = Contact();
 }
 
-
-std::string formatField(const std::string& field)
-{
-    if (field.length() > 10)
-        return field.substr(0, 9) + ".";
-    return field;
-}
-
 void PhoneBook::printAllContacts()
 {
-    std::cout << "     index|first name| last name|  nickname" << std::endl;
+    std::cout << "     index|first name| last name|  nickname" << std::endl << std::endl;
     for (int i = 0; i < 8; i++)
     {
-        // TODO move these functions into the contanct class
-        if (_contacts[i].getFirstName().empty())
+        if (_contacts[i].IsEmpty())
             continue;
-        std::cout << std::setw(10) << std::right << i << "|";
-        std::cout << std::setw(10) << std::right << formatField(_contacts[i].getFirstName()) << "|";
-        std::cout << std::setw(10) << std::right << formatField(_contacts[i].getLastName()) << "|";
-        std::cout << std::setw(10) << std::right << formatField(_contacts[i].getNickName());
-        std::cout << std::endl;
+        std::cout << std::setw(10) << std::right << i + 1 << "|";
+        _contacts[i].printContact();
     }
 }
 
