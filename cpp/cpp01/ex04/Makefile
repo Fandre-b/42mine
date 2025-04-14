@@ -6,15 +6,15 @@
 #    By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/14 22:55:49 by fandre-b          #+#    #+#              #
-#    Updated: 2024/12/15 16:01:04 by fandre-b         ###   ########.fr        #
+#    Updated: 2025/04/14 10:00:22 by fandre-b         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = swich_files
+NAME = replace
 
 CPP = c++
 CPP_FLAGS = -std=c++98 -Wall -Wextra -Werror -pedantic
-SRC_F = 	main.cpp
+SRC_F = 	my_main.cpp
 
 OBJ_F = $(SRC_F:.cpp=.o)
 

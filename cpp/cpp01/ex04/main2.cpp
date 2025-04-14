@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 16:09:05 by fandre-b          #+#    #+#             */
-/*   Updated: 2025/03/21 12:43:47 by fandre-b         ###   ########.fr       */
+/*   Updated: 2025/04/13 23:52:12 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@
 int	printError(int err)
 {
 	if (err == ARGS)
-		std::cerr << "Error : wrong number of arguments, use ./replace file s1 s2" << std::endl;
+		std::cerr << "Error : use ./replace file s1 s2" << std::endl;
 	else if (err == INPUT)
-		std::cerr << "Error : input file" << std::endl;
+		std::cerr << "Error : with input file" << std::endl;
 	else if (err == OUTPUT)
-		std::cerr << "Error : output file" << std::endl;
+		std::cerr << "Error : with output file" << std::endl;
 	return (1);
 }
 
