@@ -6,22 +6,23 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 08:37:22 by fandre-b          #+#    #+#             */
-/*   Updated: 2025/04/16 11:29:59 by fandre-b         ###   ########.fr       */
+/*   Updated: 2025/04/16 18:57:03 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "DiamondTrap.hpp"
 
 // Constructors
-DiamondTrap::DiamondTrap(): 
+FragTrap::FragTrap(): ClapTrap()
 {
+	
 	this->_hitPoints = 100;
 	this->_energyPoints = 100;
 	this->_attackDamage = 30;
 	std::cout << RED << "DiamondTrap: " << this->_name << " created" << RESET << std::endl;
 }
 
-DiamondTrap::DiamondTrap(const DiamondTrap &src): ClapTrap(src)
+DiamondTrap::DiamondTrap(const DiamondTrap &src): ClapTrap(src), ScavTrap(src), FragTrap(src)
 {
 	std::cout << RED << "DiamondTrap: " << this->_name << " copied" << RESET << std::endl;
 }
