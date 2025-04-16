@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/03 18:52:09 by fandre-b          #+#    #+#             */
-/*   Updated: 2025/04/03 18:52:09 by fandre-b         ###   ########.fr       */
+/*   Created: 2025/04/04 17:46:46 by fandre-b          #+#    #+#             */
+/*   Updated: 2025/04/04 17:46:46 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,10 @@ int main()
 	named.beRepaired(15);
 	unnamed.beRepaired(5);
 
+	named.attack("Target2");
 	unnamed = named;
 	unnamed.attack("Target3");
+	named.highFivesGuys();
 
 	return 0;
 }

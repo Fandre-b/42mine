@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+// #pragma once
 #ifndef CLAPTRAP_HPP
 # define CLAPTRAP_HPP
 
@@ -25,7 +26,7 @@
 
 class ClapTrap
 {
-	private:
+	protected:
 		std::string	_name;
 		unsigned int	_hitPoints;
 		unsigned int	_energyPoints;
@@ -33,14 +34,16 @@ class ClapTrap
 	public:
 		//orthodox cannonical form
 		ClapTrap();
-		ClapTrap(const ClapTrap &src); //copy
-		ClapTrap &operator=(const ClapTrap &rhs); //assign operator
+		ClapTrap(const ClapTrap &src);
+		ClapTrap &operator=(const ClapTrap &rhs);
 
-		~ClapTrap(); 
+		virtual ~ClapTrap(); 
+			//virtual destructor to be redineed and its needed
 
 		//constructors oveloading
 		ClapTrap(std::string name);
 		
+
 		void attack(const std::string &target);
 		void takeDamage(unsigned int amount);
 		void beRepaired(unsigned int amount);

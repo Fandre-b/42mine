@@ -12,16 +12,9 @@
 
 #include "ClapTrap.hpp"
 
-ClapTrap::ClapTrap() : _name("Unnamed"), _hitPoints(10), _energyPoints(10), _attackDamage(0) {}
-
-ClapTrap::ClapTrap(std::string name) : _name(name), _hitPoints(10), _energyPoints(10), _attackDamage(0)
+ClapTrap::ClapTrap() : _name("Unnamed"), _hitPoints(10), _energyPoints(10), _attackDamage(0) 
 {
 	std::cout << GREEN << "ClapTrap: " << this->_name << " created" << RESET << std::endl;
-}
-
-ClapTrap::~ClapTrap()
-{
-	std::cout << GREEN << "ClapTrap: " << this->_name << " destroyed" << RESET << std::endl;
 }
 
 ClapTrap::ClapTrap(const ClapTrap &src)
@@ -32,7 +25,7 @@ ClapTrap::ClapTrap(const ClapTrap &src)
 
 ClapTrap &ClapTrap::operator=(const ClapTrap &rhs)
 {
-	std::cout << GREEN << "ClapTrap: " << this->_name << " ShapeShifts into " << rhs._name << std::endl;
+	std::cout << GREEN << "ClapTrap: " << this->_name << " Assigned into " << rhs._name << std::endl;
 	if (this != &rhs)
 	{
 		this->_name = rhs._name;
@@ -41,6 +34,17 @@ ClapTrap &ClapTrap::operator=(const ClapTrap &rhs)
 		this->_attackDamage = rhs._attackDamage;
 	}
 	return (*this);
+}
+
+ClapTrap::~ClapTrap()
+{
+	std::cout << GREEN << "ClapTrap: " << this->_name << " destroyed" << RESET << std::endl;
+}
+
+
+ClapTrap::ClapTrap(std::string name) : _name(name), _hitPoints(10), _energyPoints(10), _attackDamage(0)
+{
+	std::cout << GREEN << "ClapTrap: " << this->_name << " created" << RESET << std::endl;
 }
 
 void ClapTrap::attack(const std::string &target)
