@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 13:13:35 by fandre-b          #+#    #+#             */
-/*   Updated: 2025/04/16 11:28:27 by fandre-b         ###   ########.fr       */
+/*   Updated: 2025/04/17 12:13:14 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ class DiamondTrap : public ScavTrap, public FragTrap
 		//constructors oveloading
 		DiamondTrap(std::string name);
 		
-
-		void attack(const std::string &target);
+		using ScavTrap::attack;
+		// void attack(const std::string &target);
 		void whoAmI(void);
 };
 

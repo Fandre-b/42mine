@@ -6,60 +6,64 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 08:37:22 by fandre-b          #+#    #+#             */
-/*   Updated: 2025/04/16 18:57:03 by fandre-b         ###   ########.fr       */
+/*   Updated: 2025/04/17 12:56:13 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "DiamondTrap.hpp"
 
 // Constructors
-FragTrap::FragTrap(): ClapTrap()
+DiamondTrap::DiamondTrap(): ClapTrap()
 {
-	
-	this->_hitPoints = 100;
-	this->_energyPoints = 100;
-	this->_attackDamage = 30;
-	std::cout << RED << "DiamondTrap: " << this->_name << " created" << RESET << std::endl;
+	this->_name = this->ClapTrap::_name;
+	this->ClapTrap::_name = this->ClapTrap::_name + "_clap_name";
+	this->_hitPoints = FragTrap::_hitPoints;
+	this->_energyPoints = ScavTrap::_energyPoints;
+	this->_attackDamage = FragTrap::_attackDamage;
+	std::cout << YELLOW << "DiamondTrap: " << this->_name << " created" << RESET << std::endl;
 }
 
-DiamondTrap::DiamondTrap(const DiamondTrap &src): ClapTrap(src), ScavTrap(src), FragTrap(src)
+DiamondTrap::DiamondTrap(const DiamondTrap &src): ClapTrap(src), ScavTrap(src), FragTrap(src), _name(src._name)
 {
-	std::cout << RED << "DiamondTrap: " << this->_name << " copied" << RESET << std::endl;
+	std::cout << YELLOW << "DiamondTrap: " << this->_name << " copied" << RESET << std::endl;
 }
 
 DiamondTrap &DiamondTrap::operator=(const DiamondTrap &rhs)
 {
-	std::cout << RED << "DiamondTrap: " << this->_name << " Assigned into " << rhs._name << std::endl;
+	std::cout << YELLOW << "DiamondTrap: " << this->_name << " Assigned into " << rhs._name << RESET << std::endl;
 
-    ClapTrap::operator=(rhs);
+    if (this != &rhs) 
+	{
+        // ClapTrap::operator=(rhs);   // Assign ClapTrap members
+		ScavTrap::operator=(rhs);   // Assign ScavTrap members
+		FragTrap::operator=(rhs);   // Assign FragTrap members
+		// both will also call claptrap relevant members
+        this->_name = rhs._name;    // Set the DiamondTrap _name manually after base assignment
+    }
 
     return *this;
 }
 
 DiamondTrap::~DiamondTrap()
 {
-	std::cout << RED << "DiamondTrap: " << this->_name << " destroyed" << RESET << std::endl;
+	std::cout << YELLOW << "DiamondTrap: " << this->_name << " destroyed" << RESET << std::endl;
 }
 
-DiamondTrap::DiamondTrap(std::string name): ClapTrap(name)
+DiamondTrap::DiamondTrap(std::string name): ClapTrap(name + "_clap_name"), _name(name)
 {
-	this->_hitPoints = 100;
-	this->_energyPoints = 50;
-	this->_attackDamage = 20;
-	std::cout << RED << "DiamondTrap: " << this->_name << " created" << RESET << std::endl;
+	this->_hitPoints = FragTrap::_hitPoints;
+	this->_energyPoints = ScavTrap::_energyPoints;
+	this->_attackDamage = FragTrap::_attackDamage;
+	std::cout << YELLOW << "DiamondTrap: " << this->_name << " created" << RESET << std::endl;
 }
 
-void DiamondTrap::attack(const std::string &target)
+// void DiamondTrap::attack(const std::string &target)
+// {
+// 	ScavTrap::attack(target);
+// }
+
+void	DiamondTrap::whoAmI(void)
 {
-	if (this->_hitPoints <= 0)
-		std::cout << RED << "DiamondTrap: " << this->_name << " is unalive and cannot attack" << RESET << std::endl;
-	else if (this->_energyPoints <= 0)
-		std::cout << RED << "DiamondTrap: " << this->_name << " its out of energy and cannot attack" << RESET << std::endl;
-	else
-	{
-		std::cout << RED << "DiamondTrap: " << this->_name << " attacks " << target << ", causing " << this->_attackDamage << " points of damage" << RESET << std::endl;
-        this->_energyPoints--;
-	}
-	//can't do target checks or changes as per subject
+	std::cout << MAGENTA << "--> DiamondTrap named: " << this->_name << RESET << std::endl;
+	std::cout << MAGENTA << "--> Originated from ClapTrap named " << ClapTrap::_name << RESET << std::endl;
 }
-

@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 08:37:22 by fandre-b          #+#    #+#             */
-/*   Updated: 2025/04/16 11:14:53 by fandre-b         ###   ########.fr       */
+/*   Updated: 2025/04/17 11:32:07 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ FragTrap::FragTrap(const FragTrap &src): ClapTrap(src)
 
 FragTrap &FragTrap::operator=(const FragTrap &rhs)
 {
-	std::cout << RED << "FragTrap: " << this->_name << " Assigned into " << rhs._name << std::endl;
+	std::cout << RED << "FragTrap: " << this->_name << " Assigned into " << rhs._name << RESET << std::endl;
 
     ClapTrap::operator=(rhs);
 

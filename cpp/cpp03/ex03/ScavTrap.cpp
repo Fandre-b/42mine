@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 08:37:22 by fandre-b          #+#    #+#             */
-/*   Updated: 2025/04/16 11:15:17 by fandre-b         ###   ########.fr       */
+/*   Updated: 2025/04/17 10:05:12 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ ScavTrap::ScavTrap(const ScavTrap &src): ClapTrap(src)
 
 ScavTrap &ScavTrap::operator=(const ScavTrap &rhs)
 {
-	std::cout << BLUE << "ScavTrap: " << this->_name << " Assigned into " << rhs._name << std::endl;
+	std::cout << BLUE << "ScavTrap: " << this->_name << " Assigned into " << rhs._name << RESET << std::endl;
 
     ClapTrap::operator=(rhs);
     this->_guardGate = rhs._guardGate;

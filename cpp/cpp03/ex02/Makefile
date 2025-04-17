@@ -6,11 +6,11 @@
 #    By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/14 22:55:49 by fandre-b          #+#    #+#              #
-#    Updated: 2025/04/16 11:01:33 by fandre-b         ###   ########.fr        #
+#    Updated: 2025/04/17 15:06:15 by fandre-b         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = ClapTrap
+NAME = FragTrap
 
 CPP = c++
 CPP_FLAGS = -std=c++98 -Wall -Wextra -Werror -pedantic
