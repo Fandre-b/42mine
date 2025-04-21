@@ -1,0 +1,63 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Dog.cpp                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/18 18:58:51 by fandre-b          #+#    #+#             */
+/*   Updated: 2025/04/21 14:37:37 by fandre-b         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "Dog.hpp"
+
+Dog::Dog() : AAnimal()
+{
+    this->_type = "Dog";
+    this->_brain = new Brain();
+    AAnimal::_type = "Dog"; //Witch one tho?? or both
+    std::cout << RED << "An puppy happeared" << RESET << std::endl;
+}
+
+Dog::Dog(const Dog& src) : AAnimal()
+{
+    *this = src;
+    std::cout << RED << "Dog was coppied" << RESET << std::endl;
+}
+
+Dog &Dog::operator=(const Dog& src)
+{
+    if (this == &src)
+        return *this;
+    this->_type = src._type;
+    this->_brain = new Brain();
+    std::cout << RED << "assigned" << RESET << std::endl;
+    return *this;
+}
+
+Dog::~Dog() 
+{
+        std::cout << RED << "Destructed" << RESET << std::endl;
+}
+
+const std::string& Dog::getType() const
+{
+    return this->_type;
+}
+
+void Dog::makeSound() const
+{
+    std::cout << RED << "Woof Woof" << RESET << std::endl;
+}
+
+void	Dog::getIdeas(void)const
+{
+	for (int i = 0; i < 3; i++)// change the 3 to 100 to show all ideas
+		std::cout << "\tIdea " << i << " of the Dog is: \"" << this->_brain->getIdea(i) << std::endl;
+}
+
+void	Dog::setIdea(int i, std::string idea)
+{
+		this->_brain->setIdea(i, idea);
+}
