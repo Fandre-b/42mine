@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 10:58:58 by tblaase           #+#    #+#             */
-/*   Updated: 2025/04/21 14:36:33 by fandre-b         ###   ########.fr       */
+/*   Updated: 2025/04/21 16:21:59 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ class Brain
 		Brain &operator=(const Brain &src);
 		virtual ~Brain();
 
-            //Getter
 		const std::string& getIdea(int i)const;
-            //setter
 		void setIdea(int i, std::string idea);
 };

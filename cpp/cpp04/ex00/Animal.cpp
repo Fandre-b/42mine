@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 18:58:51 by fandre-b          #+#    #+#             */
-/*   Updated: 2025/04/20 18:36:42 by fandre-b         ###   ########.fr       */
+/*   Updated: 2025/04/21 16:07:54 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,7 @@ Animal::Animal()
 
 Animal::Animal(const Animal& src)
 {
-    // if (this != &src)
-    // {
-        *this = src;
-    // }
+    this->_type = src._type;
     std::cout << YELLOW << "Animal: was coppied" << RESET << std::endl;
 }
 

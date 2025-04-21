@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 18:58:40 by fandre-b          #+#    #+#             */
-/*   Updated: 2025/04/21 12:53:38 by fandre-b         ###   ########.fr       */
+/*   Updated: 2025/04/21 16:54:40 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,7 @@ class AAnimal
         AAnimal(std::string type);
         virtual void makeSound() const = 0;
         const std::string& getType() const;
-
+        
+        virtual void setIdea(int i, const std::string idea) = 0;
+        virtual void getIdeas() const = 0;
 };

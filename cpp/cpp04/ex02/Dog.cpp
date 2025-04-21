@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 18:58:51 by fandre-b          #+#    #+#             */
-/*   Updated: 2025/04/21 14:37:37 by fandre-b         ###   ########.fr       */
+/*   Updated: 2025/04/21 17:06:41 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ Dog::Dog() : AAnimal()
     std::cout << RED << "An puppy happeared" << RESET << std::endl;
 }
 
-Dog::Dog(const Dog& src) : AAnimal()
+Dog::Dog(const Dog& src) : AAnimal(src)
 {
-    *this = src;
+    this->_brain = new Brain(*src._brain); // Deep copy of Brain
     std::cout << RED << "Dog was coppied" << RESET << std::endl;
 }
 
@@ -30,15 +30,19 @@ Dog &Dog::operator=(const Dog& src)
 {
     if (this == &src)
         return *this;
+    AAnimal::operator=(src);
+    // delete old brain 
+    delete this->_brain;
+    this->_brain = new Brain(*src._brain);
     this->_type = src._type;
-    this->_brain = new Brain();
     std::cout << RED << "assigned" << RESET << std::endl;
     return *this;
 }
 
 Dog::~Dog() 
 {
-        std::cout << RED << "Destructed" << RESET << std::endl;
+    delete this->_brain;
+    std::cout << RED << "Destructed" << RESET << std::endl;
 }
 
 const std::string& Dog::getType() const
@@ -54,7 +58,8 @@ void Dog::makeSound() const
 void	Dog::getIdeas(void)const
 {
 	for (int i = 0; i < 3; i++)// change the 3 to 100 to show all ideas
-		std::cout << "\tIdea " << i << " of the Dog is: \"" << this->_brain->getIdea(i) << std::endl;
+        std::cout << "\tIdea " << i << " of the Dog is: \"" 
+          << this->_brain->getIdea(i) << "\" with reference: " << &this->_brain->getIdea(i) << std::endl;
 }
 
 void	Dog::setIdea(int i, std::string idea)

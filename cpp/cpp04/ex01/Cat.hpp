@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 18:58:54 by fandre-b          #+#    #+#             */
-/*   Updated: 2025/04/21 11:18:37 by fandre-b         ###   ########.fr       */
+/*   Updated: 2025/04/21 16:54:40 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,5 @@ class Cat : public Animal
         const std::string& getType() const;
 
         void getIdeas(void) const;
-        void setIdea(int i, std::string idead);
+        virtual void setIdea(int i, std::string idea);
 };
