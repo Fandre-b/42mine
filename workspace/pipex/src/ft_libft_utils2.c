@@ -55,10 +55,10 @@ int	ft_strpbrk_idx(char *str, char *chrs)
 	if (!chrs || !str)
 		return (-2);
 	j = 0;
-	while (str[j] != '\0')
+	while (str[j] && str[j] != '\0')
 	{
 		i = 0;
-		while (chrs[i] != '\0')
+		while (chrs[i++] && chrs[i] != '\0')
 		{
 			if (str[j] == chrs[i++])
 				return (j);

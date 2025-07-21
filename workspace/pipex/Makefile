@@ -14,9 +14,9 @@ NAME			:= pipex
 BONUS_NAME		:= checker
 DEBUG_NAME		:= debug
 
-CC := gcc
+CC := @cc
 RM := -@rm -f
-CFLAGS := -Wall -Wextra -Werror -std=c99
+CFLAGS := -Wall -Wextra -Werror -std=c99 -fsanitize=address
 VAL := valgrind --leak-check=full --show-leak-kinds=all -s
 
 OBJ_DIR := obj

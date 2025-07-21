@@ -29,6 +29,8 @@
 typedef struct s_info
 {
 	int		fd[2];
+	int		exe_fd[2];
+	int		error;
 	int		here_doc;
 	char	***cmd;
 	char	**envp;
@@ -46,9 +48,10 @@ char	*get_path(char *cmd, char **envp);
 int		parcel_open_fd(int argc, char **argv, t_info *info);
 int		input_gnl(t_info *info);
 ////run program ->TODO restructure passing args TO MANY ARGS
-int		execute_command(int input_fd, int output_fd, char **cmd, char **envp);
-void	exe_cmd_child(int input_fd, int output_fd, int *fd_error, char **cmd, char **envp);
-void	exe_cmd_parent(int input_fd, int output_fd, int *fd_error);
+int		execute_command(t_info *info, char **cmd);
+void	exe_cmd_child(t_info *info, int *fd_error, char **cmd);
+int		exe_cmd_parent(t_info *info, int *fd_error);
+int		close_all(void);
 ////big utils
 int		get_next_line(int fd, char **new_str);
 char	**ft_split(char *str, char c);

@@ -1,0 +1,105 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Harl.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/15 17:30:03 by fandre-b          #+#    #+#             */
+/*   Updated: 2025/04/02 17:13:54 by fandre-b         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "Harl.hpp"
+#include <string>
+#include <iostream>
+
+Harl::Harl()
+{
+    // std::string levels[4] = {"DEBUG", "INFO", "WARNING", "ERROR"};
+    _levels[0] = "DEBUG";
+    _levels[1] = "WARNING";
+    _levels[2] = "INFO";
+    _levels[3] = "ERROR";
+    _levels[4] = "NONE";
+    _functions[0] = &Harl::_debug;
+    _functions[1] = &Harl::_info;
+    _functions[2] = &Harl::_warning;
+    _functions[3] = &Harl::_error;
+    _functions[4] = &Harl::_none;
+}
+
+Harl::~Harl(){}
+
+void Harl::complain(std::string level)
+{
+    int i = -1;
+    while (_levels[++i].compare("NONE") && level.compare(_levels[i]));
+    (this->*_functions[i])();
+    while (_levels[++i].compare("NONE"))
+    {
+        std::cout << "[ " << _levels[i] << " ]" << std::endl;
+        (this->*_functions[i++])();
+        std::cout << std::endl;
+    }
+}
+
+void Harl::harlFilter(std::string level)
+{
+    int i = -1;
+    // while (_levels[++i].compare("NONE") && level.compare(_levels[i]));
+    // while (_levels[++i].compare("NONE"))
+    // {
+    //     std::cout << "[ " << _levels[i] << " ]" << std::endl;
+    //     (this->*_functions[i++])();
+    //     std::cout << std::endl;
+    // }
+    while (_levels[++i].compare("NONE") && level.compare(_levels[i]));
+    std::cout << "[ " << _levels[i] << " ]" << std::endl;
+    switch (i)
+    {
+        case 0:
+            (this->*_functions[0])();
+            break;
+        case 1:
+            (this->*_functions[1])();
+            break;
+        case 2:
+            (this->*_functions[2])();
+            break;
+        case 3:
+            (this->*_functions[3])();
+            return;
+        default:
+            (this->*_functions[4])();
+            return;
+    }
+    std::cout << std::endl;
+    harlFilter(_levels[i + 1]);
+}
+
+void Harl::_debug()
+{
+    std::cout << "I love having extra bacon for my 7XL-double-cheese-triple-pickle-special-ketchup burger." << std::endl;
+    std::cout << "I really do!" << std::endl;
+}
+
+void Harl::_warning()
+{
+    std::cout << "I cannot believe adding extra bacon costs more money." << std::endl;
+    std::cout << "You didn’t put enough bacon in my burger!" << std::endl;
+    std::cout << "If you did, I wouldn’t be asking for more!" << std::endl;
+}
+
+void Harl::_info()
+{
+    std::cout << "I think I deserve to have some extra bacon for free. " << std::endl;
+    std::cout << "I’ve been coming for years whereas you started working here since last month." << std::endl;
+}
+
+void Harl::_error()
+{
+    std::cout << "This is unacceptable! I want to speak to the manager now." << std::endl;
+}
+
+void Harl::_none(){}
